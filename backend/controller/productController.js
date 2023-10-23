@@ -3,18 +3,18 @@ const Shop = require("../model/shopModel");
 const catchAsync = require("../util/catchAsync");
 const fs = require("fs");
 const AppError = require("../model/errorModel");
-const Order=require('../model/orderModel');
+const Order = require("../model/orderModel");
+
+const cloudinary = require("cloudinary");
 
 exports.createProduct = catchAsync(async (req, res, next) => {
-  if (req.files) {
-    req.body.images = req.files.map((file) => {
-      return {
-        public_id: "fdf",
-        url: `${req.protocol}://${req.get("host")}/${
-          file.destination.split("/")[1]
-        }/${file.filename}`,
-      };
+  const images = [];
+
+  for (const img of req.body.images) {
+    const myCloud = await cloudinary.v2.uploader.upload(img, {
+      folder: "avatars",
     });
+    images.push({ public_id: myCloud.public_id, url: myCloud.url });
   }
 
   const shop = await Shop.findById(req.body.shopId);
@@ -24,7 +24,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
   }
 
   req.body.shop = shop;
-  const product = await Product.create(req.body);
+  const product = await Product.create({ ...req.body, images });
 
   res.status(201).json({
     status: "success",
@@ -46,7 +46,7 @@ exports.getProductDetail = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
-  const products = await Product.find().sort({createdAt:-1});
+  const products = await Product.find().sort({ createdAt: -1 });
   res.status(200).json({
     status: "success",
     products,
@@ -76,7 +76,7 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.submitReview = catchAsync(async (req, res, next) => {
-  const { user, rating, comment, productId,orderId } = req.body;
+  const { user, rating, comment, productId, orderId } = req.body;
 
   const product = await Product.findById(productId);
 
@@ -87,7 +87,9 @@ exports.submitReview = catchAsync(async (req, res, next) => {
     productId,
   };
 
-  const isReviewd = product.reviews.findIndex((r) => r.user._id.toString() === user._id.toString());
+  const isReviewd = product.reviews.findIndex(
+    (r) => r.user._id.toString() === user._id.toString()
+  );
 
   const existingReview = product.reviews[isReviewd];
 
@@ -107,20 +109,22 @@ exports.submitReview = catchAsync(async (req, res, next) => {
 
   await product.save({ validateBeforeSave: false });
 
-  const order=await Order.findByIdAndUpdate(orderId,{
-    $set:{
-      'cart.$[elem].isReviewed':true
+  const order = await Order.findByIdAndUpdate(
+    orderId,
+    {
+      $set: {
+        "cart.$[elem].isReviewed": true,
+      },
+    },
+    {
+      arrayFilters: [{ "elem._id": productId }],
+      new: true,
     }
-  },{ 
-    arrayFilters:[{ "elem._id": productId }],
-    new:true
-  })
+  );
 
   res.status(201).json({
     status: "success",
     product,
-    order
+    order,
   });
 });
-
-
