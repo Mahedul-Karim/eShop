@@ -6,6 +6,7 @@ const productSlice = createSlice({
     productError: null,
     product: [],
     isProductLoading: false,
+    stripe:null
   },
   reducers: {
     productRequest(state) {
@@ -38,6 +39,9 @@ const productSlice = createSlice({
     clearError(state) {
       state.productError = null;
     },
+    setApi(state,action){
+      state.stripe=action.payload
+    }
   },
 });
 

@@ -18,6 +18,12 @@ export default {
         "1300px": "1300px",
         "400px":"400px"
       },
+      colors:{
+        'primary':'#3399ff',
+        'grey-50':'#f9fafb',
+        'grey-200':'#d1d5db',
+        'grey-700':'#6b7280'
+      }
     },
   },
   plugins: [],

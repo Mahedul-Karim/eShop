@@ -4,17 +4,23 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 import styles from "../../util/style";
 
-
 import WishListItems from "./WishListItems";
 import { useSelector } from "react-redux";
 
-const Wishlist = ({ setOpenWishlist }) => {
-  
-  const { wishlist } = useSelector(state=>state.wishlist);
+const Wishlist = ({ setOpenWishlist, openWishlist }) => {
+  const { wishlist } = useSelector((state) => state.wishlist);
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
-      <div className="fixed top-0 right-0 h-full w-[80%] 800px:w-[40%] bg-white flex flex-col overflow-y-scroll justify-between shadow-sm">
+    <div
+      className={`fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10 ${
+        openWishlist ? "visible" : "invisible"
+      }`}
+    >
+      <div
+        className={`fixed top-0 right-0 h-full w-[80%] 800px:w-[40%] bg-white flex flex-col overflow-y-scroll justify-between shadow-sm ${
+          openWishlist ? "translate-x-0" : "translate-x-[100%]"
+        } transition-all duration-800`}
+      >
         <>
           <div>
             <div className="flex w-full justify-end pt-5 pr-5">
@@ -34,10 +40,11 @@ const Wishlist = ({ setOpenWishlist }) => {
             <br />
             <div className="w-full border-t">
               {wishlist &&
-                wishlist.map((i, index) => <WishListItems key={index} data={i} />)}
+                wishlist.map((i, index) => (
+                  <WishListItems key={index} data={i} />
+                ))}
             </div>
           </div>
-
         </>
       </div>
     </div>

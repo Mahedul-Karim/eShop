@@ -10,12 +10,12 @@ function Dropdown({ categoryData, setDropdown }) {
       };
  
     return (
-    <div className="pb-4 w-[270px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm">
+    <div className="pb-4 w-[270px] bg-grey-50 absolute z-30 rounded-b-md shadow-sm">
       {categoryData &&
         categoryData.map((category, index) => (
           <div
             key={index}
-            className={`${styles.noramlFlex}`}
+            className={`${styles.noramlFlex} transition-all hover:bg-white`}
             onClick={() => submitHandle(category)}
           >
             <img

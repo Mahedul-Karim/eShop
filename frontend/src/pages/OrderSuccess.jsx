@@ -2,7 +2,7 @@ import React from "react";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
 import Lottie from "react-lottie";
-import animationData from '../../public/assets/107043-success.json';
+import animationData from '/assets/107043-success.json?url';
 
 const Success = () => {
     const defaultOptions = {
