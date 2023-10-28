@@ -1,5 +1,16 @@
-import React, { useRef, useState } from "react";
-import Container from "../../util/Container";
+import React, { useEffect, useRef, useState } from "react";
+const SLIDES = [
+  {
+    id: 0,
+    src: "/assets/slide-1.jpg",
+    alt: "slide img 1",
+  },
+  {
+    id: 1,
+    src: "/assets/slide-2.jpg",
+    alt: "slide img 2",
+  },
+];
 
 const Carousel = () => {
   const [currentSlide,setCurrentSlide]=useState("1");
@@ -7,7 +18,8 @@ const Carousel = () => {
   const containerRef = useRef();
 
   let direction = "nextSlide";
-  let curSlide ="1";
+
+
 
   const nextSlide = () => {
     // setCurrentSlide(()=>containerRef.current.lastElementChild.dataset.img)
@@ -18,9 +30,7 @@ const Carousel = () => {
     direction = "nextSlide";
     containerRef.current.style.justifyContent = "flex-start";
     containerRef.current.style.transform = "translateX(-100%)";
-    // setCurrentSlide(containerRef.current.lastElementChild.dataset.img)
-    // curSlide=containerRef.current.lastElementChild.dataset.img
-    // console.log(curSlide)
+    
   };
 
   const prevSlide = () => {
@@ -31,9 +41,6 @@ const Carousel = () => {
     direction = "prevSlide";
     containerRef.current.style.justifyContent = "flex-end";
     containerRef.current.style.transform = "translateX(100%)";
-    // setCurrentSlide(()=>containerRef.current.firstElementChild.dataset.img)
-    // curSlide=containerRef.current.firstElementChild.dataset.img
-    // console.log(curSlide)
   };
 
   const transitionEnd = () => {
@@ -51,7 +58,7 @@ const Carousel = () => {
     });
     
   };
-  console.log(currentSlide)
+  
   return (
    
       <div className="flex flex-col items-center justify-center overflow-hidden relative">
@@ -61,20 +68,15 @@ const Carousel = () => {
           ref={containerRef}
           style={{ transitionDuration: "0.6s" }}
         >
-          <div id="slide" data-img="1">
+          {SLIDES.map(slide=><div id="slide" data-img="1" key={slide.id}>
             <img
-              src="/assets/slide-1.jpg"
+              src={slide.src}
               className="w-full object-cover h-auto"
-              alt="slide img 1"
+              alt={slide.alt}
             />
-          </div>
-          <div id="slide" data-img="2">
-            <img
-              src="/assets/slide-2.jpg"
-              className="w-full object-cover h-auto"
-              alt="slide img 2"
-            />
-          </div>
+          </div>)}
+          
+         
         </div>
 
         <button
