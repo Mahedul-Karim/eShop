@@ -9,7 +9,7 @@
   scroll-behavior: smooth;
 }
 body {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
   font-family: "Poppins";
 }
 input,

@@ -1,64 +1,84 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import styles from "../../util/style";
 import Container from "../../util/Container";
+import Carousel from "../ui/Carousel";
 
+const SLIDES = [
+  {
+    id: 1,
+    src: "/assets/slide-1.jpg",
+    alt: "slide img 1",
+  },
+  {
+    id: 2,
+    src: "/assets/slide-2.jpg",
+    alt: "slide img 2",
+  },
+  {
+    id: 3,
+    src: "/assets/slide-2.jpg",
+    alt: "slide img 2",
+  },
+  {
+    id: 4,
+    src: "/assets/slide-2.jpg",
+    alt: "slide img 2",
+  },
+  {
+    id: 4,
+    src: "/assets/slide-2.jpg",
+    alt: "slide img 2",
+  }
+];
 const Hero = () => {
-  const [direction, setDirection] = useState(-1);
+  const [curSlide, setCurSlide] = useState(0);
+  const containerRef = useRef();
+  const [scr,setScr]=useState()
+  
+  useEffect(()=>{
+    setScr(containerRef?.current?.firstElementChild?.offsetWidth)
+  },[containerRef])
 
-  const nextSlide = (e) => {
-    e.target.parentElement.firstElementChild.style.transform =
-      "translateX(-100%)";
-    e.target.parentElement.firstElementChild.style.justifyContent =
-      "flex-start";
-    setDirection(-1);
+  const nextSlide = () => {
+    // if (curSlide === SLIDES.length - 1) {
+    //   return;
+    // }
+    setCurSlide((prev) => (prev + 1));
+    
+    setScr(prev => prev+prev)
+    // containerRef.current.scrollLeft = scr ;
+    // console.log(containerRef.current.scrollLeft)
+    containerRef.current.style.transform=`translateX(-${containerRef?.current?.firstElementChild?.offsetWidth}px)`
   };
 
-  const prevSlide = (e) => {
-    e.target.parentElement.firstElementChild.style.transform =
-      "translateX(100%)";
-    e.target.parentElement.firstElementChild.style.justifyContent = "flex-end";
-    setDirection(1);
-  };
-
-  const transitionEnd = (e) => {
-    e.target.style.transitionDuration = "0ms";
-    if (direction === -1) {
-      e.target.appendChild(e.target.firstElementChild);
-    } else if (direction === 1) {
-      e.target.prepend(e.target.lastElementChild);
-    }
-    e.target.style.transform = "translateX(0%)";
-    setTimeout(() => {
-      e.target.style.transitionDuration = "0.6s";
-    });
+  const prevSlide = () => {
+    // if (curSlide === 0) {
+    //   return;
+    // }
+    // setCurSlide((prev) => (prev - 1));
+    containerRef.current.style.transform=`translateX(${containerRef?.current?.firstElementChild?.offsetWidth}px)`;
   };
 
   return (
     <Container
       styles={"grid grid-cols-1 800px:grid-cols-[1fr_0.4fr] mt-6 gap-4"}
     >
-      <div className="flex flex-col items-center justify-center overflow-hidden relative">
+      <div className="overflow-hidden relative">
         <div
-          className="grid grid-flow-col auto-cols-[100%]"
+          className="grid grid-flow-col auto-cols-[100%] transition-all"
           style={{
-            transition: "all 0.8s",
+            transitionDuration: "0.6s",
           }}
-          onTransitionEnd={transitionEnd}
-          id="sld"
+          ref={containerRef}
         >
-          <div id="slide">
-            <img
-              src="/assets/slide-1.jpg"
-              className="w-full object-cover h-auto"
-            />
-          </div>
-          <div id="slide">
-            <img
-              src="/assets/slide-2.jpg"
-              className="w-full object-cover h-auto"
-            />
-          </div>
+          {SLIDES.map((slider, i) => (
+            <div id="slide" data-img={i} key={slider.id}>
+              <img
+                src={slider.src}
+                className="w-full object-cover h-auto"
+                alt={slider.alt}
+              />
+            </div>
+          ))}
         </div>
 
         <button
@@ -74,7 +94,8 @@ const Hero = () => {
           Next
         </button>
       </div>
-      <div className="bg-primary"></div>
+      {/* <Carousel /> */}
+      <div className={`bg-primary`}></div>
     </Container>
   );
 };
