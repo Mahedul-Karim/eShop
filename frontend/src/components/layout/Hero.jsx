@@ -37,7 +37,7 @@ const Hero = () => {
   const nextSlide = () => {
     // setCurSlide((prev) => (prev === SLIDES.length - 1 ? 0 : prev + 1));
     if(curSlide === SLIDES.length - 2){
-      SLIDES.push(SLIDES[0])
+      SLIDES.forEach(slide=>SLIDES.push(slide))
     }
     setCurSlide(prev => prev+1)
   };
@@ -52,7 +52,8 @@ const Hero = () => {
     >
       <div className="overflow-hidden relative w-full h-full">
         <div
-          className="flex transition-all w-full h-full"
+          className="grid grid-flow-col auto-cols-[100%] transition-all w-full h-full"
+          // className="flex transition-all w-full h-full"
           style={{
             transitionDuration: "0.6s",
           }}
@@ -63,7 +64,8 @@ const Hero = () => {
               id="slide"
               data-img={i}
               key={slider.id}
-              className="flex-shrink-0 w-full"
+              // className="flex-shrink-0 w-full"
+              className="w-full"
               style={{
                 transform: `translateX(-${curSlide * 100}%)`,
                 transition: "all 0.6s",
