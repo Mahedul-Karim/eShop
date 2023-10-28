@@ -13,24 +13,24 @@ const SLIDES = [
 ];
 
 const Carousel = () => {
-  const [currentSlide,setCurrentSlide]=useState("1");
-  
+  const [currentSlide,setCurrentSlide]=useState(0);
+  const [direction,setDirection]=useState("nextSlide")
   const containerRef = useRef();
 
-  let direction = "nextSlide";
+  
 
 
 
   const nextSlide = () => {
-    // setCurrentSlide(()=>containerRef.current.lastElementChild.dataset.img)
+    
     if (direction === "prevSlide") {
       containerRef.current.appendChild(containerRef.current.firstElementChild);
       
     }
-    direction = "nextSlide";
+    setDirection("nextSlide");
     containerRef.current.style.justifyContent = "flex-start";
     containerRef.current.style.transform = "translateX(-100%)";
-    
+    setCurrentSlide(prev=> prev === SLIDES.length - 1 ? 0 : prev + 1);
   };
 
   const prevSlide = () => {
@@ -38,19 +38,20 @@ const Carousel = () => {
       containerRef.current.prepend(containerRef.current.lastElementChild);
       
     }
-    direction = "prevSlide";
+    setDirection("prevSlide");
     containerRef.current.style.justifyContent = "flex-end";
     containerRef.current.style.transform = "translateX(100%)";
+    setCurrentSlide(prev => prev === 0 ? SLIDES.length - 1 : prev - 1)
   };
 
   const transitionEnd = () => {
     containerRef.current.style.transitionDuration = "0ms";
     if (direction === "nextSlide") {
       containerRef.current.appendChild(containerRef.current.firstElementChild);
-      // setCurrentSlide(containerRef.current.firstElementChild.dataset.img)
+      
     } else if (direction === "prevSlide") {
       containerRef.current.prepend(containerRef.current.lastElementChild);
-      // setCurrentSlide(containerRef.current.lastElementChild.dataset.img)
+      
     }
     containerRef.current.style.transform = "translateX(0%)";
     setTimeout(() => {
