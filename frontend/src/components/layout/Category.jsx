@@ -1,43 +1,33 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {  categoriesData } from "../../util/data";
-import styles from "../../util/style";
-import Branding from "../Branding";
+import { categoriesData } from "../../util/data";
+import Container from "../../util/Container";
 
 const Category = () => {
   const navigate = useNavigate();
   return (
-    <>
-      <Branding />
-
-      <div
-        className={`${styles.section} bg-white p-6 rounded-lg mb-12`}
-        id="categories"
-      >
-        <div className="grid grid-cols-1 gap-[5px] md:grid-cols-2 md:gap-[10px] lg:grid-cols-4 lg:gap-[20px] xl:grid-cols-5 xl:gap-[30px]">
-          {categoriesData &&
-            categoriesData.map((i) => {
-              const handleSubmit = (i) => {
-                navigate(`/products?category=${i.title}`);
-              };
-              return (
-                <div
-                  className="w-full h-[100px] flex items-center justify-between cursor-pointer overflow-hidden"
-                  key={i.id}
-                  onClick={() => handleSubmit(i)}
-                >
-                  <h5 className={`text-[18px] leading-[1.3]`}>{i.title}</h5>
-                  <img
-                    src={i.image_Url}
-                    className="w-[120px] object-cover"
-                    alt=""
-                  />
-                </div>
-              );
-            })}
-        </div>
+    <Container styles={"my-4 py-4"}>
+      <h2 className="text-[22px] font-[500] text-center">
+        Explore popular categories
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-6 1000px:grid-cols-6">
+        {categoriesData.map((cat) => (
+          <div
+            className="flex flex-col justify-end items-center gap-8 text-[14px] font-[400] text-dot group cursor-pointer"
+            key={cat.id}
+          >
+            <div>
+              <img
+                src={cat.image_Url}
+                alt="category"
+                className="block group-hover:-translate-y-[20px] transition-all"
+              />
+            </div>
+            <p>{cat.title}</p>
+          </div>
+        ))}
       </div>
-    </>
+    </Container>
   );
 };
 

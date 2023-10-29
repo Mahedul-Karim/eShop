@@ -46,13 +46,13 @@ function Header({ activePage }) {
         </div>
       </Container>
 
-        <div
-          className={`${
-            active ? "fixed top-0 left-0 z-10" : ""
-          } transition hidden 800px:flex items-center justify-between w-full h-[70px] bg-white shadow-sm`}
-        >
-          <Nav activePage={activePage} />
-        </div>
+      <Container
+        styles={`${
+          active ? "fixed top-0 left-[50%] -translate-x-[50%] z-10" : ""
+        } hidden 800px:flex items-center justify-between w-full h-[70px] bg-white shadow-sm`}
+      >
+        <Nav activePage={activePage} />
+      </Container>
 
       <MobileNav
         active={active}

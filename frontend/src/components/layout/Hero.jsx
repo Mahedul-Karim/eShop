@@ -1,48 +1,49 @@
 import React, { useEffect, useRef, useState } from "react";
 import Container from "../../util/Container";
 import Carousel from "../ui/carousel/Carousel";
-import CarouselV2 from "../ui/carousel/Carousel-v2";
+import { Link } from "react-router-dom";
+import HeroBanner from "../ui/hero/HeroBanner";
 
-const SLIDES = [
+const HERO_BANNER = [
   {
-    id: 1,
-    src: "/assets/slide-1.jpg",
-    alt: "slide img 1",
+    src: "/assets/banner-1.jpg",
+    subtitle: "Top product",
+    title: "Edifier<br /> stereo bluetooth",
+    to: "#",
   },
   {
-    id: 2,
-    src: "/assets/slide-2.jpg",
-    alt: "slide img 2",
+    src: "/assets/banner-2.jpg",
+    subtitle: "Clearance",
+    title: "GoPro - Fusion 360",
+    to: "#",
+  },
+  {
+    src: "/assets/banner-3.jpg",
+    subtitle: "Featured",
+    title: "Apple watch 4",
+    to: "#",
   },
 ];
+
 const Hero = () => {
-  const [curSlide, setCurSlide] = useState(0);
-  
-  const containerRef = useRef();
-
- 
-
-  const nextSlide = () => {
-    
-    setCurSlide((prev) => (prev === SLIDES.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevSlide = () => {
-    
-    setCurSlide((prev) => (prev === 0 ? SLIDES.length - 1 : prev - 1));
-  };
-
-  const transitionEnd = () => {
-   
-  };
-
   return (
     <Container
       styles={"grid grid-cols-1 800px:grid-cols-[1fr_0.4fr] mt-6 gap-4"}
     >
-   
       <Carousel />
-      <div className={`bg-primary`}></div>
+      <div
+        className={`bg-white grid grid-cols-1 gap-4`}
+      >
+        {HERO_BANNER.map((item, index) => (
+          <HeroBanner
+            src={item.src}
+            to={item.to}
+            subtitle={item.subtitle}
+            title={item.title}
+            key={index}
+          />
+        ))}
+      </div>
     </Container>
   );
 };
