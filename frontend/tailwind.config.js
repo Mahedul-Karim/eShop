@@ -22,7 +22,9 @@ export default {
         'primary':'#3399ff',
         'grey-50':'#f9fafb',
         'grey-200':'#d1d5db',
-        'grey-700':'#6b7280'
+        'grey-700':'#6b7280',
+        'dot':'#666666',
+        'secondary':'#fcb941'
       }
     },
   },
