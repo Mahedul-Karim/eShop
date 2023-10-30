@@ -89,11 +89,11 @@ const Carousel = () => {
           </div>
         ))}
       </div>
-      <CarouselButton classes={"left-4"} onClick={prevSlide}>
+      <CarouselButton classes={"left-4 bg-white opacity-50 hover:bg-primary hover:opacity-100 hover:text-white"} onClick={prevSlide}>
         <BsChevronLeft size={20} />
       </CarouselButton>
 
-      <CarouselButton classes={"right-4"} onClick={nextSlide}>
+      <CarouselButton classes={"right-4 bg-white opacity-50 hover:bg-primary hover:opacity-100 hover:text-white"} onClick={nextSlide}>
         <BsChevronRight size={20} />
       </CarouselButton>
 

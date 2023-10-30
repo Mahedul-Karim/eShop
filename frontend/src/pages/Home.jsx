@@ -9,19 +9,15 @@ import Header from "../components/layout/Header";
 import Hero from "../components/layout/Hero";
 import Sponsored from "../components/layout/Sponsored";
 
-
 function Home() {
-
-  
-
   return (
     <>
       <Header activePage={1} />
       <Hero />
       <Category />
+      <FeaturedProduct />
       <BestDeals />
       <Events />
-      <FeaturedProduct />
       <Sponsored />
       <Footer />
     </>

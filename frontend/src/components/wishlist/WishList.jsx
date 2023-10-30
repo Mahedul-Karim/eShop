@@ -17,7 +17,7 @@ const Wishlist = ({ setOpenWishlist, openWishlist }) => {
       }`}
     >
       <div
-        className={`fixed top-0 right-0 h-full w-[80%] 800px:w-[40%] bg-white flex flex-col overflow-y-scroll justify-between shadow-sm ${
+        className={`fixed top-0 right-0 h-screen w-[80%] 800px:w-[40%] bg-white flex flex-col overflow-hidden justify-between shadow-sm ${
           openWishlist ? "translate-x-0" : "translate-x-[100%]"
         } transition-all duration-800`}
       >
