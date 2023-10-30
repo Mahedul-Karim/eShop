@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "../../store/cartSlice";
 import { toast } from "react-toastify";
 import { wishlistAction } from "../../store/wishlistSlice";
+import { createPortal } from "react-dom";
 
 function ProductModal({ setOpen, data }) {
   const [count, setCount] = useState(1);
@@ -21,7 +22,7 @@ function ProductModal({ setOpen, data }) {
 
   const dispatch = useDispatch();
 
-  const { wishlist } = useSelector(state=>state.wishlist);
+  const { wishlist } = useSelector((state) => state.wishlist);
 
   useEffect(() => {
     if (wishlist && wishlist.find((w) => w._id === data._id)) {
@@ -46,10 +47,10 @@ function ProductModal({ setOpen, data }) {
     dispatch(wishlistAction.removewishlistItem(id));
   };
 
-  return (
+  const modalData = (
     <div className="bg-[#fff]">
       {data ? (
-        <div className="fixed w-full h-screen top-0 left-0 bg-[#00000030] z-40 flex items-center justify-center">
+        <div className="fixed w-full h-screen top-0 left-0 bg-[#00000030] z-40 flex items-center justify-center backdrop-blur-[4px]">
           <div className="w-[90%] 800px:w-[60%] h-[90vh] overflow-y-scroll 800px:h-[75vh] bg-white rounded-md shadow-sm relative p-4">
             <RxCross1
               size={30}
@@ -115,7 +116,9 @@ function ProductModal({ setOpen, data }) {
                     </span>
                     <button
                       className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-                      onClick={() =>data.stock > count && setCount((prev) => prev + 1)}
+                      onClick={() =>
+                        data.stock > count && setCount((prev) => prev + 1)
+                      }
                     >
                       +
                     </button>
@@ -154,6 +157,8 @@ function ProductModal({ setOpen, data }) {
       ) : null}
     </div>
   );
+
+  return createPortal(modalData, document.body);
 }
 
 export default ProductModal;

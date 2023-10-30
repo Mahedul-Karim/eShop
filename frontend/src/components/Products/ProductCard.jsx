@@ -1,5 +1,5 @@
-import { useState, useEffect,forwardRef } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, forwardRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../../util/style";
 import { wishlistAction } from "../../store/wishlistSlice";
 import {
@@ -15,10 +15,10 @@ import { cartAction } from "../../store/cartSlice";
 import { toast } from "react-toastify";
 import Ratings from "../../util/Ratings";
 
-const ProductCard = forwardRef(({ data, isEvent,current },ref) =>{
+const ProductCard = forwardRef(({ data, isEvent, current }, ref) => {
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const navigate = useNavigate();
   const { wishlist } = useSelector((state) => state.wishlist);
 
   const dispatch = useDispatch();
@@ -47,10 +47,13 @@ const ProductCard = forwardRef(({ data, isEvent,current },ref) =>{
     dispatch(cartAction.addToCart({ ...product, quantity: 1 }));
     toast.success("Product added to cart");
   };
- 
+
   return (
     <>
-      <div className="border-[1px] border-solid border-grey-200 p-3 flex flex-col cursor-pointer group hover:shadow-lg transition-all" ref={ref}>
+      <div
+        className="border-[1px] border-solid border-grey-200 p-3 flex flex-col cursor-pointer group hover:shadow-lg transition-all"
+        ref={ref}
+      >
         <div className="h-[170px] flex items-center w-full justify-center relative">
           <img
             src={`${data.images && data.images.at(0)?.url}`}
@@ -87,10 +90,12 @@ const ProductCard = forwardRef(({ data, isEvent,current },ref) =>{
             />
           </div>
         </div>
-        <div>
+        <div onClick={() => navigate(`/product/${productName}`)}>
           <h3 className="text-dot text-[12px]">{data?.category}</h3>
           <h2 className="font-[500] text-[18px]">
-            {data?.name?.length > 30 ? data?.name?.substring(0, 30)+'...' : data.name}
+            {data?.name?.length > 50
+              ? data?.name?.substring(0, 50) + "..."
+              : data.name}
           </h2>
           <p className="text-[18px] font-[600] text-secondary">
             $
@@ -107,7 +112,7 @@ const ProductCard = forwardRef(({ data, isEvent,current },ref) =>{
       {open ? <ProductModal setOpen={setOpen} data={data} /> : null}
     </>
   );
-})
+});
 
-ProductCard.displayName='ProductCard';
+ProductCard.displayName = "ProductCard";
 export default ProductCard;
