@@ -1,5 +1,3 @@
-import React, { useEffect, useRef, useState } from "react";
-
 function Title({ active, setActive }) {
   return (
     <div className="flex items-center flex-col sm:flex-row justify-center gap-3 relative">

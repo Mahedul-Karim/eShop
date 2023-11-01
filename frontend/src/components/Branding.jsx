@@ -7,7 +7,7 @@ function Branding() {
     <Container>
       <div className={`hidden sm:block`}>
         <div
-          className={`branding my-12 flex justify-between w-full shadow-sm bg-white p-5 rounded-md`}
+          className={`branding my-12 flex justify-between w-full border-b-[1px] border-t-[1px] border-solid border-grey-200 bg-white p-8`}
         >
           {brandingData &&
             brandingData.map((i, index) => (

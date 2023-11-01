@@ -1,21 +1,14 @@
-import styles from "../util/style";
+import Container from '../util/Container';
 import EventCard from "./layout/EventCard";
-
+import Heading from '../components/ui/Heading';
 
 
 function Events() {
   return (
-    <div className={`${styles.section}`}>
-      <div className={`${styles.heading}`}>
-        <h1>Popular Events</h1>
-      </div>
-
-      <div className="w-full grid">
-        <EventCard />
-
-        {/* <h4>'No Events have!'</h4> */}
-      </div>
-    </div>
+   <Container styles={'my-4'}>
+      <Heading>Deals and outlets</Heading>
+      <EventCard />
+   </Container>
   );
 }
 export default Events;
