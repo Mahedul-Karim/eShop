@@ -39,12 +39,8 @@ const productSchema = new mongoose.Schema({
   ratings: {
     type: Number,
   },
-  originalPrice: {
+  price: {
     type: Number,
-  },
-  discountPrice: {
-    type: Number,
-    required: [true, "Please enter your product price!"],
   },
   stock: {
     type: Number,

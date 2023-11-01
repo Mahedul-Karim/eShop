@@ -27,12 +27,6 @@ function CountDown({ eventFinishDate }) {
     return timeLeft;
   }
 
-  Object.keys(timeLeft).map((interval, i) => {
-    if (!timeLeft[interval]) {
-      return null;
-    }
-  });
-
   return (
     <div className="400px:flex 400px:items-center grid grid-cols-2 gap-4">
       <div className="flex flex-col justify-center items-center gap-2">
