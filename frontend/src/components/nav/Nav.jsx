@@ -27,7 +27,7 @@ function Nav({ activePage }) {
             className="absolute right-2 top-4 cursor-pointer"
           />
           {dropdown ? (
-            <Dropdown categoryData={categoriesData} setDropdown={setDropdown} />
+            <Dropdown categoryData={categoriesData.slice(1)} setDropdown={setDropdown} />
           ) : null}
         </div>
       </div>

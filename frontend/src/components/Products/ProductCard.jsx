@@ -9,7 +9,7 @@ import {
   AiOutlineEye,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import ProductModal from "./ProductModal";
+import ProductModal from "../ui/modal/ProductModal";
 import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "../../store/cartSlice";
 import { toast } from "react-toastify";
@@ -109,7 +109,7 @@ const ProductCard = forwardRef(({ data, isEvent, current }, ref) => {
           </div>
         </div>
       </div>
-      {open ? <ProductModal setOpen={setOpen} data={data} /> : null}
+      {open ? <ProductModal setOpen={()=>setOpen(false)} data={data} /> : null}
     </>
   );
 });

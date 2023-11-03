@@ -14,6 +14,8 @@ import { cartAction } from "./store/cartSlice";
 import { productActions } from "./store/productSlice";
 import { router } from "./routes/routes";
 
+
+
 function App() {
   const { isLoading, isLoggedIn, user } = useSelector((state) => state.auth);
   const { isSellerLoggedIn, isSellerLoading } = useSelector(
@@ -73,6 +75,7 @@ function App() {
 
   return (
     <>
+    
       {isLoading || isSellerLoading ? (
         <Loader />
       ) : (

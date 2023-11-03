@@ -16,7 +16,7 @@ function NewsLetter() {
             <input
               type="text"
               placeholder="Enter your email"
-              className="p-2"
+              className="p-2 w-[150px] 400px:w-full"
             />
             <button className="bg-secondary block p-2 w-[60px] text-lg text-white">
               &rarr;

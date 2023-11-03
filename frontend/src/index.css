@@ -87,3 +87,7 @@ input[type="number"] {
 .active::before {
   transform: scale(1);
 }
+
+#modal::-webkit-scrollbar{
+  display:none;
+}

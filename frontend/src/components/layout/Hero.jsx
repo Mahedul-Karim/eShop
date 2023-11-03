@@ -6,21 +6,21 @@ import HeroBanner from "../ui/hero/HeroBanner";
 
 const HERO_BANNER = [
   {
-    src: "/assets/banner-1.jpg",
-    subtitle: "Top product",
-    title: "Edifier<br /> stereo bluetooth",
+    src: "/assets/banner-1.png",
+    subtitle: "Smart offer",
+    title: "Samsung galaxy<br /> Note9",
+    to: "#",
+  },
+  {
+    src: "/assets/banner-2 (1).jpg",
+    subtitle: "Time deals",
+    title: "Bose SoundSport",
     to: "#",
   },
   {
     src: "/assets/banner-2.jpg",
-    subtitle: "Clearance",
-    title: "GoPro - Fusion 360",
-    to: "#",
-  },
-  {
-    src: "/assets/banner-3.jpg",
     subtitle: "Featured",
-    title: "Apple watch 4",
+    title: "GoPro - Fusion 360",
     to: "#",
   },
 ];

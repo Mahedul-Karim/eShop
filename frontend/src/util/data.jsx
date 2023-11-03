@@ -190,6 +190,12 @@ export const brandingData = [
 // categories data
 export const categoriesData = [
   {
+    id: 0,
+    title: "All",
+    subTitle: "",
+    image_Url: "",
+  },
+  {
     id: 1,
     title: "Computers and Laptops",
     subTitle: "",

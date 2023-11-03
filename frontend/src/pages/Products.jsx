@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/Products/ProductCard";
 import Footer from "../components/layout/Footer";
 import Header from "../components/layout/Header";
-import styles from "../util/style";
 import { useSearchParams } from "react-router-dom";
-import { productData } from "../util/data";
 import { useSelector } from "react-redux";
+import Container from "../util/Container";
+import Filter from "../components/ui/action/Filter";
 
 function Products() {
   const [data, setData] = useState([]);
@@ -17,8 +17,8 @@ function Products() {
 
   useEffect(() => {
     if (categoryData === null) {
-      const sortedData =product;
-        // product && product.sort((a, b) => a.sold_out - b.sold_out);
+      const sortedData = product;
+      // product && product.sort((a, b) => a.sold_out - b.sold_out);
       setData(sortedData);
     } else {
       const filteredData =
@@ -26,27 +26,24 @@ function Products() {
         product.filter((product) => product.category === categoryData);
       setData(filteredData);
     }
-  }, [categoryData,product]);
+  }, [categoryData, product]);
 
   return (
     <>
-      <div>
+      <Container>
         <Header activePage={3} />
         <br />
         <br />
-        <div className={`${styles.section}`}>
-          <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
-            {data &&
-              data.map((i, index) => <ProductCard data={i} key={index} />)}
+        <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-4">
+          <div className="hidden p-3 md:flex flex-col gap-4">
+          <Filter />
           </div>
-          {data && data.length === 0 ? (
-            <h1 className="text-center w-full pb-[100px] text-[20px]">
-              No products Found!
-            </h1>
-          ) : null}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 min-h-[1200px] overflow-hidden">
+            {data && data.map((dt) => <ProductCard data={dt} key={dt._id} />)}
+          </div>
         </div>
         <Footer />
-      </div>
+      </Container>
     </>
   );
 }
