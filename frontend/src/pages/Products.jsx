@@ -22,7 +22,7 @@ function Products() {
     setCatValue,
     ratingValue,
     setRatingValue,
-    totalItem
+    totalItem,
   } = useSearch();
 
   const [open, setOpen] = useState(false);
@@ -31,8 +31,8 @@ function Products() {
   const activePage = +searchParams.get("page") || 1;
 
   useEffect(() => {
-    handleSearch(searchText, "filter",activePage);
-  }, [searchText, catValue, ratingValue,activePage]);
+    handleSearch(searchText, "filter", activePage);
+  }, [searchText, catValue, ratingValue, activePage]);
 
   return (
     <>
@@ -85,7 +85,9 @@ function Products() {
               </div>
             </>
           )}
-          <Pagination totalItem={totalItem}/>
+          {searchData.length < 10 && activePage === 1 ? null : (
+            <Pagination totalItem={totalItem} />
+          )}
         </div>
         <Footer />
       </Container>
