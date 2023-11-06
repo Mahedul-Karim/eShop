@@ -6,6 +6,7 @@ const AppError = require("../model/errorModel");
 const Order = require("../model/orderModel");
 
 const cloudinary = require("cloudinary");
+const ApiFeatures = require("../util/apiFeatures");
 
 exports.createProduct = catchAsync(async (req, res, next) => {
   const images = [];
@@ -126,5 +127,24 @@ exports.submitReview = catchAsync(async (req, res, next) => {
     status: "success",
     product,
     order,
+  });
+});
+
+exports.searchProduct = catchAsync(async (req, res, next) => {
+  
+
+  const productCount = await Product.countDocuments();
+
+  const features = new ApiFeatures(Product.find(),req.query).search().filter().pagination(10)
+
+  const products = await features.query;
+
+  if (products.length === 0) {
+    return next(new AppError("No Products found!"));
+  }
+  res.status(200).json({
+    status: "success",
+    products,
+    total:productCount
   });
 });

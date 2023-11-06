@@ -8,17 +8,20 @@ const {
   deleteProduct,
   getAllProducts,
   getProductDetail,
-  submitReview
+  submitReview,
+  searchProduct
 } = require("../controller/productController");
 
 const { protect } = require('../controller/authController');
 
 const router = express.Router();
 
+router.route("/search").get(searchProduct);
 router.route("/create-product").post(createProduct);
 router.route("/:id").get(getProduct).delete(deleteProduct);
 router.route("/").get(getAllProducts);
 router.route("/single/:name").get(getProductDetail);
 router.route("/review").post(protect,submitReview);
+
 
 module.exports = router;

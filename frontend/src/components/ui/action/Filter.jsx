@@ -3,23 +3,22 @@ import { categoriesData } from "../../../util/data";
 import RatingFilter from "./RatingFilter";
 import { useSearchParams } from "react-router-dom";
 
-function Filter() {
-  const [catValue, setCatValue] = useState("");
-  const [ratingValue, setRatingValue] = useState([]);
-  const [priceValue, setPriceValue] = useState(1000);
-
-  const handleCategory = function (e) {
-    setCatValue(e.target.value);
-  };
-
+function Filter({
+  searchText,
+  setSearchText,
+  catValue,
+  setCatValue,
+  ratingValue,
+  setRatingValue,
+}) {
   const handleRating = function (e) {
     if (ratingValue.includes(e)) {
-      setRatingValue((prev) => prev.filter((rat) => rat !== e));
+      setRatingValue( ratingValue.filter((rat) => rat !== e));
     } else {
-      setRatingValue((prev) => [...prev, e]);
+      setRatingValue([...ratingValue, e]);
     }
   };
-  
+
   return (
     <>
       <div>
@@ -27,6 +26,8 @@ function Filter() {
           type="text"
           placeholder="Search"
           className="border-[1px] border-solid border-grey-200 p-2"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -34,7 +35,7 @@ function Filter() {
         <select
           className="border-[1px] border-solid border-grey-200 p-2"
           value={catValue}
-          onChange={handleCategory}
+          onChange={(e)=>setCatValue(e.target.value)}
         >
           {categoriesData.map((cat) => (
             <option key={cat.id} value={cat.title}>
@@ -42,19 +43,6 @@ function Filter() {
             </option>
           ))}
         </select>
-      </div>
-      <div className="flex flex-col gap-2">
-        <label className="text-2xl font-[500]">
-          Price<span className="text-[12px] text-dot">(${priceValue})</span>
-        </label>
-        <input
-          type="range"
-          min={1000}
-          max={10000}
-          className="accent-primary"
-          value={priceValue}
-          onChange={(e) => setPriceValue(e.target.value)}
-        />
       </div>
       <div className="flex flex-col gap-2">
         <h3 className="text-2xl font-[500]">Customer ratings</h3>

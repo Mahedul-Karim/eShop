@@ -24,11 +24,11 @@ const HERO_BANNER = [
     to: "#",
   },
 ];
-
+//800px:grid-cols-[1fr_0.4fr]
 const Hero = () => {
   return (
     <Container
-      styles={"grid grid-cols-1 800px:grid-cols-[1fr_0.4fr] mt-6 gap-4"}
+      styles={"grid grid-cols-1 mt-6 gap-4 800px:grid-cols-[1fr_0.4fr]"}
     >
       <Carousel />
       <div

@@ -56,7 +56,9 @@ const FeaturedProduct = () => {
       <Title active={active} setActive={setActive} />
       <div className={`overflow-x-hidden mt-6`}>
         {isLoading ? (
+          <div className="h-screen">
           <Loader />
+          </div>
         ) : (
           <div
             className="grid grid-flow-col auto-cols-[calc((100%_/_1)_-_6px)] 400px:auto-cols-[calc((100%_/_2)_-_6px)] sm:auto-cols-[calc((100%_/_3)_-_6px)] 800px:auto-cols-[calc((100%_/_4)_-_6px)] gap-2"

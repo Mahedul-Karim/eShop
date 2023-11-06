@@ -40,7 +40,7 @@ const CartItems = ({ data }) => {
       <div className="w-full flex items-center">
         <div>
           <div
-            className={`bg-[#e44343] border border-[#e4434373] rounded-full w-[25px] h-[25px] ${
+            className={`bg-primary border rounded-full w-[25px] h-[25px] ${
               styles.noramlFlex
             } justify-center ${
               data.stock > data.quantity
@@ -72,7 +72,7 @@ const CartItems = ({ data }) => {
             ${data.originalPrice ? data.originalPrice : data.discountPrice}*
             {data.quantity}
           </h4>
-          <h4 className="font-[600] text-[17px] pt-[3px] text-[#d02222] font-Roboto">
+          <h4 className="font-[600] text-[17px] pt-[3px] text-secondary font-Roboto">
             US${totalPrice}
           </h4>
         </div>

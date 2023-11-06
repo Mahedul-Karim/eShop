@@ -91,3 +91,9 @@ input[type="number"] {
 #modal::-webkit-scrollbar{
   display:none;
 }
+.page_active{
+  @apply text-white bg-secondary
+}
+.page_hover:hover{
+  @apply text-white bg-secondary
+}

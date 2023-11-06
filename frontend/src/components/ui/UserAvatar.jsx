@@ -19,7 +19,7 @@ function UserAvatar() {
         <Link to="/login">
           <CgProfile
             size={30}
-            color="rgb(255 255 255 / 83%)"
+            style={{stroke:'black'}}
             className="hidden 800px:inline-block"
           />
           <span className="800px:hidden text-[18px] pr-[10px] text-[#000000b7]">
