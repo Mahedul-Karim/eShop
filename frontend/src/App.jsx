@@ -1,4 +1,4 @@
-import {  RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,14 +14,11 @@ import { cartAction } from "./store/cartSlice";
 import { productActions } from "./store/productSlice";
 import { router } from "./routes/routes";
 
-
-
 function App() {
   const { isLoading, isLoggedIn, user } = useSelector((state) => state.auth);
   const { isSellerLoggedIn, isSellerLoading } = useSelector(
     (state) => state.seller
   );
-  
 
   const [_, fetchData, error] = useHttp();
 
@@ -31,8 +28,7 @@ function App() {
     try {
       const data = await fetchData(`payment/stripe/apikey`);
 
-      
-      dispatch(productActions.setApi(data.public))
+      dispatch(productActions.setApi(data.public));
     } catch (err) {
       toast.error(err.message);
     }
@@ -75,13 +71,13 @@ function App() {
 
   return (
     <>
-    
       {isLoading || isSellerLoading ? (
-        <Loader />
+        <div className="h-screen flex items-center justify-center">
+          <Loader />
+        </div>
       ) : (
         <>
-          
-          <RouterProvider router={router}/>
+          <RouterProvider router={router} />
           <ToastContainer
             position="bottom-center"
             autoClose={5000}

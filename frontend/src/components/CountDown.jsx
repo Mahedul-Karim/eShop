@@ -30,25 +30,25 @@ function CountDown({ eventFinishDate }) {
   return (
     <div className="400px:flex 400px:items-center grid grid-cols-2 gap-4">
       <div className="flex flex-col justify-center items-center gap-2">
-        <span className="w-[55px] flex items-center justify-center bg-primary text-white p-3 text-xl rounded-sm">
+        <span className="w-[55px] flex items-center justify-center bg-secondary text-white p-3 text-xl rounded-sm">
           {timeLeft?.days}
         </span>
         <span className="text-[10px] text-dot">Days</span>
       </div>
       <div className="flex flex-col justify-center items-center gap-2">
-        <span className="w-[55px] flex items-center justify-center bg-primary text-white p-3 text-xl rounded-sm">
+        <span className="w-[55px] flex items-center justify-center bg-secondary text-white p-3 text-xl rounded-sm">
           {timeLeft?.hours}
         </span>
         <span className="text-[10px] text-dot">Hours</span>
       </div>
       <div className="flex flex-col justify-center items-center gap-2">
-        <span className="w-[55px] flex items-center justify-center bg-primary text-white p-3 text-xl rounded-sm">
+        <span className="w-[55px] flex items-center justify-center bg-secondary text-white p-3 text-xl rounded-sm">
           {timeLeft?.minutes}
         </span>
         <span className="text-[10px] text-dot">Minutes</span>
       </div>
       <div className="flex flex-col justify-center items-center gap-2">
-        <span className="bg-primary text-white p-3 text-xl rounded-sm w-[55px] flex items-center justify-center">
+        <span className="bg-secondary text-white p-3 text-xl rounded-sm w-[55px] flex items-center justify-center">
           {timeLeft?.seconds}
         </span>
         <span className="text-[10px] text-dot">seconds</span>

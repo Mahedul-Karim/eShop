@@ -10,9 +10,9 @@ function Ratings({ rating }) {
       stars.push(
         <AiFillStar
           key={i}
-          size={20}
-          color="#ef837b"
-          className="mr-2 cursor-pointer"
+          // size={16}
+          color="#E90074"
+          className="cursor-pointer text-[14px] sm:text-[16px]"
         />
       );
     } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
@@ -20,22 +20,22 @@ function Ratings({ rating }) {
         <BsStarHalf
           key={i}
           size={17}
-          color="#ef837b"
-          className="mr-2 cursor-pointer"
+          color="#E90074"
+          className="cursor-pointer"
         />
       );
     } else {
       stars.push(
         <AiOutlineStar
           key={i}
-          size={20}
-          color="#ef837b"
-          className="mr-2 cursor-pointer"
+          // size={16}
+          color="#E90074"
+          className="cursor-pointer text-[14px] sm:text-[16px]"
         />
       );
     }
   }
 
-  return <div className="flex"> {stars}</div>;
+  return <div className="flex items-center gap-1">{stars}</div>;
 }
 export default Ratings;

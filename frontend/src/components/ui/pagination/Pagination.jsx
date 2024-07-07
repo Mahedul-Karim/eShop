@@ -61,7 +61,7 @@ function Pagination({ totalItem }) {
   };
 
   return (
-    <ul className="md:col-start-2 flex items-center gap-2">
+    <ul className="lg:col-start-2 flex items-center gap-2 mx-auto">
       <li>
         <button
           className={`block p-2 rounded-md ${

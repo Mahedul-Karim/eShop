@@ -8,7 +8,14 @@ const NavItems = ({ activePage }) => {
     <div className={`block 800px:${styles.noramlFlex} h-full`}>
       {navItems &&
         navItems.map((i, index) => (
-          <div className={`flex items-center h-full relative ${activePage === index+1 ? '800px:border-b-[2px] border-solid border-primary' : ''}`} key={index}>
+          <div
+            className={`flex items-center h-full relative ${
+              activePage === index + 1
+                ? "800px:border-b-[2px] border-solid border-primary"
+                : ""
+            }`}
+            key={index}
+          >
             <Link
               to={i.url}
               className={`${

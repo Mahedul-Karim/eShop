@@ -10,6 +10,8 @@ import { useSelector } from "react-redux";
 import Logo from "../ui/Logo";
 import Siderbar from "../ui/sidebar/Siderbar";
 import UserAvatar from "../ui/UserAvatar";
+import { CiHeart, CiShoppingCart } from "react-icons/ci";
+import SearchIcon from "../ui/SearchIcon";
 
 function MobileNav({
   active,
@@ -30,13 +32,14 @@ function MobileNav({
   return (
     <>
     <div className="block 800px:hidden border-b-[1px] border-solid border-grey-200 py-2">
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-end gap-2">
+        <SearchIcon />
       <div className={`${styles.noramlFlex}`}>
         <div
-          className="inline-block 800px:hidden relative cursor-pointer mr-[15px]"
+          className="inline-block 800px:hidden relative cursor-pointer"
           onClick={() => setOpenWishlist(true)}
         >
-          <AiOutlineHeart size={30} style={{stroke:'black'}} />
+          <CiHeart size={30} style={{ strokeWidth: "0.8px" }} />
           <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
             {wishlist && wishlist.length}
           </span>
@@ -45,10 +48,10 @@ function MobileNav({
 
       <div className={`${styles.noramlFlex}`}>
         <div
-          className="inliner-block 800px:hidden relative cursor-pointer mr-[15px]"
+          className="inliner-block 800px:hidden relative cursor-pointer"
           onClick={() => setOpenCart(true)}
         >
-          <AiOutlineShoppingCart size={30} style={{stroke:'black'}} />
+          <CiShoppingCart size={30} style={{ strokeWidth: "0.8px" }} />
           <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
           {cart && cart.length}
           </span>
@@ -57,9 +60,7 @@ function MobileNav({
       </div>
     </div>
       <div
-        className={`${
-          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
-        }
+        className={`
       w-full bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
       >
         <div className="w-full flex items-center justify-between h-full py-5 shadow-sm">
@@ -72,6 +73,7 @@ function MobileNav({
           </div>
           <Logo />
           <div>
+            
             <div
               className="relative mr-[20px]"
               onClick={() => setOpenCart(true)}

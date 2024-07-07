@@ -51,14 +51,14 @@ const ProductCard = forwardRef(({ data, isEvent, current }, ref) => {
   return (
     <>
       <div
-        className="border-[1px] border-solid border-grey-200 p-3 flex flex-col cursor-pointer group hover:shadow-lg transition-all"
+        className="border-[1px] border-solid border-grey-200 p-2 sm:p-3 flex flex-col cursor-pointer group hover:shadow-lg transition-all 400px:max-w-[270px] h-[230px] sm:h-[350px]"
         ref={ref}
       >
-        <div className="h-[170px] flex items-center w-full justify-center relative">
+        <div className="h-[120px] sm:h-[250px] max-w-[270px] flex items-center justify-center relative">
           <img
             src={`${data.images && data.images.at(0)?.url}`}
             alt="img"
-            className="w-[150px] h-auto object-contain block"
+            className="max-w-[90px] sm:max-w-[190px] sm:h-[180px] object-contain block"
           />
           <div className="absolute right-2 top-5 flex flex-col gap-2 items-center justify-center -translate-x-[30px] opacity-0 invisible group-hover:translate-x-0 group-hover:opacity-100 group-hover:visible transition-all">
             {click ? (
@@ -91,21 +91,22 @@ const ProductCard = forwardRef(({ data, isEvent, current }, ref) => {
           </div>
         </div>
         <div onClick={() => navigate(`/product/${productName}`)}>
-          <h3 className="text-dot text-[12px]">{data?.category}</h3>
-          <h2 className="font-[500] text-[18px]">
-            {data?.name?.length > 50
-              ? data?.name?.substring(0, 50) + "..."
-              : data.name}
+          <h3 className="text-dot text-[10px] sm:text-[12px]">{data?.category}</h3>
+          <h2 className="font-[500] text-[12px] 400px:text-[14px] sm:text-[16px] line-clamp-1">
+            {data.name}
           </h2>
-          <p className="text-[18px] font-[600] text-secondary">
+          <p className="text-[12px] 400px:text-[14px] sm:text-[16px] font-[600] text-secondary">
             $
             {data?.originalPrice === 0
               ? data?.originalPrice
               : data?.discountPrice}
           </p>
-          <div className="mt-2">
+          <div className="mt-1 400px:mt-2 flex items-center gap-2">
+            <div>
+
             <Ratings rating={data?.ratings} />
-            <span className="text-dot text-[12px]">(2 reviews)</span>
+            </div>
+            <span className="text-dot text-[10px] 400px:text-[12px] sm:text-[14px]">(2)</span>
           </div>
         </div>
       </div>

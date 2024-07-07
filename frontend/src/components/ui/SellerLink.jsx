@@ -8,13 +8,13 @@ function SellerLink() {
   return (
     <div>
       <Link
-        className="flex items-center text-primary font-[500] gap-1 transition-all group text-[17px]"
+        className="flex items-center text-white bg-secondary font-[500] gap-1 transition-all group text-[15px] px-3 py-2 rounded-md"
         to={"/shop-create"}
       >
-        <span className="group-hover:-translate-x-1 transition-all">
+        <span>
           {!isSellerLoggedIn ? "Become seller" : "Dashboard"}
         </span>
-        <span className="group-hover:translate-x-1 transition-all">
+        <span>
           <BsChevronRight style={{ strokeWidth: 2 }} />
         </span>
       </Link>

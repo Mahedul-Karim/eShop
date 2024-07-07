@@ -88,12 +88,25 @@ input[type="number"] {
   transform: scale(1);
 }
 
-#modal::-webkit-scrollbar{
-  display:none;
+#modal::-webkit-scrollbar {
+  display: none;
 }
-.page_active{
-  @apply text-white bg-secondary
+.page_active {
+  @apply text-white bg-secondary;
 }
-.page_hover:hover{
-  @apply text-white bg-secondary
+.page_hover:hover {
+  @apply text-white bg-secondary;
+}
+
+.swiper-slide {
+  width: 100% !important;
+}
+.swiper-pagination-bullet-active {
+  background-color: #e90074 !important;
+}
+.swiper-pagination-bullet{
+  width: 30px !important;
+  border-radius: 10px !important;
+  height: 5px !important;
+
 }

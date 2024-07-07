@@ -19,13 +19,13 @@ export default {
         "400px":"400px"
       },
       colors:{
-        'primary':'#3399ff',
+        'primary':'#E90074',
         'grey-50':'#f9fafb',
         'grey-200':'#d1d5db',
         'grey-700':'#6b7280',
         'dot':'#666666',
-        'secondary':'#ef837b',
-        'text-secondary':'#333'
+        'secondary':'#E90074',
+        'text-secondary':'#333',
       }
     },
   },
