@@ -1,20 +1,19 @@
 import CountDown from "../CountDown";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Container from "../../util/Container";
 import Heading from "../ui/Heading";
 
 function EventCard({ active }) {
-  const { event } = useSelector((state) => state.event);
+ 
 
-  const maxSale = event && event.find((e) => Math.max(e.sold_out));
+ 
   const bgImg = "/assets/bg-1.jpg";
   return (
     <Container styles={"my-4"}>
       <Heading>Deals and outlets</Heading>
       <div
         className={`bg-cover bg-no-repeat py-4 px-2 400px:py-[36px] 400px:px-[40px] flex flex-col gap-6 mt-4`}
-        style={{ backgroundImage: `url(${bgImg})` }}
+        style={{ backgroundImage: `url(${bgImg})`,backgroundSize:'cover' }}
       >
         <div>
           <h3 className="text-xl font-[500] text-secondary">

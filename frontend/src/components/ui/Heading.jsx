@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
 
-function Heading({children}) {
+function Heading({ children }) {
   return (
-    <h2 className="text-[22px] font-[500] text-center">
-        {children}
-      </h2>
-  )
+    <div className="flex items-center gap-2">
+      <div className="w-[15px] h-[25px] 400px:w-[20px] 400px:h-[40px] bg-primary rounded-md" />
+      <p className="text-[14px] 400px:text-base text-primary">{children}</p>
+    </div>
+  );
 }
 
-export default Heading
+export default Heading;

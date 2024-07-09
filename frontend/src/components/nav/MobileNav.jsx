@@ -21,10 +21,6 @@ function MobileNav({
   openCart,
   openWishlist,
   setOpenWishlist,
-  searchText,
-  handleSearch,
-  searchData,
-  activePage,
   styles,
 }) {
   const { cart } = useSelector((state) => state.cart);
@@ -94,7 +90,7 @@ function MobileNav({
           open={open}
           setOpen={setOpen}
           setOpenWishlist={setOpenWishlist}
-          activePage={activePage}
+          
         />
       </div>
     </>

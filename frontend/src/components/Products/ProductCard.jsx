@@ -1,6 +1,5 @@
 import { useState, useEffect, forwardRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../../util/style";
 import { wishlistAction } from "../../store/wishlistSlice";
 import {
   AiFillStar,
@@ -15,7 +14,7 @@ import { cartAction } from "../../store/cartSlice";
 import { toast } from "react-toastify";
 import Ratings from "../../util/Ratings";
 
-const ProductCard = forwardRef(({ data, isEvent, current }, ref) => {
+const ProductCard = forwardRef(({ data, isEvent}, ref) => {
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -51,42 +50,42 @@ const ProductCard = forwardRef(({ data, isEvent, current }, ref) => {
   return (
     <>
       <div
-        className="border-[1px] border-solid border-grey-200 p-2 sm:p-3 flex flex-col cursor-pointer group hover:shadow-lg transition-all 400px:max-w-[270px] h-[230px] sm:h-[350px]"
+        className="border-[1px] border-solid border-grey-200 p-2 sm:p-3 flex flex-col cursor-pointer group transition-all w-full h-[230px] sm:h-[350px]"
         ref={ref}
       >
         <div className="h-[120px] sm:h-[250px] max-w-[270px] flex items-center justify-center relative">
           <img
             src={`${data.images && data.images.at(0)?.url}`}
             alt="img"
-            className="max-w-[90px] sm:max-w-[190px] sm:h-[180px] object-contain block"
+            className="max-w-[90px] sm:max-w-[150px] sm:h-[180px] object-contain block"
           />
-          <div className="absolute right-2 top-5 flex flex-col gap-2 items-center justify-center -translate-x-[30px] opacity-0 invisible group-hover:translate-x-0 group-hover:opacity-100 group-hover:visible transition-all">
+          <div className="absolute right-0 top-5 flex flex-col gap-2 items-center justify-center ">
             {click ? (
               <AiFillHeart
-                size={27}
-                color={click ? "#ef837b" : ""}
+                color={click ? "#E90074" : ""}
                 title="Remove from wishlist"
                 onClick={() => removeFromWishlist(data._id || "")}
+                className="text-[22px] lg:text-[27px]"
               />
             ) : (
               <AiOutlineHeart
-                size={27}
-                color={click ? "#ef837b" : "#333"}
+                color={click ? "#E90074" : "#333"}
                 title="Add to wishlist"
                 onClick={() => addToWishlist(data || "")}
+                className="text-[22px] lg:text-[27px] hover:text-[#E90074]"
               />
             )}
             <AiOutlineEye
-              size={27}
               onClick={() => setOpen((prev) => !prev)}
               color="#333"
               title="Quick view"
+              className="text-[22px] lg:text-[27px]"
             />
             <AiOutlineShoppingCart
-              size={27}
               onClick={() => handleCartAdd(data || "")}
               color="#333"
               title="Add to cart"
+              className="text-[22px] lg:text-[27px]"
             />
           </div>
         </div>

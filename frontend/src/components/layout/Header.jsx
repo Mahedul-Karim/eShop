@@ -6,7 +6,7 @@ import Container from "../../util/Container";
 
 import SellerLink from "../ui/SellerLink";
 
-function Header({ activePage }) {
+function Header() {
   
   const [openCart, setOpenCart] = useState(false);
 
@@ -29,11 +29,10 @@ function Header({ activePage }) {
       <Container
         styles={` hidden 800px:flex items-center justify-between w-full h-[70px] bg-white shadow-sm`}
       >
-        <Nav activePage={activePage} />
+        <Nav />
       </Container>
 
       <MobileNav
-        activePage={activePage}
         open={open}
         setOpen={setOpen}
         setOpenCart={setOpenCart}

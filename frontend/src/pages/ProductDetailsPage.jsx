@@ -16,7 +16,7 @@ const ProductDetailsPage = () => {
   const [isLoading, fetchData, error] = useHttp();
 
   const productName = productId.replace(/-/g, " ");
-  
+
   useEffect(() => {
     const getProduct = async function () {
       try {
@@ -33,10 +33,8 @@ const ProductDetailsPage = () => {
 
   return (
     <div>
-      <Header />
       {isLoading ? <Loader /> : <ProductDetails data={data} />}
       {data && <SuggestedProduct data={data} />}
-      <Footer />
     </div>
   );
 };

@@ -16,7 +16,6 @@ function BestSelling() {
   return (
     <>
       <div>
-        <Header activePage={2} />
         <br />
         <br />
         <div className={`${styles.section}`}>
@@ -27,7 +26,6 @@ function BestSelling() {
               ))}
           </div>
         </div>
-        <Footer />
       </div>
     </>
   );

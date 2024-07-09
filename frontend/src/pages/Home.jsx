@@ -1,25 +1,21 @@
-import { useDispatch } from "react-redux";
 import Events from "../components/Events";
-import FeaturedProduct from "../components/Products/FeaturedProduct";
+import HomeProducts from "../components/Products/HomeProducts";
 import Category from "../components/layout/Category";
-import Footer from "../components/layout/Footer";
-import Header from "../components/layout/Header";
 import Hero from "../components/layout/Hero";
-import Branding from '../components/Branding'
+import Branding from "../components/Branding";
 import NewsLetter from "../components/newsletter/NewsLetter";
-
+import FeaturedProducts from "../components/Products/FeaturedProducts";
 
 function Home() {
   return (
     <>
-      <Header activePage={1} />
       <Hero />
       <Category />
-      <FeaturedProduct />
+      <HomeProducts />
       <Events />
+      <FeaturedProducts />
       <Branding />
       <NewsLetter />
-      <Footer />
     </>
   );
 }

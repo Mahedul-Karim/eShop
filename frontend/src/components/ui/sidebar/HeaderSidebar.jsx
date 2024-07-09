@@ -17,7 +17,7 @@ function HeaderSidebar({ setOpen, activePage }) {
       </div>
       
 
-      <Nav activePage={activePage} />
+      <Nav />
       <br />
       <br />
       <br />

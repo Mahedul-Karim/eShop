@@ -37,10 +37,9 @@ function Products() {
   return (
     <>
       <Container>
-        <Header activePage={3} />
         <br />
         <br />
-        <div className="flex justify-end relative md:hidden">
+        <div className="flex justify-end relative lg:hidden">
           <button className="block" onClick={() => setOpen((prev) => !prev)}>
             <AiFillFilter size={30} />
           </button>
@@ -76,7 +75,7 @@ function Products() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-6 overflow-hidden place-items-center">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 overflow-hidden place-items-center">
                 {!loading &&
                   searchData &&
                   searchData.map((dt) => (
@@ -89,7 +88,6 @@ function Products() {
             <Pagination totalItem={totalItem} />
           )}
         </div>
-        <Footer />
       </Container>
     </>
   );

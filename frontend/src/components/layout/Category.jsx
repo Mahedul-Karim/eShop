@@ -8,7 +8,8 @@ const Category = () => {
   const navigate = useNavigate();
   return (
     <Container styles={"my-4 py-4"}>
-      <Heading>Explore popular categories</Heading>
+      <Heading>Popular categories</Heading>
+
       <div className="grid mt-[20px] grid-cols-2 sm:grid-cols-3 gap-3 1000px:grid-cols-6">
         {categoriesData.slice(1).map((cat) => (
           <div

@@ -43,32 +43,88 @@ import CreateCoupons from "../pages/dashboard/CreateCoupon";
 import StripeRoutes from "./StripeRoutes";
 import PaymentPage from "../pages/PaymentPage";
 import Products from "../pages/Products";
+import Main from "../pages/Main";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <Main />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/best-selling",
+        element: <BestSelling />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
+      },
+      {
+        path: "/events",
+        element: <EventsPage />,
+      },
+      {
+        path: "/faq",
+        element: <FAQPage />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
+      {
+        path: "/checkout",
+        element: (
+          <ProtectedRoutes>
+            <CheckoutPage />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/order/success",
+        element: (
+          <ProtectedRoutes>
+            <OrderSuccessPage />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/shop-login",
+        element: <ShopLogin />,
+      },
+      {
+        path: "/shop-create",
+        element: <ShopCreate />,
+      },
+      {
+        path: "/product/:productId",
+        element: <ProductDetailsPage />,
+      },
+      {
+        path: "/user/order/:id",
+        element: (
+          <ProtectedRoutes to={"/login"}>
+            <OrderDetailsPage />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/user/track/order/:id",
+        element: (
+          <ProtectedRoutes to={"/login"}>
+            <TrackOrderPage />
+          </ProtectedRoutes>
+        ),
+      },
+    ],
   },
-  {
-    path: "/best-selling",
-    element: <BestSelling />,
-  },
-  {
-    path: "/products",
-    element: <Products />,
-  },
-  {
-    path: "/events",
-    element: <EventsPage />,
-  },
-  {
-    path: "/faq",
-    element: <FAQPage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
+
   {
     path: "/profile",
     element: (
@@ -77,22 +133,8 @@ export const router = createBrowserRouter([
       </ProtectedRoutes>
     ),
   },
-  {
-    path: "/user/order/:id",
-    element: (
-      <ProtectedRoutes to={"/login"}>
-        <OrderDetailsPage />
-      </ProtectedRoutes>
-    ),
-  },
-  {
-    path: "/user/track/order/:id",
-    element: (
-      <ProtectedRoutes to={"/login"}>
-        <TrackOrderPage />
-      </ProtectedRoutes>
-    ),
-  },
+  
+  
   {
     path: "/inbox",
     element: (
@@ -101,10 +143,7 @@ export const router = createBrowserRouter([
       </ProtectedRoutes>
     ),
   },
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
+
   {
     path: "/activation",
     element: <ActivePage />,
@@ -165,26 +204,7 @@ export const router = createBrowserRouter([
       </AdminRoutes>
     ),
   },
-  {
-    path: "/checkout",
-    element: (
-      <ProtectedRoutes>
-        <CheckoutPage />
-      </ProtectedRoutes>
-    ),
-  },
-  {
-    path: "/order/success",
-    element: (
-      <ProtectedRoutes>
-        <OrderSuccessPage />
-      </ProtectedRoutes>
-    ),
-  },
-  {
-    path: "/shop-login",
-    element: <ShopLogin />,
-  },
+
   {
     path: "/settings",
     element: (
@@ -193,18 +213,12 @@ export const router = createBrowserRouter([
       </SellerRoutes>
     ),
   },
-  {
-    path: "/shop-create",
-    element: <ShopCreate />,
-  },
+
   {
     path: "/seller",
     element: <ActiveSeller />,
   },
-  {
-    path: "/product/:productId",
-    element: <ProductDetailsPage />,
-  },
+  
   {
     path: "/shop-home/:shopId",
     element: (
