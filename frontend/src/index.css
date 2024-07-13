@@ -110,3 +110,46 @@ input[type="number"] {
   height: 5px !important;
 
 }
+input[type="range"]{
+  width:100%;
+  position:absolute;
+  top: -5px;
+  left: 0;
+  background: none;
+  pointer-events: none;
+  appearance: none;
+}
+input[type="range"]::-webkit-slider-thumb{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #e0e3e6;
+  pointer-events: auto;
+  appearance: none;
+  transition: all 0.3s;
+}
+input[type="range"]::-moz-range-thumb{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #e0e3e6;
+  pointer-events: auto;
+  appearance: none;
+  transition: all 0.3s;
+}
+input[type="range"]::-webkit-slider-thumb:hover{
+  box-shadow: 0 0 6px #E90074;
+  cursor: grab;
+}
+input[type="range"]::-moz-range-thumb:hover{
+  box-shadow: 0 0 6px #E90074;
+  cursor: grab;
+}
+input[type="range"]::-webkit-slider-thumb:active{
+  cursor: grabbing;
+}
+input[type="range"]::-moz-range-thumb:active{
+  cursor: grabbing;
+}

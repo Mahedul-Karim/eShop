@@ -96,9 +96,7 @@ const ProductCard = forwardRef(({ data, isEvent}, ref) => {
           </h2>
           <p className="text-[12px] 400px:text-[14px] sm:text-[16px] font-[600] text-secondary">
             $
-            {data?.originalPrice === 0
-              ? data?.originalPrice
-              : data?.discountPrice}
+            {data?.price}
           </p>
           <div className="mt-1 400px:mt-2 flex items-center gap-2">
             <div>

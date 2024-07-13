@@ -6,7 +6,6 @@ const AppError = require("../model/errorModel");
 const Order = require("../model/orderModel");
 
 const cloudinary = require("cloudinary");
-const ApiFeatures = require("../util/apiFeatures");
 
 exports.createProduct = catchAsync(async (req, res, next) => {
   const images = [];
@@ -66,9 +65,9 @@ exports.getProduct = catchAsync(async (req, res, next) => {
 exports.deleteProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
 
-  product.images.forEach((image) => {
-    fs.unlink(`public/${image.url.split("/").slice(3).join("/")}`, () => {});
-  });
+  for (const img of product.images) {
+    await cloudinary.v2.uploader.destroy(img.public_id);
+  }
 
   res.status(200).json({
     status: "success",
@@ -131,13 +130,52 @@ exports.submitReview = catchAsync(async (req, res, next) => {
 });
 
 exports.searchProduct = catchAsync(async (req, res, next) => {
-  
+  const {
+    searchText,
+    catValue = "All",
+    ratingValue = 0,
+    page: currentPage,
+    minValue = 0,
+    maxValue = 2000,
+  } = req.body;
 
   const productCount = await Product.countDocuments();
 
-  const features = new ApiFeatures(Product.find(),req.query).search().filter().pagination(10)
+  const itemsPerPage = 10;
 
-  const products = await features.query;
+  const skipedPage = itemsPerPage * (currentPage - 1);
+
+  let query = {};
+
+  query.price = {
+    $lte: maxValue,
+    $gte: minValue,
+  };
+
+  if (searchText) {
+    query.name = {
+      $regex: searchText,
+      $options: "i",
+    };
+  }
+
+  if (catValue !== "All") {
+    query.category = {
+      $regex: catValue,
+      $options: "i",
+    };
+  }
+
+  if (ratingValue.length !== 0) {
+    query.ratings = {
+      $in: ratingValue,
+    };
+  }
+
+  const products = await Product.find(query)
+    .sort({ ratings: -1, createdAt: -1, price: -1 })
+    .limit(itemsPerPage)
+    .skip(skipedPage);
 
   if (products.length === 0) {
     return next(new AppError("No Products found!"));
@@ -145,6 +183,6 @@ exports.searchProduct = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     products,
-    total:productCount
+    total: productCount,
   });
 });

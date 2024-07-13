@@ -6,8 +6,12 @@ const initialState = {
   searchData: [],
   loading: false,
   catValue: "",
-  ratingValue: [0],
+  ratingValue: [],
   totalItem: 0,
+  error: false,
+  errorMessage: "",
+  maxValue: 2000,
+  minValue: 0,
 };
 
 const reducer = function (state, action) {
@@ -20,6 +24,8 @@ const reducer = function (state, action) {
     case "DATA":
       return {
         ...state,
+        error: false,
+        errorMessage: "",
         searchData: action.payload,
       };
     case "LOADING":
@@ -42,6 +48,23 @@ const reducer = function (state, action) {
         ...state,
         totalItem: action.payload,
       };
+    case "ERROR":
+      return {
+        ...state,
+        error: true,
+        errorMessage: action.payload,
+        searchData: [],
+      };
+    case "MAX_VALUE":
+      return {
+        ...state,
+        maxValue: action.payload,
+      };
+    case "MIN_VALUE":
+      return {
+        ...state,
+        minValue: action.payload,
+      };
     default:
       return state;
   }
@@ -54,36 +77,54 @@ function useSearch() {
     dispatch({ type: "SEARCH", payload: e });
   };
 
+  const setCatValue = (val) => {
+    dispatch({ type: "CATEGORY", payload: val });
+  };
+
+  const setRatingValue = (val) => {
+    dispatch({ type: "RATING", payload: val });
+  };
+
+  const setMaxValue=(val)=>{
+    dispatch({type:"MAX_VALUE",payload:val})
+  }
+
+  const setMinValue=(val)=>{
+    dispatch({ type:"MIN_VALUE",payload:val })
+  }
+
   const handleSearch = async function (e, type = "search", page) {
     setSearchText(e);
+    let url = `${BASE_URL}/product/search`;
 
-    let url;
-    let rating =
-      state.ratingValue.length > 1
-        ? `ratings[eq]=${Math.max(...state.ratingValue)}`
-        : `ratings[gte]=${state.ratingValue[0]}`;
-
-    if (state.catValue && state.catValue !== "All") {
-      url = `${BASE_URL}/product/search?keyword=${e}&category=${state.catValue}&${rating}&page=${page}`;
-    } else {
-      url = `${BASE_URL}/product/search?keyword=${e}&${rating}&page=${page}`;
-    }
-
-    if (type === "search") {
-      url = `${BASE_URL}/product/search?keyword=${e}`;
-    }
-
-    if (type === "search" && !e) {
-      return;
-    }
     try {
       dispatch({ type: "LOADING", payload: true });
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          searchText: state.searchText,
+          catValue: state.catValue,
+          ratingValue: state.ratingValue,
+          page,
+          maxValue:state.maxValue,
+          minValue:state.minValue
+        }),
+      });
       const data = await res.json();
+
+      if (data.status === "failed") {
+        console.log(data.status);
+        throw new Error(data.message);
+      }
+
       dispatch({ type: "DATA", payload: data.products });
       dispatch({ type: "ITEM", payload: data.total });
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
+      dispatch({ type: "ERROR", payload: err.message });
     } finally {
       dispatch({ type: "LOADING", payload: false });
     }
@@ -95,10 +136,16 @@ function useSearch() {
     handleSearch,
     setSearchText,
     catValue: state.catValue,
-    setCatValue: (val) => dispatch({ type: "CATEGORY", payload: val }),
+    setCatValue,
     ratingValue: state.ratingValue,
-    setRatingValue: (val) => dispatch({ type: "RATING", payload: val }),
+    setRatingValue,
     totalItem: state.totalItem,
+    error: state.error,
+    errorMessage: state.errorMessage,
+    maxValue:state.maxValue,
+    minValue:state.minValue,
+    setMaxValue,
+    setMinValue
   };
 }
 

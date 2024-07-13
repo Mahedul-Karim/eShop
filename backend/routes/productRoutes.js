@@ -16,7 +16,7 @@ const { protect } = require('../controller/authController');
 
 const router = express.Router();
 
-router.route("/search").get(searchProduct);
+router.route("/search").post(searchProduct);
 router.route("/create-product").post(createProduct);
 router.route("/:id").get(getProduct).delete(deleteProduct);
 router.route("/").get(getAllProducts);

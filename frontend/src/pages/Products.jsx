@@ -23,6 +23,11 @@ function Products() {
     ratingValue,
     setRatingValue,
     totalItem,
+    error,
+    maxValue,
+    minValue,
+    setMaxValue,
+    setMinValue,
   } = useSearch();
 
   const [open, setOpen] = useState(false);
@@ -31,8 +36,12 @@ function Products() {
   const activePage = +searchParams.get("page") || 1;
 
   useEffect(() => {
-    handleSearch(searchText, "filter", activePage);
-  }, [searchText, catValue, ratingValue, activePage]);
+    const timeout = setTimeout(() => {
+      handleSearch(searchText, "filter", activePage);
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [searchText, catValue, ratingValue, activePage, maxValue, minValue]);
 
   return (
     <>
@@ -53,6 +62,10 @@ function Products() {
                 setCatValue={setCatValue}
                 ratingValue={ratingValue}
                 setRatingValue={setRatingValue}
+                maxValue={maxValue}
+                setMaxValue={setMaxValue}
+                minValue={minValue}
+                setMinValue={setMinValue}
               />
             </div>
           )}
@@ -67,6 +80,10 @@ function Products() {
               setCatValue={setCatValue}
               ratingValue={ratingValue}
               setRatingValue={setRatingValue}
+              maxValue={maxValue}
+              setMaxValue={setMaxValue}
+              minValue={minValue}
+              setMinValue={setMinValue}
             />
           </div>
           {loading ? (
@@ -77,14 +94,20 @@ function Products() {
             <>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 overflow-hidden place-items-center">
                 {!loading &&
+                  !error &&
                   searchData &&
                   searchData.map((dt) => (
                     <ProductCard data={dt} key={dt._id} />
                   ))}
+                {error && (
+                  <div className="flex items-center justify-center w-full col-span-full">
+                    <img src="/assets/images.png" alt="No products" />
+                  </div>
+                )}
               </div>
             </>
           )}
-          {searchData.length < 10 && activePage === 1 ? null : (
+          {searchData?.length < 10 && activePage === 1 ? null : (
             <Pagination totalItem={totalItem} />
           )}
         </div>

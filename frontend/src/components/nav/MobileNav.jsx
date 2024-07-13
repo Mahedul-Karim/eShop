@@ -72,7 +72,7 @@ function MobileNav({
             
             <div
               className="relative mr-[20px]"
-              onClick={() => setOpenCart(true)}
+              
             >
               <UserAvatar />
              
