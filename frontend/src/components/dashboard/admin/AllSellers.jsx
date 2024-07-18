@@ -5,7 +5,7 @@ import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { Button } from "@material-ui/core";
 import styles from "../../../util/style";
 import { RxCross1 } from "react-icons/rx";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const AllSellers = () => {

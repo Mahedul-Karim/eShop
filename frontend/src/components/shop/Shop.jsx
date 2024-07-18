@@ -3,7 +3,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../util/style";
 import { Link, useNavigate } from "react-router-dom";
 
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { RxAvatar } from "react-icons/rx";
 import { BASE_URL } from "../../util/base";
 import { useDispatch } from "react-redux";

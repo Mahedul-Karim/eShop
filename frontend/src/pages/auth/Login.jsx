@@ -5,7 +5,7 @@ import loginReducer from "../../reducers/formReducer";
 import { BASE_URL } from "../../util/base";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
@@ -20,7 +20,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const { user, token } = useSelector((state) => state.auth);
+  const { user, token, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const [visible, setVisible] = useState(false);
@@ -40,7 +40,6 @@ function Login() {
 
       const data = await res.json();
       if (data.status === "failed") {
-        
         throw new Error(data.message);
       }
 
@@ -87,7 +86,8 @@ function Login() {
                   onChange={(e) =>
                     dispatchFn({ type: "EMAIL_INPUT", payload: e.target.value })
                   }
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  disabled={isLoading}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-300"
                 />
               </div>
             </div>
@@ -112,7 +112,8 @@ function Login() {
                       payload: e.target.value,
                     })
                   }
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  disabled={isLoading}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-300"
                 />
                 {visible ? (
                   <AiOutlineEye
@@ -145,20 +146,18 @@ function Login() {
                 </label>
               </div>
               <div className="text-sm">
-                <a
-                  href=".forgot-password"
-                  className="font-medium text-primary"
-                >
+                <a href=".forgot-password" className="font-medium text-primary">
                   Forgot your password?
                 </a>
               </div>
             </div>
             <div>
               <button
+                disabled={isLoading}
                 type="submit"
-                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary"
+                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary disabled:bg-primary/[0.4]"
               >
-                Submit
+                {isLoading ? 'Submitting...' : 'Submit'}
               </button>
             </div>
             <div className={`${styles.noramlFlex} w-full`}>

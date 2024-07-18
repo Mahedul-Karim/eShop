@@ -4,7 +4,7 @@ import styles from "../../../util/style";
 import { RxCross1 } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
 import { orderActions } from "../../../store/orderSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useHttp } from "../../hooks/useHttp";
 import { sellerActions } from "../../../store/sellerSlice";
 

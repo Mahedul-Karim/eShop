@@ -6,7 +6,7 @@ import styles from "../../util/style";
 import { RxCross1 } from "react-icons/rx";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useHttp } from "../hooks/useHttp";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { productActions } from "../../store/productSlice";
 import { orderActions } from "../../store/orderSlice";
 

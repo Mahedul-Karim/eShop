@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useHttp } from "../hooks/useHttp";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import socketIO from "socket.io-client";
 import { SOCKET_URL } from "../../util/base";
 import Header from "../layout/Header";

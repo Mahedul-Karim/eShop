@@ -5,7 +5,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useHttp } from "../hooks/useHttp";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { orderActions } from '../../store/orderSlice';
 
 

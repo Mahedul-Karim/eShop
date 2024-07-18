@@ -27,6 +27,7 @@ const SLIDES = [
     price: 29,
     link: "",
   },
+
 ];
 
 const Carousel = () => {

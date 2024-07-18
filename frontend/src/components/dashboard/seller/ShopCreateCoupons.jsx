@@ -6,7 +6,7 @@ import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../../../util/style";
 import Loader from "../../../util/Loader";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { BASE_URL } from "../../../util/base";
 import { productActions } from "../../../store/productSlice";
 

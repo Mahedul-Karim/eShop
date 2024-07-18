@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineCamera } from "react-icons/ai";
 import styles from "../../util/style";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useHttp } from "../hooks/useHttp";
 import { sellerActions } from "../../store/sellerSlice";
 

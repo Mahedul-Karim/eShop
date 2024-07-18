@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { categoriesData } from "../../../util/data";
 import { BASE_URL } from "../../../util/base";
 import { productActions } from "../../../store/productSlice";

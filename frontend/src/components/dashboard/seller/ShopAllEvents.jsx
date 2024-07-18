@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { eventActions } from "../../../store/eventSlice";
 import { BASE_URL } from "../../../util/base";
 import Loader from "../../../util/Loader";
-import { toast } from 'react-toastify';
+import toast from "react-hot-toast";
 
 const ShopAllEvents = () => {
   const { event, isEventLoading } = useSelector((state) => state.event);

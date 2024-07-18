@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import ShippingInfo from "./ShippingInfo";
 import CartData from "../cart/CartData";
 import { useHttp } from "../hooks/useHttp";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const Checkout = () => {
   const [city, setCity] = useState("");

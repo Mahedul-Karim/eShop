@@ -1,11 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useHttp } from "../../hooks/useHttp";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
-import styles from "../../../util/style";
-import { TfiGallery } from "react-icons/tfi";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import socketIO from "socket.io-client";
 import { SOCKET_URL } from "../../../util/base";
 import MessageList from "../../inbox/MessageList";

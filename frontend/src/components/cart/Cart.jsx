@@ -5,7 +5,7 @@ import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 import styles from "../../util/style";
 import { Link } from "react-router-dom";
 
-import { toast } from "react-toastify";
+
 import CartItems from "./CartItems";
 import { useSelector } from "react-redux";
 

@@ -4,7 +4,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import { BsPencil } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../../util/style";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useHttp } from "../../hooks/useHttp";
 import { useSelector } from "react-redux";
 

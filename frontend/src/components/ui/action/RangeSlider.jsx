@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 const RangeSlider = ({ maxValue, minValue, setMaxValue, setMinValue }) => {
   const trackRef = useRef();

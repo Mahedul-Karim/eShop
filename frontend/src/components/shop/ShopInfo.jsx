@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../util/base";
 import { sellerActions } from "../../store/sellerSlice";
 import { useHttp } from "../hooks/useHttp";
-import { toast } from 'react-toastify';
+import toast from "react-hot-toast";
 
 const ShopInfo = ({ isOwner }) => {
   const [data, setData] = useState({});

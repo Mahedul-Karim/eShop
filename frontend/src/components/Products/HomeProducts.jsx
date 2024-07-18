@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "./ProductCard";
 import { useHttp } from "../hooks/useHttp";
 import { productActions } from "../../store/productSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Loader from "../../util/Loader";
 import Container from "../../util/Container";
 import Heading from '../ui/Heading'

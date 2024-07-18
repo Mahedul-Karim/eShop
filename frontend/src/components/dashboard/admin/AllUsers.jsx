@@ -6,7 +6,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@material-ui/core";
 import styles from "../../../util/style";
 import { RxCross1 } from "react-icons/rx";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useHttp } from "../../hooks/useHttp";
 import { userActions } from "../../../store/userSlice";
 import Loader from "../../../util/Loader";

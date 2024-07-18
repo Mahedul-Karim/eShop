@@ -4,7 +4,7 @@ import { BsCartPlus } from 'react-icons/bs';
 import { useDispatch } from "react-redux";
 import { wishlistAction } from '../../store/wishlistSlice';
 import { cartAction } from '../../store/cartSlice';
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const WishListItems = ({ data }) => {
     const [value,setValue]=useState(1);

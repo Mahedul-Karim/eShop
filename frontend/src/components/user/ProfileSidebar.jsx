@@ -10,7 +10,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { TbAddressBook } from "react-icons/tb";
 import { useSelector, useDispatch } from "react-redux";
 import { BASE_URL } from "../../util/base";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { userActions } from "../../store/userSlice";
 
 function ProfileSidebar({ active, setActive }) {

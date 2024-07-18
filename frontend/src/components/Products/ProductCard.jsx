@@ -11,10 +11,10 @@ import {
 import ProductModal from "../ui/modal/ProductModal";
 import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "../../store/cartSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Ratings from "../../util/Ratings";
 
-const ProductCard = forwardRef(({ data, isEvent}, ref) => {
+const ProductCard = forwardRef(({ data, isEvent }, ref) => {
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -46,6 +46,12 @@ const ProductCard = forwardRef(({ data, isEvent}, ref) => {
     dispatch(cartAction.addToCart({ ...product, quantity: 1 }));
     toast.success("Product added to cart");
   };
+
+  
+
+  
+
+  const avgRating = data?.ratings / data?.reviews?.length || 0;
 
   return (
     <>
@@ -90,24 +96,28 @@ const ProductCard = forwardRef(({ data, isEvent}, ref) => {
           </div>
         </div>
         <div onClick={() => navigate(`/product/${productName}`)}>
-          <h3 className="text-dot text-[10px] sm:text-[12px]">{data?.category}</h3>
+          <h3 className="text-dot text-[10px] sm:text-[12px]">
+            {data?.category}
+          </h3>
           <h2 className="font-[500] text-[12px] 400px:text-[14px] sm:text-[16px] line-clamp-1">
             {data.name}
           </h2>
           <p className="text-[12px] 400px:text-[14px] sm:text-[16px] font-[600] text-secondary">
-            $
-            {data?.price}
+            ${data?.price}
           </p>
           <div className="mt-1 400px:mt-2 flex items-center gap-2">
             <div>
-
-            <Ratings rating={data?.ratings} />
+              <Ratings rating={data?.ratings} />
             </div>
-            <span className="text-dot text-[10px] 400px:text-[12px] sm:text-[14px]">(2)</span>
+            <span className="text-dot text-[10px] 400px:text-[12px] sm:text-[14px]">
+              ({data?.reviews?.length})
+            </span>
           </div>
         </div>
       </div>
-      {open ? <ProductModal setOpen={()=>setOpen(false)} data={data} /> : null}
+      {open ? (
+        <ProductModal setOpen={() => setOpen(false)} data={data} />
+      ) : null}
     </>
   );
 });

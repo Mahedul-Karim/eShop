@@ -9,7 +9,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import { useHttp } from "../../hooks/useHttp";
 import { productActions } from "../../../store/productSlice";
 import { eventActions } from "../../../store/eventSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { orderActions } from "../../../store/orderSlice";
 import Loader from "../../../util/Loader";
 import { sellerActions } from "../../../store/sellerSlice";

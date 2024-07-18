@@ -9,7 +9,7 @@ import Address from "./Address";
 import ChangePassword from "./ChangePassword";
 import { useHttp } from "../hooks/useHttp";
 import { userActions } from "../../store/userSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 function ProfileContent({ active }) {
   const { user, token } = useSelector((state) => state.auth);

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const wishlistSlice = createSlice({
   name: "wishlist",

@@ -6,8 +6,9 @@ import { BASE_URL } from "../../util/base";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const initialState = {
   email: "",
@@ -19,8 +20,10 @@ const initialState = {
 
 function SignUp() {
   const [state, dispatchFn] = useReducer(signupReducer, initialState);
-  const navigate = useNavigate();
+ 
   const [visible, setVisible] = useState(false);
+
+  const { isLoading } = useSelector((state) => state.auth);
 
   const handleFileInputChange = function (e) {
     const fileReader = new FileReader();
@@ -90,7 +93,8 @@ function SignUp() {
                   onChange={(e) =>
                     dispatchFn({ type: "NAME_INPUT", payload: e.target.value })
                   }
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  disabled={isLoading}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-300"
                 />
               </div>
             </div>
@@ -112,7 +116,8 @@ function SignUp() {
                   onChange={(e) =>
                     dispatchFn({ type: "EMAIL_INPUT", payload: e.target.value })
                   }
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  disabled={isLoading}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-300"
                 />
               </div>
             </div>
@@ -137,7 +142,8 @@ function SignUp() {
                       payload: e.target.value,
                     })
                   }
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  disabled={isLoading}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-300"
                 />
                 {visible ? (
                   <AiOutlineEye
@@ -174,7 +180,7 @@ function SignUp() {
                 </span>
                 <label
                   htmlFor="file-input"
-                  className="ml-5 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  className="ml-5 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:bg-gray-300"
                 >
                   <span>Upload a file</span>
                   <input
@@ -184,6 +190,7 @@ function SignUp() {
                     accept=".jpg,.jpeg,.png"
                     onChange={handleFileInputChange}
                     className="sr-only"
+                    disabled={isLoading}
                   />
                 </label>
               </div>
@@ -191,10 +198,11 @@ function SignUp() {
 
             <div>
               <button
+              disabled={isLoading}
                 type="submit"
-                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary"
+                className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary disabled:bg-primary/[0.4]"
               >
-                Submit
+                {isLoading ? 'Submitting...' : 'Submit'}
               </button>
             </div>
             <div className={`${styles.noramlFlex} w-full`}>

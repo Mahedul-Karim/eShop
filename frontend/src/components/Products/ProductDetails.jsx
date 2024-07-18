@@ -1,19 +1,35 @@
 import React, { useEffect, useState } from "react";
-import {
-  AiFillHeart,
-  AiOutlineHeart,
-  AiOutlineMessage,
-  AiOutlineShoppingCart,
-} from "react-icons/ai";
 
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../../util/style";
-import ProductTab from "./ProductTab";
+import { IoMdHome } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "../../store/cartSlice";
 import { wishlistAction } from "../../store/wishlistSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useHttp } from "../hooks/useHttp";
+import Ratings from "../../util/Ratings";
+import BreadCrumb from "./details/BreadCrumb";
+import Gallery from "./details/Gallery";
+import Details from "./details/Details";
+
+const DUMMY_IMAGE = [
+  {
+    url: "https://plus.unsplash.com/premium_photo-1664201890729-a9653a3592cb?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bW9iaWxlfGVufDB8fDB8fHww",
+    public_id: "1",
+  },
+  {
+    url: "https://media.istockphoto.com/id/1305305520/photo/mockup-of-isolated-mobile-phone-with-home-screen-templates.webp?s=170667a&w=0&k=20&c=NX_KqOAJ8h3zCKX4c_mvt17Ym7yUgqHED_of0FF_9jM=",
+    public_id: "2",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D",
+    public_id: "3",
+  },
+  {
+    url: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fHw%3D",
+    public_id: "4",
+  },
+];
 
 const ProductDetails = ({ data }) => {
   const [count, setCount] = useState(1);
@@ -27,6 +43,10 @@ const ProductDetails = ({ data }) => {
   const navigate = useNavigate();
 
   const handleMessageSubmit = async function () {
+    if (!user) {
+      toast.error("Login first to start conversation with the seller!");
+      return;
+    }
     const groupTitle = user._id + data._id;
     const userId = user._id;
     const participentId = data.shop._id;
@@ -80,133 +100,40 @@ const ProductDetails = ({ data }) => {
 
   const totalReviews = sellerProduct.reduce((a, p) => a + p.reviews.length, 0);
 
-  const totalRatings = sellerProduct.reduce((a, p) => a + (p.ratings ? p.ratings : 0), 0);
+  const totalRatings = sellerProduct.reduce(
+    (a, p) => a + (p.ratings ? p.ratings : 0),
+    0
+  );
 
-  const avgRating = totalRatings / totalReviews || 0;
+  console.log(sellerProduct)
+
+  const avgRating = data?.ratings / data?.reviews?.length || 0;
 
   return (
-    <div className="bg-white">
-      {data ? (
-        <div className={`${styles.section} w-[90%] 800px:w-[80%]`}>
-          <div className="w-full py-5">
-            <div className="block w-full 800px:flex">
-              <div className="w-full 800px:w-[50%]">
-                <img src={data.images[select].url} alt="" className="w-[80%]" />
-                <div className="w-full flex">
-                  {data.images.map((d, i) => (
-                    <div
-                      className={`${
-                        select === i ? "border" : "null"
-                      } cursor-pointer`}
-                      key={i}
-                    >
-                      <img
-                        src={`${d.url}`}
-                        alt=""
-                        className="h-[200px] overflow-hidden mr-3 mt-3"
-                        onClick={() => setSelect(i)}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="w-full 800px:w-[50%] pt-5">
-                <h1 className={`${styles.productTitle}`}>{data.name}</h1>
-                <p>{data.description}</p>
-                <div className="flex pt-3">
-                  <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discountPrice}$
-                  </h4>
-                  <h3 className={`${styles.price}`}>
-                    {data.originalPrice ? data.originalPrice + "$" : null}
-                  </h3>
-                </div>
-
-                <div className="flex items-center mt-12 justify-between pr-3">
-                  <div>
-                    <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-                      onClick={() => count > 1 && setCount((prev) => prev - 1)}
-                    >
-                      -
-                    </button>
-                    <span className="bg-gray-200 text-gray-800 font-medium px-4 py-[11px]">
-                      {count}
-                    </span>
-                    <button
-                      className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l px-4 py-2 shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
-                      onClick={() =>
-                        data.stock > count && setCount((prev) => prev + 1)
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div>
-                    {click ? (
-                      <AiFillHeart
-                        size={30}
-                        className="cursor-pointer"
-                        onClick={() => removeFromWishlist(data._id)}
-                        color={click ? "red" : "#333"}
-                        title="Remove from wishlist"
-                      />
-                    ) : (
-                      <AiOutlineHeart
-                        size={30}
-                        className="cursor-pointer"
-                        onClick={() => addToWishlist(data)}
-                        color={click ? "red" : "#333"}
-                        title="Add to wishlist"
-                      />
-                    )}
-                  </div>
-                </div>
-                <div
-                  className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
-                  onClick={() => handleCardAdd(data)}
-                >
-                  <span className="text-white flex items-center">
-                    Add to cart <AiOutlineShoppingCart className="ml-1" />
-                  </span>
-                </div>
-                <div className="flex items-center pt-8">
-                  <Link to={`/shop/preview/`}>
-                    <img
-                      src={`${data.shop.avatar.url}`}
-                      alt=""
-                      className="w-[50px] h-[50px] rounded-full mr-2"
-                    />
-                  </Link>
-                  <div className="pr-8">
-                    <Link to={`/shop/preview/${data.shopId}`}>
-                      <h3 className={`${styles.shop_name} pb-1 pt-1`}>
-                        {data.shop.name}
-                      </h3>
-                    </Link>
-                    <h5 className="pb-3 text-[15px]">
-                      ({avgRating.toFixed(2)}) Ratings
-                    </h5>
-                  </div>
-                  <div
-                    className={`${styles.button} bg-[#6443d1] mt-4 !rounded !h-11`}
-                    onClick={handleMessageSubmit}
-                  >
-                    <span className="text-white flex items-center">
-                      Send Message <AiOutlineMessage className="ml-1" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <ProductTab data={data} />
-          <br />
-          <br />
-        </div>
-      ) : null}
+    <div className="my-6">
+      <BreadCrumb category={data?.category} name={data?.name} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8">
+        <Gallery images={DUMMY_IMAGE} />
+        <Details
+          click={click}
+          setCount={setCount}
+          data={data}
+          avgRating={data?.ratings}
+          handleMessageSubmit={handleMessageSubmit}
+          count={count}
+          removeFromWishlist={removeFromWishlist}
+          addToWishlist={addToWishlist}
+          handleCardAdd={handleCardAdd}
+        />
+      </div>
+      <div className="border border-solid mt-8 px-4 py-6 rounded-md" id="product__details">
+        <h4 className="text-lg 400px:text-xl font-semibold ">Product Description</h4>
+        <div className="h-[0.8px] bg-[#e5e7eb] w-full my-2"/>
+        <p className="400px:text-base text-sm">{data?.description}</p>
+      </div>
     </div>
+    
   );
 };
-
+//bg-slate-100
 export default ProductDetails;

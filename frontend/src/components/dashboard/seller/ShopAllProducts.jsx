@@ -5,7 +5,7 @@ import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { productActions } from "../../../store/productSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import Loader from "../../../util/Loader";
 import { BASE_URL } from "../../../util/base";
 

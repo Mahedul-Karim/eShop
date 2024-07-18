@@ -3,7 +3,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { categoriesData } from "../../../util/data";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { eventActions } from "../../../store/eventSlice";
 import { BASE_URL } from "../../../util/base";
 

@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import PaymentInfo from "./PaymentInfo";
 import CartData from "../cart/CartData";
 import { useHttp } from "../hooks/useHttp";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { cartAction } from '../../store/cartSlice';
 import { useDispatch } from "react-redux";
 

@@ -5,7 +5,7 @@ import styles from "../../util/style";
 import ProductCard from "../Products/ProductCard";
 import { productActions } from "../../store/productSlice";
 import { eventActions } from "../../store/eventSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useHttp } from "../hooks/useHttp";
 import Loader from "../../util/Loader";
 import Ratings from "../../util/Ratings";

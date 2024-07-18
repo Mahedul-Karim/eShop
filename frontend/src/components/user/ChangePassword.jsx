@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import styles from "../../util/style";
 import { useHttp } from "../hooks/useHttp";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../../util/Loader";
 

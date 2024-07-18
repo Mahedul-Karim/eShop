@@ -3,7 +3,7 @@ import styles from "../../../util/style";
 import { BsFillBagFill } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useHttp } from "../../hooks/useHttp";
 import { orderActions } from "../../../store/orderSlice";
 import { sellerActions } from "../../../store/sellerSlice";

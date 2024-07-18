@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "../../../store/cartSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { wishlistAction } from "../../../store/wishlistSlice";
 import Modal from "./Modal";
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";

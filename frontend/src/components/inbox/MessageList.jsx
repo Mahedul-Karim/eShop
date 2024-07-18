@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useHttp } from "../hooks/useHttp";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const MessageList = ({
   data,

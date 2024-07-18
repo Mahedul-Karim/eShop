@@ -1,13 +1,12 @@
 import { RouterProvider } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
+
 
 import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState, Suspense } from "react";
+import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import { userActions } from "./store/userSlice";
 import { sellerActions } from "./store/sellerSlice";
-import Loader from "./util/Loader";
 import { eventActions } from "./store/eventSlice";
 import { useHttp } from "./components/hooks/useHttp";
 import { cartAction } from "./store/cartSlice";
@@ -15,11 +14,6 @@ import { productActions } from "./store/productSlice";
 import { router } from "./routes/routes";
 
 function App() {
-  const { isLoading, isLoggedIn, user } = useSelector((state) => state.auth);
-  const { isSellerLoggedIn, isSellerLoading } = useSelector(
-    (state) => state.seller
-  );
-
   const [_, fetchData, error] = useHttp();
 
   const dispatch = useDispatch();
@@ -71,27 +65,28 @@ function App() {
 
   return (
     <>
-      {isLoading || isSellerLoading ? (
-        <div className="h-screen flex items-center justify-center">
-          <Loader />
-        </div>
-      ) : (
-        <>
-          <RouterProvider router={router} />
-          <ToastContainer
-            position="bottom-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-          />
-        </>
-      )}
+      <RouterProvider router={router} />
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 5000,
+          },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "5px 8px",
+            backgroundColor: "#fff",
+            color: "#243757",
+            zIndex: 99999999,
+          },
+        }}
+      />
     </>
   );
 }

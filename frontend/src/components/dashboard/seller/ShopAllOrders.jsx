@@ -7,7 +7,7 @@ import Loader from "../../../util/Loader";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useHttp } from "../../hooks/useHttp";
 import { orderActions } from "../../../store/orderSlice";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const ShopAllOrders = () => {
   const { orders } = useSelector((state) => state.order);
