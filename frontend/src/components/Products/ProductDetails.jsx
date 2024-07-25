@@ -11,6 +11,8 @@ import Ratings from "../../util/Ratings";
 import BreadCrumb from "./details/BreadCrumb";
 import Gallery from "./details/Gallery";
 import Details from "./details/Details";
+import Description from "./details/Description";
+import Reviews from "./details/Reviews";
 
 const DUMMY_IMAGE = [
   {
@@ -34,8 +36,6 @@ const DUMMY_IMAGE = [
 const ProductDetails = ({ data }) => {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
-  const [select, setSelect] = useState(0);
-  const { product } = useSelector((state) => state.product);
   const { user, token } = useSelector((state) => state.auth);
 
   const [_, fetchData] = useHttp();
@@ -95,25 +95,12 @@ const ProductDetails = ({ data }) => {
     dispatch(wishlistAction.removewishlistItem(id));
   };
 
-  const sellerProduct =
-    product && product.filter((p) => p.shopId === data?.shopId);
-
-  const totalReviews = sellerProduct.reduce((a, p) => a + p.reviews.length, 0);
-
-  const totalRatings = sellerProduct.reduce(
-    (a, p) => a + (p.ratings ? p.ratings : 0),
-    0
-  );
-
-  console.log(sellerProduct)
-
-  const avgRating = data?.ratings / data?.reviews?.length || 0;
 
   return (
     <div className="my-6">
       <BreadCrumb category={data?.category} name={data?.name} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8">
-        <Gallery images={DUMMY_IMAGE} />
+        <Gallery images={data?.images} />
         <Details
           click={click}
           setCount={setCount}
@@ -126,14 +113,11 @@ const ProductDetails = ({ data }) => {
           handleCardAdd={handleCardAdd}
         />
       </div>
-      <div className="border border-solid mt-8 px-4 py-6 rounded-md" id="product__details">
-        <h4 className="text-lg 400px:text-xl font-semibold ">Product Description</h4>
-        <div className="h-[0.8px] bg-[#e5e7eb] w-full my-2"/>
-        <p className="400px:text-base text-sm">{data?.description}</p>
-      </div>
+      <Description description={data?.description} />
+      <Reviews avgRating={data?.ratings} reviews={data?.reviews}/>
     </div>
     
   );
 };
-//bg-slate-100
+
 export default ProductDetails;

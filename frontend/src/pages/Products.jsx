@@ -99,7 +99,7 @@ function Products() {
                   searchData.map((dt) => (
                     <ProductCard data={dt} key={dt._id} />
                   ))}
-                {error && (
+                {(error || searchData.length === 0) && (
                   <div className="flex items-center justify-center w-full col-span-full">
                     <img src="/assets/images.png" alt="No products" />
                   </div>

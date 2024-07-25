@@ -14,12 +14,8 @@ import { CiHeart, CiShoppingCart } from "react-icons/ci";
 import SearchIcon from "../ui/SearchIcon";
 
 function MobileNav({
-  active,
   open,
   setOpen,
-  setOpenCart,
-  openCart,
-  openWishlist,
   setOpenWishlist,
   styles,
 }) {
@@ -27,34 +23,34 @@ function MobileNav({
   const { wishlist } = useSelector((state) => state.wishlist);
   return (
     <>
-    <div className="block 800px:hidden border-b-[1px] border-solid border-grey-200 py-2">
-      <div className="flex items-center justify-end gap-2">
-        <SearchIcon />
-      <div className={`${styles.noramlFlex}`}>
-        <div
-          className="inline-block 800px:hidden relative cursor-pointer"
-          onClick={() => setOpenWishlist(true)}
-        >
-          <CiHeart size={30} style={{ strokeWidth: "0.8px" }} />
-          <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-            {wishlist && wishlist.length}
-          </span>
-        </div>
-      </div>
+      <div className="block 800px:hidden border-b-[1px] border-solid border-grey-200 py-2">
+        <div className="flex items-center justify-end gap-2">
+          <SearchIcon />
+          <div className={`${styles.noramlFlex}`}>
+            <Link
+              to={"/wishlist"}
+              className="inline-block 800px:hidden relative cursor-pointer"
+            >
+              <CiHeart size={30} style={{ strokeWidth: "0.8px" }} />
+              <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                {wishlist && wishlist.length}
+              </span>
+            </Link>
+          </div>
 
-      <div className={`${styles.noramlFlex}`}>
-        <div
-          className="inliner-block 800px:hidden relative cursor-pointer"
-          onClick={() => setOpenCart(true)}
-        >
-          <CiShoppingCart size={30} style={{ strokeWidth: "0.8px" }} />
-          <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-          {cart && cart.length}
-          </span>
+          <div className={`${styles.noramlFlex}`}>
+            <Link
+              className="inliner-block 800px:hidden relative cursor-pointer"
+              to="/cart"
+            >
+              <CiShoppingCart size={30} style={{ strokeWidth: "0.8px" }} />
+              <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                {cart && cart.length}
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
-      </div>
-    </div>
       <div
         className={`
       w-full bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
@@ -69,28 +65,17 @@ function MobileNav({
           </div>
           <Logo />
           <div>
-            
-            <div
-              className="relative mr-[20px]"
-              
-            >
+            <div className="relative mr-[20px]">
               <UserAvatar />
-             
             </div>
           </div>
-          {/* cart popup */}
-          {<Cart setOpenCart={setOpenCart} openCart={openCart}/> }
-
-          {/* wishlist popup */}
-          { <Wishlist setOpenWishlist={setOpenWishlist} openWishlist={openWishlist}/>}
         </div>
 
-        {/* header sidebar */}
+        
         <Siderbar
           open={open}
           setOpen={setOpen}
           setOpenWishlist={setOpenWishlist}
-          
         />
       </div>
     </>

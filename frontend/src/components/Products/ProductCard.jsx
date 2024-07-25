@@ -47,11 +47,6 @@ const ProductCard = forwardRef(({ data, isEvent }, ref) => {
     toast.success("Product added to cart");
   };
 
-  
-
-  
-
-  const avgRating = data?.ratings / data?.reviews?.length || 0;
 
   return (
     <>

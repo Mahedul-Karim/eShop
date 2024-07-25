@@ -11,7 +11,7 @@ const Category = () => {
       <Heading>Popular categories</Heading>
 
       <div className="grid mt-[20px] grid-cols-2 sm:grid-cols-3 gap-3 1000px:grid-cols-6">
-        {categoriesData.slice(1).map((cat) => (
+        {categoriesData.slice(1,7).map((cat) => (
           <div
             className="flex flex-col justify-end items-center gap-8 text-[14px] font-[400] text-dot group cursor-pointer"
             key={cat.id}

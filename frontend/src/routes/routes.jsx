@@ -44,6 +44,8 @@ import StripeRoutes from "./StripeRoutes";
 import PaymentPage from "../pages/PaymentPage";
 import Products from "../pages/Products";
 import Main from "../pages/Main";
+import Wishlist from "../components/wishlist/WishList";
+import Cart from "../components/cart/Cart";
 
 export const router = createBrowserRouter([
   {
@@ -122,6 +124,14 @@ export const router = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
+      {
+        path: "/wishlist",
+        element: <Wishlist />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
     ],
   },
 
@@ -133,8 +143,7 @@ export const router = createBrowserRouter([
       </ProtectedRoutes>
     ),
   },
-  
-  
+
   {
     path: "/inbox",
     element: (
@@ -218,7 +227,7 @@ export const router = createBrowserRouter([
     path: "/seller",
     element: <ActiveSeller />,
   },
-  
+
   {
     path: "/shop-home/:shopId",
     element: (

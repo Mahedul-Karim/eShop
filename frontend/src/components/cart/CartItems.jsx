@@ -5,12 +5,15 @@ import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 import styles from "../../util/style";
 import { cartAction } from "../../store/cartSlice";
 import { useDispatch } from "react-redux";
+import TableStock from "../ui/table/TableStock";
+import TableMobilePricing, { TablePricing } from "../ui/table/TablePricing";
+import TableDetails from "../ui/table/TableDetails";
+import TableGrid from "../ui/table/Grid";
+import TableActions from "../ui/table/TableActions";
 
-const CartItems = ({ data }) => {
+const CartItems = ({ data, index }) => {
   const [value, setValue] = useState(1);
-  const totalPrice = data.originalPrice
-    ? data.originalPrice * data.quantity
-    : data.discountPrice * data.quantity;
+  const totalPrice = data?.price * data?.quantity;
 
   const dispatch = useDispatch();
 
@@ -36,54 +39,36 @@ const CartItems = ({ data }) => {
   };
 
   return (
-    <div className="border-b p-4">
-      <div className="w-full flex items-center">
-        <div>
-          <div
-            className={`bg-primary border rounded-full w-[25px] h-[25px] ${
-              styles.noramlFlex
-            } justify-center ${
-              data.stock > data.quantity
-                ? "cursor-pointer"
-                : "cursor-not-allowed"
-            }`}
-            onClick={() => handleQuantityIncrease(data)}
-          >
-            <HiPlus size={18} color="#fff" />
-          </div>
-          <span className="pl-[10px]">{data.quantity}</span>
-          <div
-            className={`bg-[#a7abb14f] rounded-full w-[25px] h-[25px] flex items-center justify-center ${
-              data.quantity > 1 ? "cursor-pointer" : "cursor-not-allowed"
-            }`}
-            onClick={() => handleQuantityDecrese(data)}
-          >
-            <HiOutlineMinus size={16} color="#7d879c" />
-          </div>
-        </div>
-        <img
-          src={data.images[0].url}
-          alt=""
-          className="w-[100px] h-min ml-2 mr-2 rounded-[5px]"
-        />
-        <div className="pl-[5px]">
-          <h1>{data.name}</h1>
-          <h4 className="font-[400] text-[15px] text-[#00000082]">
-            ${data.originalPrice ? data.originalPrice : data.discountPrice}*
-            {data.quantity}
-          </h4>
-          <h4 className="font-[600] text-[17px] pt-[3px] text-secondary font-Roboto">
-            US${totalPrice}
-          </h4>
-        </div>
-        <div className=" w-[25px] h-[25px] flex items-center justify-center cursor-pointer">
-          <RxCross1
-            className="cursor-pointer"
-            onClick={() => handleCartRemove(data._id)}
-          />
-        </div>
-      </div>
-    </div>
+    <TableGrid
+      isCart={true}
+      extraClass={`${
+        index === 0 && "border-t md:border-t-0"
+      } border-b border-solid py-5 items-center`}
+    >
+      <TableDetails
+        src={data?.images?.[0].url}
+        onClick={() => handleCartRemove(data._id)}
+      >
+        {data?.name}
+      </TableDetails>
+      <TableMobilePricing
+        isCart
+        price={data?.price}
+        total={totalPrice}
+        count={data?.quantity}
+        onClick1={() => handleQuantityDecrese(data)}
+        onClick2={() => handleQuantityIncrease(data)}
+      />
+      <TablePricing price={data?.price} />
+      <TableStock
+        isCart
+        count={data?.quantity}
+        onClick1={() => handleQuantityDecrese(data)}
+        onClick2={() => handleQuantityIncrease(data)}
+      />
+      <TablePricing price={totalPrice} />
+      <TableActions isCart onClick2={() => handleCartRemove(data._id)} />
+    </TableGrid>
   );
 };
 export default CartItems;

@@ -24,11 +24,13 @@ function App() {
 
       dispatch(productActions.setApi(data.public));
     } catch (err) {
-      toast.error(err.message);
+      
+      console.log(err.message);
     }
   };
 
   useEffect(() => {
+    
     if (JSON.parse(localStorage.getItem("user"))) {
       dispatch(
         userActions.userRequestSuccess(JSON.parse(localStorage.getItem("user")))
@@ -43,17 +45,12 @@ function App() {
       );
     }
 
-    if (localStorage.getItem("cartItems")) {
-      dispatch(
-        cartAction.allCart(JSON.parse(localStorage.getItem("cartItems")))
-      );
-    }
-
     const getEvents = async function () {
       const data = await fetchData("event");
 
       if (error) {
-        return toast.error(error);
+        
+        return console.log(error);
       }
 
       dispatch(eventActions.allevents(data.event));

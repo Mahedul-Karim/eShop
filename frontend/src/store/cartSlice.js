@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    cart: [],
+    cart: localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [],
   },
   reducers: {
     addToCart(state, action) {

@@ -7,12 +7,7 @@ import Container from "../../util/Container";
 import SellerLink from "../ui/SellerLink";
 
 function Header() {
-  
-  const [openCart, setOpenCart] = useState(false);
-
   const [open, setOpen] = useState(false);
-  const [openWishlist, setOpenWishlist] = useState(false);
-
 
   return (
     <>
@@ -32,15 +27,7 @@ function Header() {
         <Nav />
       </Container>
 
-      <MobileNav
-        open={open}
-        setOpen={setOpen}
-        setOpenCart={setOpenCart}
-        openCart={openCart}
-        openWishlist={openWishlist}
-        setOpenWishlist={setOpenWishlist}
-        styles={styles}
-      />
+      <MobileNav open={open} setOpen={setOpen} styles={styles} />
     </>
   );
 }

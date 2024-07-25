@@ -22,6 +22,12 @@ const Details = ({
     window.scrollTo({ top: offsetTop, behavior: "smooth" });
   };
 
+  const handleScrollToReview = () => {
+    const reviewSection = document.getElementById("review__section");
+
+    window.scrollTo({ top:reviewSection.offsetTop - 100,behavior: "smooth" });
+  };
+
   return (
     <div className="flex flex-col py-[15px] md:py-0 px-[10px] lg:px-[50px] md:justify-between">
       <div className="flex flex-col gap-2">
@@ -30,7 +36,10 @@ const Details = ({
         </h2>
         <div className="flex items-center gap-2">
           <Ratings rating={avgRating} />
-          <p className="text-dot text-[10px] 400px:text-[12px] sm:text-[14px] cursor-pointer hover:underline">
+          <p
+            className="text-dot text-[10px] 400px:text-[12px] sm:text-[14px] cursor-pointer hover:underline"
+            onClick={handleScrollToReview}
+          >
             ({data?.reviews?.length} reviews) |
           </p>
           <p
