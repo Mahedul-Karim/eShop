@@ -77,14 +77,14 @@ const Gallery = ({ images }) => {
 
     finalTranslate = initialTranslate + (movingPoint - clickedPoint);
 
-    containerRef.current.style.transform = `translateX(${finalTranslate}px)`;
+    containerRef.current.style.transform = `translateX(${finalTranslate * 2}px)`;
   };
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex overflow-x-clip relative group transition-all duration-300">
         <div
-          className="flex transition-all duration-300"
+          className="flex transition-all duration-300 w-full"
           ref={containerRef}
           style={{
             transform: "translateX(0px)",
@@ -102,7 +102,7 @@ const Gallery = ({ images }) => {
               <img
                 src={img.url}
                 alt=""
-                className="w-full object-cover h-[200px] 400px:h-[350px] sm:h-[380px] bg-slate-100"
+                className="w-full object-contain h-[200px] 400px:h-[350px] sm:h-[380px] bg-slate-100"
                 onDragStart={(e) => e.preventDefault()}
               />
             </div>

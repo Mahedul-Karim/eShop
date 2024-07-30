@@ -3,9 +3,10 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { categoriesData } from "../../../util/data";
-import toast from "react-hot-toast";
+
 import { eventActions } from "../../../store/eventSlice";
 import { BASE_URL } from "../../../util/base";
+import { useToast } from "../../hooks/useToast";
 
 const ShopCreateEvents = () => {
   const { seller } = useSelector((state) => state.seller);
@@ -23,6 +24,8 @@ const ShopCreateEvents = () => {
   const [stock, setStock] = useState();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const { success,error } = useToast();
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -86,10 +89,10 @@ const ShopCreateEvents = () => {
       }
 
       dispatch(eventActions.eventRequestSuccess(data.event));
-      toast.success("Event created");
+      success("Event created");
       navigate('/dashboard-events')
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

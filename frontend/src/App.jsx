@@ -1,5 +1,4 @@
 import { RouterProvider } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
 
 
 import "./App.css";
@@ -9,12 +8,14 @@ import { userActions } from "./store/userSlice";
 import { sellerActions } from "./store/sellerSlice";
 import { eventActions } from "./store/eventSlice";
 import { useHttp } from "./components/hooks/useHttp";
-import { cartAction } from "./store/cartSlice";
+import Toast from './components/ui/Toast'
 import { productActions } from "./store/productSlice";
 import { router } from "./routes/routes";
 
 function App() {
   const [_, fetchData, error] = useHttp();
+
+
 
   const dispatch = useDispatch();
 
@@ -24,13 +25,11 @@ function App() {
 
       dispatch(productActions.setApi(data.public));
     } catch (err) {
-      
       console.log(err.message);
     }
   };
 
   useEffect(() => {
-    
     if (JSON.parse(localStorage.getItem("user"))) {
       dispatch(
         userActions.userRequestSuccess(JSON.parse(localStorage.getItem("user")))
@@ -49,7 +48,6 @@ function App() {
       const data = await fetchData("event");
 
       if (error) {
-        
         return console.log(error);
       }
 
@@ -58,32 +56,15 @@ function App() {
 
     getEvents();
     getStripeApi();
+
+   
   }, []);
 
   return (
     <>
       <RouterProvider router={router} />
-      <Toaster
-        position="top-center"
-        gutter={12}
-        containerStyle={{ margin: "8px" }}
-        toastOptions={{
-          success: {
-            duration: 3000,
-          },
-          error: {
-            duration: 5000,
-          },
-          style: {
-            fontSize: "16px",
-            maxWidth: "500px",
-            padding: "5px 8px",
-            backgroundColor: "#fff",
-            color: "#243757",
-            zIndex: 99999999,
-          },
-        }}
-      />
+      
+      <Toast />
     </>
   );
 }

@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "./ProductCard";
 import { useHttp } from "../hooks/useHttp";
 import { productActions } from "../../store/productSlice";
-import toast from "react-hot-toast";
 import Loader from "../../util/Loader";
 import Container from "../../util/Container";
 import Heading from "../ui/Heading";
 import { Link } from "react-router-dom";
 
 const HomeProducts = () => {
-  const cardContainer = useRef();
+  
   const [isLoading, fetchData, error] = useHttp();
 
   const { product } = useSelector((state) => state.product);
@@ -24,7 +23,7 @@ const HomeProducts = () => {
       const data = await fetchData(`product`);
 
       if (error) {
-        return toast.error(error);
+        return console.log(error);
       }
 
       dispatch(productActions.allProducts(data.products));
@@ -45,7 +44,7 @@ const HomeProducts = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4  place-items-center">
               {productCards.length !== 0 ? (
                 productCards.map((pro) => (
-                  <ProductCard data={pro} key={pro._id} ref={cardContainer} />
+                  <ProductCard data={pro} key={pro._id}  />
                 ))
               ) : (
                 <div className="flex items-center justify-center w-full col-span-full">

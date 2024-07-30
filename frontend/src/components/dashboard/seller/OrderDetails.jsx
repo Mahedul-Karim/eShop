@@ -3,10 +3,12 @@ import styles from "../../../util/style";
 import { BsFillBagFill } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
+
 import { useHttp } from "../../hooks/useHttp";
 import { orderActions } from "../../../store/orderSlice";
 import { sellerActions } from "../../../store/sellerSlice";
+
+import { useToast } from '../../hooks/useToast'
 
 const OrderDetails = () => {
   const { orders } = useSelector((state) => state.order);
@@ -18,6 +20,8 @@ const OrderDetails = () => {
   const [_, fetchData] = useHttp();
 
   const { id } = useParams();
+
+  const { success,error } = useToast()
 
   const data = orders && orders.find((item) => item._id === id);
 
@@ -44,10 +48,10 @@ const OrderDetails = () => {
         "seller",
         JSON.stringify({ seller: data.shop, sellerToken: data.token })
       );
-      toast.success("Order Updated");
+      success("Order Updated");
       navigate("/dashboard-orders");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

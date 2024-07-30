@@ -10,7 +10,7 @@
 }
 body {
   /* scroll-behavior: smooth; */
-  font-family: "Poppins";
+  font-family: "Poppins",sans-serif;
 }
 input,
 select {
@@ -98,6 +98,8 @@ input[type="number"] {
   @apply text-white bg-secondary;
 }
 
+
+
 .swiper-slide {
   width: 100% !important;
 }
@@ -152,4 +154,30 @@ input[type="range"]::-webkit-slider-thumb:active{
 }
 input[type="range"]::-moz-range-thumb:active{
   cursor: grabbing;
+}
+
+.slide{
+  animation: slider 0.3s forwards;
+}
+
+.no-slide{
+  animation: no-slider 0.3s forwards;
+}
+
+@keyframes no-slider{
+  0%{
+    transform: translateX(0%);
+  }
+  100%{
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slider{
+  0%{
+    transform: translateX(100%);
+  }
+  100%{
+    transform: translateX(0%);
+  }
 }

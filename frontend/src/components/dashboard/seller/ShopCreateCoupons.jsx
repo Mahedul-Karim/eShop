@@ -6,7 +6,7 @@ import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../../../util/style";
 import Loader from "../../../util/Loader";
-import toast from "react-hot-toast";
+import { useToast } from '../../hooks/useToast'
 import { BASE_URL } from "../../../util/base";
 import { productActions } from "../../../store/productSlice";
 
@@ -21,6 +21,8 @@ const ShopAllCoupons = () => {
   const [value, setValue] = useState(null);
   const { seller, sellerToken } = useSelector((state) => state.seller);
   const { product } = useSelector((state) => state.product);
+
+  const { success,error } = useToast();
 
   useEffect(() => {
     const allCoupons = async function () {
@@ -37,7 +39,7 @@ const ShopAllCoupons = () => {
 
         setCoupouns(data.coupons);
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -59,9 +61,9 @@ const ShopAllCoupons = () => {
       }
 
       setCoupouns((prev) => prev.filter((c) => c._id !== id));
-      toast.success("Coupon deleted");
+      success("Coupon deleted");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -94,9 +96,9 @@ const ShopAllCoupons = () => {
       }
 
       setCoupouns((prev) => [...prev, data.coupon]);
-      toast.success("Coupon created successfully");
+      success("Coupon created successfully");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     } finally {
       setIsLoading(false);
     }

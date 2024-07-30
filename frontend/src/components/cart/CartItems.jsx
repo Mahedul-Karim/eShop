@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import { RxCross1 } from "react-icons/rx";
-import { IoBagHandleOutline } from "react-icons/io5";
-import { HiOutlineMinus, HiPlus } from "react-icons/hi";
-import styles from "../../util/style";
 import { cartAction } from "../../store/cartSlice";
 import { useDispatch } from "react-redux";
 import TableStock from "../ui/table/TableStock";

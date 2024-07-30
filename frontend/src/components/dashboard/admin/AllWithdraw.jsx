@@ -4,9 +4,10 @@ import { DataGrid } from "@material-ui/data-grid";
 import { BsPencil } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../../util/style";
-import toast from "react-hot-toast";
+
 import { useHttp } from "../../hooks/useHttp";
 import { useSelector } from "react-redux";
+import { useToast } from "../../hooks/useToast";
 
 const AllWithdraw = () => {
   const { token } = useSelector((state) => state.auth);
@@ -17,6 +18,8 @@ const AllWithdraw = () => {
   const [withdrawStatus, setWithdrawStatus] = useState("Processing");
 
   const [isLoading, fetchData] = useHttp();
+
+  const { success,error } = useToast()
 
   useEffect(() => {
     const getAllWithdraw = async function () {
@@ -94,10 +97,10 @@ const AllWithdraw = () => {
         JSON.stringify({ sellerId: withdrawData.shopId })
       );
       setData(prev=>[...prev,updateWithdraw.withdraw]);
-      toast.success("Payment status updated");
+      success("Payment status updated");
       setOpen(false);
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

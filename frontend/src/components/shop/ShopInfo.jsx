@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../util/base";
 import { sellerActions } from "../../store/sellerSlice";
 import { useHttp } from "../hooks/useHttp";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 
 const ShopInfo = ({ isOwner }) => {
   const [data, setData] = useState({});
 
   const [isLoading, fetchData, error] = useHttp();
+
+  const { error:toastError } = useToast();
 
   const { shopId } = useParams();
 
@@ -27,7 +29,7 @@ const ShopInfo = ({ isOwner }) => {
       const shopData = await fetchData(`shop/${shopId}`);
 
       if (error) {
-        return toast.error(error);
+        return toastError(error);
       }
 
       setData(shopData.shop);

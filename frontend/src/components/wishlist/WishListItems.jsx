@@ -4,7 +4,7 @@ import { BsCartPlus } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { wishlistAction } from "../../store/wishlistSlice";
 import { cartAction } from "../../store/cartSlice";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 import TableGrid from "../ui/table/Grid";
 import { CiShoppingCart } from "react-icons/ci";
 import TableDetails from "../ui/table/TableDetails";
@@ -14,17 +14,19 @@ import TableActions from "../ui/table/TableActions";
 
 const WishListItems = ({ data }) => {
   
+  const { success,warning } = useToast();
 
   const dispatch = useDispatch();
 
   const handleCardAdd = function (product) {
     dispatch(cartAction.addToCart({ ...product, quantity: 1 }));
-    toast.success("Product added to cart");
+    success("Product added to cart");
     dispatch(wishlistAction.removewishlistItem(product._id));
   };
 
   const removeFromWishlist = function (id) {
     dispatch(wishlistAction.removewishlistItem(id));
+    warning('Product was removed from wishlist')
   };
 
   return (

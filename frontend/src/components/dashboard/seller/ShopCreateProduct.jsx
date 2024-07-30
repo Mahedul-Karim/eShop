@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { useToast } from '../../hooks/useToast'
 import { categoriesData } from "../../../util/data";
 import { BASE_URL } from "../../../util/base";
 import { productActions } from "../../../store/productSlice";
@@ -12,6 +12,8 @@ const ShopCreateProduct = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { success,error } = useToast();
 
   const [images, setImages] = useState([]);
 
@@ -62,10 +64,10 @@ const ShopCreateProduct = () => {
       console.log(data);
       dispatch(productActions.productRequestSuccess(data.product));
       navigate("/dashboard");
-      toast.success("Product created successfully");
+      success("Product created successfully");
     } catch (err) {
       dispatch(productActions.productRequestFailed());
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

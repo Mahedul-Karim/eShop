@@ -4,7 +4,7 @@ import styles from "../../../util/style";
 import { RxCross1 } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
 import { orderActions } from "../../../store/orderSlice";
-import toast from "react-hot-toast";
+import { useToast } from "../../hooks/useToast";
 import { useHttp } from "../../hooks/useHttp";
 import { sellerActions } from "../../../store/sellerSlice";
 
@@ -22,6 +22,8 @@ const WithdrawMoney = () => {
     bankHolderName: "",
     bankAddress: "",
   });
+
+  const { success,error } = useToast();
 
   const [isLoading, fetchData] = useHttp();
 
@@ -58,7 +60,7 @@ const WithdrawMoney = () => {
         JSON.stringify({ seller: data.shop, sellerToken: data.token })
       );
       setPaymentMethod(false);
-      toast.success("Withdraw method added successfully");
+      success("Withdraw method added successfully");
 
       setBankInfo({
         bankName: "",
@@ -69,7 +71,7 @@ const WithdrawMoney = () => {
         bankAddress: "",
       });
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 
@@ -89,9 +91,9 @@ const WithdrawMoney = () => {
         "seller",
         JSON.stringify({ seller: data.shop, sellerToken: data.token })
       );
-      toast.success("Withdraw method deleted successfully");
+      success("Withdraw method deleted successfully");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 
@@ -99,7 +101,7 @@ const WithdrawMoney = () => {
     const amount = withdrawAmount;
 
     if (amount < 50 || amount > seller?.availableBalance) {
-      return toast.error("You can not withdraw this amount");
+      return error("You can not withdraw this amount");
     }
 
     try {
@@ -122,11 +124,11 @@ const WithdrawMoney = () => {
         "seller",
         JSON.stringify({ seller: data.shop, sellerToken: data.token })
       );
-      toast.success(
+      success(
         "Withdraw request is processing.It will take 3days to 7days for processing"
       );
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 
@@ -140,7 +142,7 @@ const WithdrawMoney = () => {
           className={`${styles.button} text-white !h-[42px] !rounded`}
           onClick={() =>
             seller?.availableBalance?.toFixed(2) < 50
-              ? toast.error("You dont have enough balance to withdraw")
+              ? error("You dont have enough balance to withdraw")
               : setOpen(true)
           }
         >

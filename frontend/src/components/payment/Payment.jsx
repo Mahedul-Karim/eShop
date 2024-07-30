@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import PaymentInfo from "./PaymentInfo";
 import CartData from "../cart/CartData";
 import { useHttp } from "../hooks/useHttp";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 import { cartAction } from '../../store/cartSlice';
 import { useDispatch } from "react-redux";
 
@@ -19,6 +19,8 @@ const Payment = () => {
   const [orderData, setOrderData] = useState([]);
   const [open, setOpen] = useState(false);
   const { user, token } = useSelector((state) => state.auth);
+
+  const { error } = useToast();
 
   const dispatch=useDispatch();
 
@@ -129,7 +131,7 @@ const Payment = () => {
       });
 
       if (result.error) {
-        return toast.error(result.error.message);
+        return error(result.error.message);
       }
 
       if (result.paymentIntent.status === "succeeded") {
@@ -156,7 +158,7 @@ const Payment = () => {
       dispatch(cartAction.emptyCart());
     } catch (err) {
       
-      toast.error(err.message);
+      error(err.message);
     }
   };
 
@@ -185,7 +187,7 @@ const Payment = () => {
       localStorage.removeItem("latestOrder");
       dispatch(cartAction.emptyCart());
     }catch(err){
-      toast.error(err.message)
+      error(err.message)
     }
 
 

@@ -7,13 +7,16 @@ import { Link } from "react-router-dom";
 import { eventActions } from "../../../store/eventSlice";
 import { BASE_URL } from "../../../util/base";
 import Loader from "../../../util/Loader";
-import toast from "react-hot-toast";
+
+import { useToast } from '../../hooks/useToast'
 
 const ShopAllEvents = () => {
   const { event, isEventLoading } = useSelector((state) => state.event);
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
+
+  const { success,error } = useToast()
 
   useEffect(() => {
     const getEvents = async function () {
@@ -29,7 +32,7 @@ const ShopAllEvents = () => {
 
         dispatch(eventActions.allevents(data.event));
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
     };
 
@@ -50,9 +53,9 @@ const ShopAllEvents = () => {
         }
   
         dispatch(eventActions.deleteevents(id));
-        toast.success(data.message);
+        success(data.message);
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
   };
 

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useHttp } from "../hooks/useHttp";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 import socketIO from "socket.io-client";
 import { SOCKET_URL } from "../../util/base";
 import Header from "../layout/Header";
@@ -22,6 +22,9 @@ const UserInbox = () => {
   const [activeStatus, setActiveStatus] = useState(false);
   const [images, setImages] = useState();
   const [open, setOpen] = useState(false);
+
+  const { error } = useToast();
+
   const scrollRef = useRef(null);
 
   const [isLoading, fetchData] = useHttp();
@@ -49,7 +52,7 @@ const UserInbox = () => {
 
         setMessages(data.messages);
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
     };
     getMessages();
@@ -63,7 +66,7 @@ const UserInbox = () => {
         });
         setConversations(data.conversation);
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
     };
     getConversation();
@@ -104,7 +107,7 @@ const UserInbox = () => {
         updateLastMessage();
       }
     } catch (error) {
-      toast.error(error.message);
+      error(error.message);
     }
   };
 
@@ -141,7 +144,7 @@ const UserInbox = () => {
       );
       setNewMessage("");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   }
 
@@ -174,7 +177,7 @@ const UserInbox = () => {
       setMessages((prev) => [...prev, data.messages]);
       updateLastMessageForImage();
     } catch (error) {
-      toast.error(error.message);
+      error(error.message);
     }
   };
 
@@ -195,7 +198,7 @@ const UserInbox = () => {
       );
       setNewMessage("");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   }
 

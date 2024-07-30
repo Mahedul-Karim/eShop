@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ProductDetails from "../components/Products/ProductDetails";
 import { useHttp } from "../components/hooks/useHttp";
-import toast from "react-hot-toast";
+import { useToast } from "../components/hooks/useToast";
 import Loader from "../util/Loader";
 import SuggestedProduct from "../components/Products/SuggestedProduct";
 import Container from "../util/Container";
@@ -14,16 +14,20 @@ const ProductDetailsPage = () => {
 
   const [isLoading, fetchData, error] = useHttp();
 
+  const { error: toastError } = useToast();
+
   const productName = productId.replace(/-/g, " ");
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
     const getProduct = async function () {
       try {
         const data = await fetchData(`product/single/${productName}`);
 
         setData(data.product);
       } catch (err) {
-        toast.error(err.message);
+        toastError(err.message);
       }
     };
 
@@ -32,7 +36,13 @@ const ProductDetailsPage = () => {
 
   return (
     <Container>
-      {isLoading ? <div className="h-screen w-full flex items-center justify-center"><Loader /></div> : <ProductDetails data={data} />}
+      {isLoading ? (
+        <div className="h-screen w-full flex items-center justify-center">
+          <Loader />
+        </div>
+      ) : (
+        <ProductDetails data={data} />
+      )}
       {data && <SuggestedProduct data={data} />}
     </Container>
   );

@@ -5,7 +5,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useHttp } from "../hooks/useHttp";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 import { orderActions } from '../../store/orderSlice';
 
 
@@ -18,6 +18,8 @@ const AllOrders = () => {
 
   const [isLoading, fetchData] = useHttp();
 
+  const { error } = useToast();
+
   useEffect(() => {
     const allOrders = async function () {
       try {
@@ -28,7 +30,7 @@ const AllOrders = () => {
         dispatch(orderActions.orderRequestSuccess(data.order))
 
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
     };
 

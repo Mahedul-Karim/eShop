@@ -7,6 +7,7 @@ import eventSlice from './eventSlice';
 import cartSlice from './cartSlice';
 import wishlistSlice from './wishlistSlice';
 import orderSlice from './orderSlice';
+import toastSlice from './toastSlice';
 
 const Store=configureStore({
     reducer:{
@@ -16,7 +17,8 @@ const Store=configureStore({
         event:eventSlice.reducer,
         cart:cartSlice.reducer,
         wishlist:wishlistSlice.reducer,
-        order:orderSlice.reducer
+        order:orderSlice.reducer,
+        toast:toastSlice.reducer
     }
 });
 

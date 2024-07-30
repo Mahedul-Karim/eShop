@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import toast from "react-hot-toast";
+
 
 const wishlistSlice = createSlice({
   name: "wishlist",
@@ -19,11 +19,11 @@ const wishlistSlice = createSlice({
       const existingItem = state.wishlist[existingItemIndex];
 
       if (existingItem) {
-        toast.error("Product is already in the wishlist");
+        return;
       } else {
         state.wishlist.push(item);
         localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
-        toast.success("Product added to the wishlist");
+        
       }
     },
     removewishlistItem(state, action) {

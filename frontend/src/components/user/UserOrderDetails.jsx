@@ -6,7 +6,7 @@ import styles from "../../util/style";
 import { RxCross1 } from "react-icons/rx";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useHttp } from "../hooks/useHttp";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 import { productActions } from "../../store/productSlice";
 import { orderActions } from "../../store/orderSlice";
 
@@ -20,6 +20,8 @@ const UserOrderDetails = () => {
   const [rating, setRating] = useState(1);
 
   const { id } = useParams();
+
+  const { success,error } = useToast();
 
   const [_, fetchData] = useHttp();
 
@@ -46,9 +48,9 @@ const UserOrderDetails = () => {
       setRating(1);
       setComment("");
       dispatch(productActions.updateProductReview(data.product));
-      toast.success("Review submitted");
+      success("Review submitted");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 
@@ -67,9 +69,9 @@ const UserOrderDetails = () => {
         })
       );
       dispatch(orderActions.updateOrder(data.order));
-      toast.success(data.message);
+      success(data.message);
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
 
 

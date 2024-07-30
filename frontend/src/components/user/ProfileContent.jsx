@@ -9,7 +9,7 @@ import Address from "./Address";
 import ChangePassword from "./ChangePassword";
 import { useHttp } from "../hooks/useHttp";
 import { userActions } from "../../store/userSlice";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 
 function ProfileContent({ active }) {
   const { user, token } = useSelector((state) => state.auth);
@@ -21,6 +21,8 @@ function ProfileContent({ active }) {
   const [profileImage, setProfileImage] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState();
   const [_, fetchData] = useHttp();
+
+  const { success,error } = useToast();
 
   const dispatch = useDispatch();
 
@@ -66,9 +68,9 @@ function ProfileContent({ active }) {
         JSON.stringify({ user: data.user, token: data.token })
       );
 
-      toast.success("User updated");
+      success("User updated");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

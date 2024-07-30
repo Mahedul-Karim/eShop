@@ -5,7 +5,7 @@ import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { productActions } from "../../../store/productSlice";
-import toast from "react-hot-toast";
+import { useToast } from "../../hooks/useToast";
 import Loader from "../../../util/Loader";
 import { BASE_URL } from "../../../util/base";
 
@@ -14,6 +14,8 @@ const ShopAllProducts = () => {
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
+
+  const { success,error } = useToast()
 
   useEffect(() => {
     const getProducts = async function () {
@@ -29,7 +31,7 @@ const ShopAllProducts = () => {
 
         dispatch(productActions.allProducts(data.product));
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
     };
 
@@ -50,9 +52,9 @@ const ShopAllProducts = () => {
       }
 
       dispatch(productActions.deleteProducts(id));
-      toast.success(data.message);
+      success(data.message);
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

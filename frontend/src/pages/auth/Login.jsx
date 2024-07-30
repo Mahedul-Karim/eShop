@@ -5,7 +5,7 @@ import loginReducer from "../../reducers/formReducer";
 import { BASE_URL } from "../../util/base";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import toast from "react-hot-toast";
+import { useToast } from "../../components/hooks/useToast";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
@@ -22,6 +22,8 @@ function Login() {
 
   const { user, token, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const { error } = useToast()
 
   const [visible, setVisible] = useState(false);
 
@@ -54,7 +56,7 @@ function Login() {
       );
     } catch (err) {
       dispatch(userActions.userRequestFailed());
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

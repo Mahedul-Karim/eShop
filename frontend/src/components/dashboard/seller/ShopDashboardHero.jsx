@@ -9,7 +9,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import { useHttp } from "../../hooks/useHttp";
 import { productActions } from "../../../store/productSlice";
 import { eventActions } from "../../../store/eventSlice";
-import toast from "react-hot-toast";
+import { useToast } from '../../hooks/useToast'
 import { orderActions } from "../../../store/orderSlice";
 import Loader from "../../../util/Loader";
 import { sellerActions } from "../../../store/sellerSlice";
@@ -22,13 +22,15 @@ const ShopDashboardHero = () => {
 
   const [isLoading, fetchData] = useHttp();
 
+  const { error } = useToast();
+
   const getProducts = async function () {
     try {
       const data = await fetchData(`product/${seller._id}`);
 
       dispatch(productActions.allProducts(data.product));
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 
@@ -40,7 +42,7 @@ const ShopDashboardHero = () => {
 
       dispatch(orderActions.orderRequestSuccess(data.order));
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

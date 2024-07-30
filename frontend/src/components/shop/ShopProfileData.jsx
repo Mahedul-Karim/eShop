@@ -5,7 +5,7 @@ import styles from "../../util/style";
 import ProductCard from "../Products/ProductCard";
 import { productActions } from "../../store/productSlice";
 import { eventActions } from "../../store/eventSlice";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 import { useHttp } from "../hooks/useHttp";
 import Loader from "../../util/Loader";
 import Ratings from "../../util/Ratings";
@@ -14,6 +14,8 @@ const ShopProfileData = ({ isOwner }) => {
   const { shopId } = useParams();
 
   const [isLoading, fetchData, error] = useHttp();
+
+  const { error:toastError } = useToast();
 
   const { product } = useSelector((state) => state.product);
   const { event } = useSelector((state) => state.event);
@@ -26,7 +28,7 @@ const ShopProfileData = ({ isOwner }) => {
     const data = await fetchData(`product/${shopId}`);
 
     if (error) {
-      return toast.error(error);
+      return toastError(error);
     }
 
     dispatch(productActions.allProducts(data.product));
@@ -36,7 +38,7 @@ const ShopProfileData = ({ isOwner }) => {
     const data = await fetchData(`event/${shopId}`);
 
     if (error) {
-      return toast.error(error);
+      return toastError(error);
     }
 
     dispatch(eventActions.allevents(data.event));

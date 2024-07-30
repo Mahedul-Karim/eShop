@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useHttp } from "../hooks/useHttp";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 
 const MessageList = ({
   data,
@@ -18,6 +18,9 @@ const MessageList = ({
 }) => {
   const [user, setUser] = useState([]);
   const navigate = useNavigate();
+
+  const { error } = useToast();
+
   const handleClick = (id) => {
     navigate(`?${id}`);
     setOpen(true);
@@ -38,7 +41,7 @@ const MessageList = ({
           setUserData(data.user);
         }
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
     };
     getUser();

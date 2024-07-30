@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import styles from "../../util/style";
 import { useHttp } from "../hooks/useHttp";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 import { useSelector } from "react-redux";
 import Loader from "../../util/Loader";
 
@@ -10,6 +10,8 @@ const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const { success,error } = useToast();
 
   const { token } = useSelector((state) => state.auth);
 
@@ -31,9 +33,9 @@ const ChangePassword = () => {
       setOldPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      toast.success(data.message);
+      success(data.message);
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
   return (

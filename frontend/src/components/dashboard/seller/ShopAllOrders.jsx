@@ -7,7 +7,7 @@ import Loader from "../../../util/Loader";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useHttp } from "../../hooks/useHttp";
 import { orderActions } from "../../../store/orderSlice";
-import toast from "react-hot-toast";
+import { useToast } from "../../hooks/useToast";
 
 const ShopAllOrders = () => {
   const { orders } = useSelector((state) => state.order);
@@ -16,6 +16,8 @@ const ShopAllOrders = () => {
   const [isLoading, fetchData] = useHttp();
 
   const dispatch = useDispatch();
+
+  const { error } = useToast()
 
   useEffect(() => {
     const allOrders = async function () {
@@ -26,7 +28,7 @@ const ShopAllOrders = () => {
 
         dispatch(orderActions.orderRequestSuccess(data.order));
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
     };
 

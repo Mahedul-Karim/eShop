@@ -3,7 +3,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../util/style";
 import { Link, useNavigate } from "react-router-dom";
 
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 import { RxAvatar } from "react-icons/rx";
 import { BASE_URL } from "../../util/base";
 import { useDispatch } from "react-redux";
@@ -19,6 +19,8 @@ const Shop = () => {
   const [avatarUrl, setAvatarUrl] = useState();
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
+
+  const { success,error } = useToast();
 
   const dispatch = useDispatch();
 
@@ -62,10 +64,10 @@ const Shop = () => {
       if (data.status === "failed") {
         throw new Error(data.message);
       }
-      toast.success(data.message);
+      success(data.message);
     } catch (err) {
       dispatch(sellerActions.sellerRequestFailed());
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

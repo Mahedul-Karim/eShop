@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../../util/style";
 import { RxCross1 } from "react-icons/rx";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
 import { Country, State } from "country-state-city";
 import { useHttp } from "../hooks/useHttp";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +16,8 @@ const Address = () => {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [addressType, setAddressType] = useState("");
+
+  const { success,error,warning } = useToast();
 
   const { token, user } = useSelector((state) => state.auth);
 
@@ -39,7 +41,7 @@ const Address = () => {
     e.preventDefault();
 
     if (country === "" || city === "" || addressType === "") {
-      return toast.error("Fields can not be empty");
+      return warning("Fields can not be empty");
     }
 
     try {
@@ -68,9 +70,9 @@ const Address = () => {
         JSON.stringify({ user: data.user, token: data.token })
       );
       setOpen(false);
-      toast.success("Address added");
+      success("Address added");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 
@@ -88,9 +90,9 @@ const Address = () => {
         JSON.stringify({ user: data.user, token: data.token })
       );
 
-      toast.success("Address removed");
+      success("Address removed");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

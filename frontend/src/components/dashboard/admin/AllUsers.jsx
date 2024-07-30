@@ -6,16 +6,20 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { Button } from "@material-ui/core";
 import styles from "../../../util/style";
 import { RxCross1 } from "react-icons/rx";
-import toast from "react-hot-toast";
+
 import { useHttp } from "../../hooks/useHttp";
 import { userActions } from "../../../store/userSlice";
 import Loader from "../../../util/Loader";
+
+import { useToast } from '../../hooks/useToast'
 
 const AllUsers = () => {
   const dispatch = useDispatch();
   const { allUsers, token } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState("");
+
+  const { success,error } = useToast()
 
   const [isLoading, fetchData] = useHttp();
 
@@ -38,9 +42,9 @@ const AllUsers = () => {
       });
 
       dispatch(userActions.deleteUser(id));
-      toast.success(data.message);
+      success(data.message);
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

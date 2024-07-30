@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineCamera } from "react-icons/ai";
 import styles from "../../util/style";
-import toast from "react-hot-toast";
+import { useToast } from '../hooks/useToast'
 import { useHttp } from "../hooks/useHttp";
 import { sellerActions } from "../../store/sellerSlice";
 
@@ -17,6 +17,8 @@ const ShopSettings = () => {
   const [address, setAddress] = useState(seller && seller.address);
   const [phoneNumber, setPhoneNumber] = useState(seller && seller.phoneNumber);
   const [zipCode, setZipcode] = useState(seller && seller.zipCode);
+
+  const { success,error } = useToast();
 
   const dispatch = useDispatch();
 
@@ -64,9 +66,9 @@ const ShopSettings = () => {
         JSON.stringify({ seller: data.shop, sellerToken: data.token })
       );
       
-      toast.success("Shop updated");
+      success("Shop updated");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

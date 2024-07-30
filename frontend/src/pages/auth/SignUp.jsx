@@ -6,7 +6,7 @@ import { BASE_URL } from "../../util/base";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
-import toast from "react-hot-toast";
+import { useToast } from "../../components/hooks/useToast";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -24,6 +24,8 @@ function SignUp() {
   const [visible, setVisible] = useState(false);
 
   const { isLoading } = useSelector((state) => state.auth);
+
+  const { success,error } = useToast()
 
   const handleFileInputChange = function (e) {
     const fileReader = new FileReader();
@@ -58,9 +60,9 @@ function SignUp() {
       if (data.status === "failed") {
         throw new Error(data.message);
       }
-      toast.success(data.message);
+      success(data.message);
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     } finally {
       dispatchFn({ type: "EMPTY_FORM" });
     }

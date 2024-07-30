@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import styles from "../../util/style";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -6,18 +6,75 @@ import { useEffect } from "react";
 import ShippingInfo from "./ShippingInfo";
 import CartData from "../cart/CartData";
 import { useHttp } from "../hooks/useHttp";
-import toast from "react-hot-toast";
+import { useToast } from "../hooks/useToast";
+import { checkoutReducer } from "../../reducers/reducers";
+
+const initialState = {
+  city: "",
+  country: "",
+  address1: "",
+  address2: "",
+  zipCode: null,
+  couponCode: "",
+  couponCodeData: null,
+  discountPrice: null,
+};
+
+
 
 const Checkout = () => {
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
   const [userInfo, setUserInfo] = useState(false);
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [zipCode, setZipCode] = useState(null);
-  const [couponCode, setCouponCode] = useState("");
-  const [couponCodeData, setCouponCodeData] = useState(null);
-  const [discountPrice, setDiscountPrice] = useState(null);
+
+  // const [city, setCity] = useState("");
+  // const [country, setCountry] = useState("");
+  // const [address1, setAddress1] = useState("");
+  // const [address2, setAddress2] = useState("");
+  // const [zipCode, setZipCode] = useState(null);
+  // const [couponCode, setCouponCode] = useState("");
+  // const [couponCodeData, setCouponCodeData] = useState(null);
+  // const [discountPrice, setDiscountPrice] = useState(null);
+
+  const [state, dispatch] = useReducer(checkoutReducer, initialState);
+
+  const {
+    city,
+    country,
+    address1,
+    address2,
+    zipCode,
+    couponCode,
+    couponCodeData,
+    discountPrice,
+  } = state;
+
+  const setCity = (value) => {
+    dispatch({ type: "CITY", payload: value });
+  };
+  const setCountry = (value) => {
+    dispatch({ type: "COUNTRY", payload: value });
+  };
+  const setAddress1 = (value) => {
+    dispatch({ type: "ADDRESS1", payload: value });
+  };
+  const setAddress2 = (value) => {
+    dispatch({ type: "ADDRESS2", payload: value });
+  };
+  const setZipCode = (value) => {
+    dispatch({ type: "ZIPCODE", payload: value });
+  };
+  const setCouponCode = (value) => {
+    dispatch({ type: "COUPON_CODE", payload: value });
+  };
+  const setCouponCodeData = (value) => {
+    dispatch({ type: "COUPON_CODE_DATA", payload: value });
+  };
+  const setDiscountPrice = (value) => {
+    dispatch({ type: "DISCOUNT_PRICE", payload: value });
+  };
+  
+
+  const { error } = useToast();
+
   const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
@@ -26,28 +83,32 @@ const Checkout = () => {
   const [_, fetchData] = useHttp();
 
   const subTotalPrice = cart.reduce(
-    (acc, item) => acc + item.discountPrice * item.quantity,
+    (acc, item) => acc + item.price * item.quantity,
     0
   );
 
-  const discountPercentage = couponCodeData
-    ?  discountPrice
-    : "";
+  const discountPercentage = couponCodeData ? discountPrice : "";
 
   const shipping = subTotalPrice * 0.1;
 
   const totalPrice = discountPercentage
-    ? subTotalPrice+ shipping -discountPercentage 
+    ? subTotalPrice + shipping - discountPercentage
     : subTotalPrice + shipping;
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   const paymentSubmit = function () {
-    if(address1 === "" || address2 === "" || zipCode === null || country === "" || city === ""){
-     return toast.error("Please choose your delivery address!")
-   } 
+    if (
+      address1 === "" ||
+      address2 === "" ||
+      zipCode === null ||
+      country === "" ||
+      city === ""
+    ) {
+      return error("Please choose your delivery address!");
+    }
     const shippingAddress = {
       address1,
       address2,
@@ -64,12 +125,11 @@ const Checkout = () => {
       discountPercentage,
       shippingAddress,
       user,
-    }
+    };
 
     // update local storage with the updated orders array
     localStorage.setItem("latestOrder", JSON.stringify(orderData));
     navigate("/payment");
-   
   };
 
   const handleSubmit = async function (e) {
@@ -81,13 +141,12 @@ const Checkout = () => {
       const validProduct =
         cart && cart.filter((c) => c.shopId === data.coupon.shopId);
 
-
-      if(validProduct.length === 0){
-        throw new Error('This coupon is not eligible for this product')
+      if (validProduct.length === 0) {
+        throw new Error("This coupon is not eligible for this product");
       }
 
       const validProductPrice = validProduct.reduce(
-        (acc, p) => acc + (p.quantity * p.discountPrice),
+        (acc, p) => acc + p.quantity * p.discountPrice,
         0
       );
 
@@ -97,7 +156,7 @@ const Checkout = () => {
       setCouponCodeData(data.coupon);
       setCouponCode("");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   };
 

@@ -1,16 +1,22 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useReducer } from "react";
 import { useHttp } from "../../hooks/useHttp";
-import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+
 import socketIO from "socket.io-client";
 import { SOCKET_URL } from "../../../util/base";
 import MessageList from "../../inbox/MessageList";
 import Inbox from "../../inbox/Inbox";
+import { useToast } from "../../hooks/useToast";
 
 const socketId = socketIO(SOCKET_URL, { transports: ["websocket"] });
 
+
 const DashboardMessages = () => {
   const { seller, sellerToken } = useSelector((state) => state.seller);
+
+  const [activeStatus, setActiveStatus] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const [conversations, setConversations] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [currentChat, setCurrentChat] = useState();
@@ -18,12 +24,13 @@ const DashboardMessages = () => {
   const [userData, setUserData] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const [activeStatus, setActiveStatus] = useState(false);
   const [images, setImages] = useState();
-  const [open, setOpen] = useState(false);
+
   const scrollRef = useRef(null);
 
   const [isLoading, fetchData] = useHttp();
+
+  const { error } = useToast();
 
   socketId.on("getMessage", (data) => {
     setArrivalMessage({
@@ -48,7 +55,7 @@ const DashboardMessages = () => {
 
         setMessages(data.messages);
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
     };
     getMessages();
@@ -62,7 +69,7 @@ const DashboardMessages = () => {
         });
         setConversations(data.conversation);
       } catch (err) {
-        toast.error(err.message);
+        error(err.message);
       }
     };
     getConversation();
@@ -96,14 +103,14 @@ const DashboardMessages = () => {
           {
             "Content-Type": "application/json",
           },
-          JSON.stringify( message )
+          JSON.stringify(message)
         );
 
         setMessages((prev) => [...prev, data.messages]);
         updateLastMessage();
       }
     } catch (error) {
-      toast.error(error.message);
+      error(error.message);
     }
   };
 
@@ -140,7 +147,7 @@ const DashboardMessages = () => {
       );
       setNewMessage("");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   }
 
@@ -169,11 +176,11 @@ const DashboardMessages = () => {
         {},
         formData
       );
-      
+
       setMessages((prev) => [...prev, data.messages]);
       updateLastMessageForImage();
     } catch (error) {
-      toast.error(error.message);
+      error(error.message);
     }
   };
 
@@ -194,7 +201,7 @@ const DashboardMessages = () => {
       );
       setNewMessage("");
     } catch (err) {
-      toast.error(err.message);
+      error(err.message);
     }
   }
 

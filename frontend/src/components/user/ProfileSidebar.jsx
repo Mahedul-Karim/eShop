@@ -10,7 +10,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { TbAddressBook } from "react-icons/tb";
 import { useSelector, useDispatch } from "react-redux";
 import { BASE_URL } from "../../util/base";
-import toast from "react-hot-toast";
+import { useToast } from '../hooks/useToast'
 import { userActions } from "../../store/userSlice";
 
 function ProfileSidebar({ active, setActive }) {
@@ -18,6 +18,8 @@ function ProfileSidebar({ active, setActive }) {
   const { user } = useSelector(state=>state.auth);
 
   const navigate = useNavigate();
+
+  const { success,error } = useToast();
 
   const dispatch = useDispatch();
 
