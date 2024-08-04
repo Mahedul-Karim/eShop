@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 
 
 const Payment = () => {
+
   const [orderData, setOrderData] = useState([]);
   const [open, setOpen] = useState(false);
   const { user, token } = useSelector((state) => state.auth);
@@ -29,7 +30,7 @@ const Payment = () => {
 
   const navigate = useNavigate();
 
-  const [_, fetchData] = useHttp();
+  const [isLoading, fetchData] = useHttp();
 
   useEffect(() => {
     if (localStorage.getItem("latestOrder")) {
@@ -196,8 +197,8 @@ const Payment = () => {
 
   return (
     <div className="w-full flex flex-col items-center py-8">
-      <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
-        <div className="w-full 800px:w-[65%]">
+      <div className="w-full block 800px:flex">
+        <div className="w-full">
           <PaymentInfo
             user={user}
             open={open}
@@ -206,11 +207,10 @@ const Payment = () => {
             createOrder={createOrder}
             paymentHandler={paymentHandler}
             codHandler={codHandler}
+            isLoading={isLoading}
           />
         </div>
-        <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
-          <CartData orderData={orderData} />
-        </div>
+       
       </div>
     </div>
   );

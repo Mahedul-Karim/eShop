@@ -1,12 +1,11 @@
 import React from "react";
-import Footer from "../components/layout/Footer";
-import Header from "../components/layout/Header";
+
 
 const Success = () => {
   return (
-    <div>
-      {/* <Lottie options={defaultOptions} width={300} height={300} /> */}
-      <h5 className="text-center mb-14 text-[25px] text-[#000000a1]">
+    <div >
+     
+      <h5 className="text-center text-[25px] text-[#000000a1]">
         Your order is successful 😍
       </h5>
       <br />
@@ -17,7 +16,7 @@ const Success = () => {
 
 const OrderSuccessPage = () => {
   return (
-    <div>
+    <div className="h-[80vh] flex items-center justify-center">
       <Success />
     </div>
   );

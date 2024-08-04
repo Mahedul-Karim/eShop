@@ -1,10 +1,14 @@
 import React from "react";
 import { IoMdHome } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const BreadCrumb = ({ category, name }) => {
+
+  const navigate = useNavigate()
+
   return (
     <div className="flex items-center gap-1 md:gap-3 text-gray-400">
-      <button className="-mt-[4px]">
+      <button className="-mt-[4px]" onClick={()=>navigate('/')}>
         <IoMdHome className="text-[16px] 400px:text-[18px] sm:text-[20px]" />
       </button>
       <span className="text-[12px] sm:text-[14px]">/</span>

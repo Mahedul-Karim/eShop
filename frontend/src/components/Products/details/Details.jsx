@@ -13,6 +13,7 @@ const Details = ({
   removeFromWishlist,
   addToWishlist,
   handleCardAdd,
+  isInWishlist
 }) => {
   const handleScrollTo = () => {
     const selectedElement = document.getElementById("product__details");
@@ -120,18 +121,18 @@ const Details = ({
             Add to Cart
           </button>
           <button className="h-8 400px:h-10 border border-solid border-gray-700 rounded-md flex items-center justify-center w-[10%]">
-            {click ? (
+            {isInWishlist ? (
               <AiFillHeart
                 className="cursor-pointer text-[20px] 400px:text-[30px]"
                 onClick={() => removeFromWishlist(data._id)}
-                color={click ? "#e90074" : "#333"}
+                color={"#e90074"}
                 title="Remove from wishlist"
               />
             ) : (
               <AiOutlineHeart
                 className="cursor-pointer text-[20px] 400px:text-[30px]"
                 onClick={() => addToWishlist(data)}
-                color={click ? "#e90074" : "#333"}
+                color={"#333"}
                 title="Add to wishlist"
               />
             )}

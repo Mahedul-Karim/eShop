@@ -13,7 +13,7 @@ function Header() {
     <>
       <Container
         styles={
-          "hidden 800px:block border-b-[1px] border-solid border-grey-200 pb-2"
+          "hidden 800px:block border-b-[1px] border-solid pb-2"
         }
       >
         <div className="flex flex-row-reverse py-3">
@@ -22,7 +22,7 @@ function Header() {
       </Container>
 
       <Container
-        styles={` hidden 800px:flex items-center justify-between w-full h-[70px] bg-white shadow-sm`}
+        styles={`hidden 800px:flex items-center justify-between h-[70px] bg-white shadow-sm`}
       >
         <Nav />
       </Container>

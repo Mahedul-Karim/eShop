@@ -1,13 +1,10 @@
 import { useState } from "react";
-import styles from "../../util/style";
 import { Country, State } from "country-state-city";
 
 const ShippingInfo = ({
   user,
   country,
   setCountry,
-  userInfo,
-  setUserInfo,
   city,
   setCity,
   address1,
@@ -17,61 +14,61 @@ const ShippingInfo = ({
   zipCode,
   setZipCode,
 }) => {
-  
-
   return (
-    <div className="w-full 800px:w-[95%] bg-white rounded-md p-5 pb-8">
+    <div className="w-full bg-white rounded-md">
       <h5 className="text-[18px] font-[500]">Shipping Address</h5>
       <br />
       <form>
-        <div className="w-full flex pb-3">
-          <div className="w-[50%]">
+        <div className="w-full flex flex-col 400px:flex-row pb-3 gap-4">
+          <div className="400px:w-[50%]">
             <label className="block pb-2">Full Name</label>
             <input
               type="text"
               value={user && user.name}
+              disabled
               required
-              className={`${styles.input} !w-[95%]`}
+              className={`border p-1 rounded-[5px] w-full`}
             />
           </div>
-          <div className="w-[50%]">
+          <div className="400px:w-[50%]">
             <label className="block pb-2">Email Address</label>
             <input
               type="email"
               value={user && user.email}
+              disabled
               required
-              className={`${styles.input}`}
+              className={`w-full border p-1 rounded-[5px]`}
             />
           </div>
         </div>
 
-        <div className="w-full flex pb-3">
-          <div className="w-[50%]">
+        <div className="w-full flex flex-col 400px:flex-row pb-3 gap-4">
+          <div className="400px:w-[50%]">
             <label className="block pb-2">Phone Number</label>
             <input
               type="number"
               required
               value={user && user.phoneNumber}
-              className={`${styles.input} !w-[95%]`}
+              className={`border p-1 rounded-[5px] w-full`}
             />
           </div>
-          <div className="w-[50%]">
+          <div className="400px:w-[50%]">
             <label className="block pb-2">Zip Code</label>
             <input
               type="number"
               value={zipCode}
               onChange={(e) => setZipCode(e.target.value)}
               required
-              className={`${styles.input}`}
+              className={`w-full border p-1 rounded-[5px]`}
             />
           </div>
         </div>
 
-        <div className="w-full flex pb-3">
-          <div className="w-[50%]">
+        <div className="w-full flex flex-col 400px:flex-row pb-3 gap-4">
+          <div className="400px:w-[50%]">
             <label className="block pb-2">Country</label>
             <select
-              className="w-[95%] border h-[40px] rounded-[5px]"
+              className="w-full border h-[40px] rounded-[5px]"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             >
@@ -86,10 +83,10 @@ const ShippingInfo = ({
                 ))}
             </select>
           </div>
-          <div className="w-[50%]">
+          <div className="400px:w-[50%]">
             <label className="block pb-2">City</label>
             <select
-              className="w-[95%] border h-[40px] rounded-[5px]"
+              className="w-full border h-[40px] rounded-[5px]"
               value={city}
               onChange={(e) => setCity(e.target.value)}
             >
@@ -106,45 +103,45 @@ const ShippingInfo = ({
           </div>
         </div>
 
-        <div className="w-full flex pb-3">
-          <div className="w-[50%]">
+        <div className="w-full flex flex-col 400px:flex-row pb-3 gap-4">
+          <div className="400px:w-[50%]">
             <label className="block pb-2">Address1</label>
             <input
               type="address"
               required
               value={address1}
               onChange={(e) => setAddress1(e.target.value)}
-              className={`${styles.input} !w-[95%]`}
+              className={`border p-1 rounded-[5px] w-full`}
             />
           </div>
-          <div className="w-[50%]">
+          <div className="400px:w-[50%]">
             <label className="block pb-2">Address2</label>
             <input
               type="address"
               value={address2}
               onChange={(e) => setAddress2(e.target.value)}
               required
-              className={`${styles.input}`}
+              className={`w-full border p-1 rounded-[5px]`}
             />
           </div>
         </div>
-
-        <div></div>
       </form>
-      <h5
-        className="text-[18px] cursor-pointer inline-block"
-        onClick={() => setUserInfo((prev) => !prev)}
-      >
-        Choose From saved address
-      </h5>
-      {userInfo && (
-        <div>
-          {user &&
-            user.addresses.map((item, index) => (
-              <div className="w-full flex mt-1" key={index}>
+      {user.addresses.length !== 0 && (
+        <>
+          <h5
+            className="text-[18px] cursor-pointer inline-block"
+          >
+            Choose From saved address
+          </h5>
+
+          <div>
+            {user.addresses.map((item, index) => (
+              <div className="w-full flex mt-1 items-center" key={index}>
                 <input
-                  type="checkbox"
-                  className="mr-3"
+                  type="radio"
+                  className="mr-3 w-4 h-4 accent-primary"
+                  id={`address-${index}`}
+                  name={`address`}
                   value={item.addressType}
                   onClick={() =>
                     setAddress1(item.address1) ||
@@ -154,10 +151,14 @@ const ShippingInfo = ({
                     setCity(item.city)
                   }
                 />
-                <h2>{item.addressType}</h2>
+                
+                <label htmlFor={`address-${index}`} className="cursor-pointer text-lg">
+                  {item.addressType}
+                </label>
               </div>
             ))}
-        </div>
+          </div>
+        </>
       )}
     </div>
   );

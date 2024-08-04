@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useToast } from "../hooks/useToast";
 
 import { RxCross1 } from "react-icons/rx";
 
 import { useSelector } from "react-redux";
-
 
 const styles = {
   error: {
@@ -27,14 +26,13 @@ const styles = {
 const Toast = () => {
   const { toasts } = useSelector((state) => state.toast);
 
-
   const { removeToast } = useToast();
 
   return (
     <>
       <div
-        className="fixed inset-4 flex pointer-events-none flex-col justify-end items-end z-10 gap-4 overflow-x-clip"
-        id="toast__container"
+        className="fixed inset-4 flex pointer-events-none flex-col justify-end items-end z-[99999] gap-4 overflow-x-clip"
+        id="toast-container"
       >
         {toasts.length > 0 &&
           toasts.map((toast) => {
@@ -49,7 +47,7 @@ const Toast = () => {
                 <div className={`w-4 h-full ${bg}`} />
                 <div className="flex items-center justify-between w-full py-2">
                   <div className="flex flex-col pl-1">
-                    <h2 className={`${text} font-bold text-sm`}>{title}</h2>
+                    <h2 className={`${text} font-semibold text-sm`}>{title}</h2>
                     <p className="font-medium whitespace-pre-line">
                       {toast?.message}
                     </p>

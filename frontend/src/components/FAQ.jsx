@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
-import styles from "../util/style";
-
-
+import Container from "../util/Container";
 
 const FAQ = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -16,7 +14,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className={`${styles.section} my-8`}>
+    <Container styles={"my-8"}>
       <h2 className="text-3xl font-bold text-gray-900 mb-8">FAQ</h2>
       <div className="mx-auto space-y-4">
         {/* single Faq */}
@@ -62,10 +60,10 @@ const FAQ = () => {
           {activeTab === 2 && (
             <div className="mt-4">
               <p className="text-base text-gray-500">
-                If you&apos;re not satisfied with your purchase, we accept returns
-                within 30 days of delivery. To initiate a return, please email
-                us at support@myecommercestore.com with your order number and a
-                brief explanation of why you&apos;re returning the item.
+                If you&apos;re not satisfied with your purchase, we accept
+                returns within 30 days of delivery. To initiate a return, please
+                email us at support@myecommercestore.com with your order number
+                and a brief explanation of why you&apos;re returning the item.
               </p>
             </div>
           )}
@@ -212,8 +210,8 @@ const FAQ = () => {
               <p className="text-base text-gray-500">
                 Unfortunately, once an order has been placed, we are not able to
                 make changes or cancellations. If you no longer want the items
-                you&apos;ve ordered, you can return them for a refund within 30 days
-                of delivery.
+                you&apos;ve ordered, you can return them for a refund within 30
+                days of delivery.
               </p>
             </div>
           )}
@@ -314,7 +312,7 @@ const FAQ = () => {
           )}
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

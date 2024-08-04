@@ -1,13 +1,12 @@
 import React from "react";
-import SearchBar from "../SearchBar";
 import { RxCross1 } from "react-icons/rx";
 import Nav from "../../nav/Nav";
 import SellerLink from "../SellerLink";
 
-function HeaderSidebar({ setOpen, activePage }) {
+function HeaderSidebar({ setOpen }) {
   return (
     <>
-      <div className="w-full justify-between flex pr-3 items-center mx-3 flex-row-reverse">
+      <div className="w-full justify-between flex pr-6 items-center mx-3 flex-row-reverse">
         
         <RxCross1
           size={30}
@@ -17,7 +16,7 @@ function HeaderSidebar({ setOpen, activePage }) {
       </div>
       
 
-      <Nav />
+      <Nav setOpen={setOpen}/>
       <br />
       <br />
       <br />

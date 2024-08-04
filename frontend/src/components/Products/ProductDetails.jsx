@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "../../store/cartSlice";
 import { wishlistAction } from "../../store/wishlistSlice";
-import { useToast } from '../hooks/useToast'
+import { useToast } from "../hooks/useToast";
 import { useHttp } from "../hooks/useHttp";
 import BreadCrumb from "./details/BreadCrumb";
 import Gallery from "./details/Gallery";
@@ -12,16 +12,14 @@ import Details from "./details/Details";
 import Description from "./details/Description";
 import Reviews from "./details/Reviews";
 
-
-
 const ProductDetails = ({ data }) => {
   const [count, setCount] = useState(1);
-  const [click, setClick] = useState(false);
+
   const { user, token } = useSelector((state) => state.auth);
 
   const [_, fetchData] = useHttp();
 
-  const { success,error } = useToast();
+  const { success, error, warning } = useToast();
 
   const navigate = useNavigate();
 
@@ -54,30 +52,30 @@ const ProductDetails = ({ data }) => {
   const dispatch = useDispatch();
 
   const { wishlist } = useSelector((state) => state.wishlist);
+  const { cart } = useSelector((state) => state.cart);
 
-  useEffect(() => {
-    if (wishlist && wishlist.find((w) => w._id === data?._id)) {
-      setClick(true);
-    } else {
-      setClick(false);
-    }
-  }, [wishlist]);
+  const isInWishlist = !!wishlist?.find((w) => w._id === data?._id);
+  const isInCart = !!cart?.find((c) => c._id === data?._id);
 
   const handleCardAdd = function (product) {
+    if (isInCart) {
+      error("Product is already in the cart");
+      return;
+    }
+
     dispatch(cartAction.addToCart({ ...product, quantity: count }));
     success("Product added to cart");
   };
 
   const addToWishlist = function (product) {
-    setClick(true);
     dispatch(wishlistAction.addTowishlist(product));
+    success("Product was added to wislist");
   };
 
   const removeFromWishlist = function (id) {
-    setClick(false);
     dispatch(wishlistAction.removewishlistItem(id));
+    warning("Product was removed from wishlist");
   };
-
 
   return (
     <div className="my-6">
@@ -85,7 +83,6 @@ const ProductDetails = ({ data }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8">
         <Gallery images={data?.images} />
         <Details
-          click={click}
           setCount={setCount}
           data={data}
           avgRating={data?.ratings}
@@ -94,12 +91,14 @@ const ProductDetails = ({ data }) => {
           removeFromWishlist={removeFromWishlist}
           addToWishlist={addToWishlist}
           handleCardAdd={handleCardAdd}
+          isInWishlist={isInWishlist}
         />
       </div>
       <Description description={data?.description} />
-      <Reviews avgRating={data?.ratings} reviews={data?.reviews}/>
+      {data?.reviews?.length > 0 && (
+        <Reviews  reviews={data?.reviews} />
+      )}
     </div>
-    
   );
 };
 

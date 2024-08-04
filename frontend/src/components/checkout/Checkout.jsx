@@ -1,169 +1,24 @@
 import React, { useReducer, useState } from "react";
-import styles from "../../util/style";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import ShippingInfo from "./ShippingInfo";
-import CartData from "../cart/CartData";
-import { useHttp } from "../hooks/useHttp";
-import { useToast } from "../hooks/useToast";
-import { checkoutReducer } from "../../reducers/reducers";
 
-const initialState = {
-  city: "",
-  country: "",
-  address1: "",
-  address2: "",
-  zipCode: null,
-  couponCode: "",
-  couponCodeData: null,
-  discountPrice: null,
-};
-
-
-
-const Checkout = () => {
-  const [userInfo, setUserInfo] = useState(false);
-
-  // const [city, setCity] = useState("");
-  // const [country, setCountry] = useState("");
-  // const [address1, setAddress1] = useState("");
-  // const [address2, setAddress2] = useState("");
-  // const [zipCode, setZipCode] = useState(null);
-  // const [couponCode, setCouponCode] = useState("");
-  // const [couponCodeData, setCouponCodeData] = useState(null);
-  // const [discountPrice, setDiscountPrice] = useState(null);
-
-  const [state, dispatch] = useReducer(checkoutReducer, initialState);
-
-  const {
-    city,
-    country,
-    address1,
-    address2,
-    zipCode,
-    couponCode,
-    couponCodeData,
-    discountPrice,
-  } = state;
-
-  const setCity = (value) => {
-    dispatch({ type: "CITY", payload: value });
-  };
-  const setCountry = (value) => {
-    dispatch({ type: "COUNTRY", payload: value });
-  };
-  const setAddress1 = (value) => {
-    dispatch({ type: "ADDRESS1", payload: value });
-  };
-  const setAddress2 = (value) => {
-    dispatch({ type: "ADDRESS2", payload: value });
-  };
-  const setZipCode = (value) => {
-    dispatch({ type: "ZIPCODE", payload: value });
-  };
-  const setCouponCode = (value) => {
-    dispatch({ type: "COUPON_CODE", payload: value });
-  };
-  const setCouponCodeData = (value) => {
-    dispatch({ type: "COUPON_CODE_DATA", payload: value });
-  };
-  const setDiscountPrice = (value) => {
-    dispatch({ type: "DISCOUNT_PRICE", payload: value });
-  };
-  
-
-  const { error } = useToast();
-
-  const navigate = useNavigate();
-
-  const { user } = useSelector((state) => state.auth);
-  const { cart } = useSelector((state) => state.cart);
-
-  const [_, fetchData] = useHttp();
-
-  const subTotalPrice = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-
-  const discountPercentage = couponCodeData ? discountPrice : "";
-
-  const shipping = subTotalPrice * 0.1;
-
-  const totalPrice = discountPercentage
-    ? subTotalPrice + shipping - discountPercentage
-    : subTotalPrice + shipping;
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
-
-  const paymentSubmit = function () {
-    if (
-      address1 === "" ||
-      address2 === "" ||
-      zipCode === null ||
-      country === "" ||
-      city === ""
-    ) {
-      return error("Please choose your delivery address!");
-    }
-    const shippingAddress = {
-      address1,
-      address2,
-      zipCode,
-      country,
-      city,
-    };
-
-    const orderData = {
-      cart,
-      totalPrice,
-      subTotalPrice,
-      shipping,
-      discountPercentage,
-      shippingAddress,
-      user,
-    };
-
-    // update local storage with the updated orders array
-    localStorage.setItem("latestOrder", JSON.stringify(orderData));
-    navigate("/payment");
-  };
-
-  const handleSubmit = async function (e) {
-    e.preventDefault();
-
-    try {
-      const data = await fetchData(`coupon/shop/${couponCode}`);
-
-      const validProduct =
-        cart && cart.filter((c) => c.shopId === data.coupon.shopId);
-
-      if (validProduct.length === 0) {
-        throw new Error("This coupon is not eligible for this product");
-      }
-
-      const validProductPrice = validProduct.reduce(
-        (acc, p) => acc + p.quantity * p.discountPrice,
-        0
-      );
-
-      const discountedPrice = (validProductPrice * data.coupon.value) / 100;
-
-      setDiscountPrice(discountedPrice);
-      setCouponCodeData(data.coupon);
-      setCouponCode("");
-    } catch (err) {
-      error(err.message);
-    }
-  };
-
+const Checkout = ({
+  user,
+  city,
+  setCity,
+  address1,
+  setAddress1,
+  address2,
+  setAddress2,
+  zipCode,
+  setZipCode,
+  country,
+  setCountry,
+  paymentSubmit,
+}) => {
   return (
-    <div className="w-full flex flex-col items-center py-8">
-      <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
-        <div className="w-full 800px:w-[65%]">
+    <div className="w-full flex flex-col py-8">
+      <div className="block 800px:flex">
+        <div className="w-full">
           <ShippingInfo
             user={user}
             city={city}
@@ -176,28 +31,15 @@ const Checkout = () => {
             setZipCode={setZipCode}
             country={country}
             setCountry={setCountry}
-            userInfo={userInfo}
-            setUserInfo={setUserInfo}
-          />
-        </div>
-        <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
-          <CartData
-            handleSubmit={handleSubmit}
-            couponCode={couponCode}
-            setCouponCode={setCouponCode}
-            totalPrice={totalPrice.toFixed(2)}
-            subTotalPrice={subTotalPrice.toFixed(2)}
-            discountPercentage={discountPercentage}
-            shipping={shipping}
           />
         </div>
       </div>
-      <div
-        className={`${styles.button} w-[150px] 800px:w-[280px] mt-10`}
+      <button
+        className={`bg-primary h-[50px] my-3 flex items-center justify-center rounded-xl self-start px-3`}
         onClick={paymentSubmit}
       >
         <h5 className="text-white">Go to Payment</h5>
-      </div>
+      </button>
     </div>
   );
 };

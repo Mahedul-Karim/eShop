@@ -7,7 +7,7 @@ export const useToast = () => {
   const dispatch = useDispatch();
 
   const removeToast = (id, timeout) => {
-    const container = document.getElementById("toast__container");
+    const container = document.getElementById("toast-container");
 
     if (!container) {
       return;

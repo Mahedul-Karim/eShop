@@ -1,71 +1,52 @@
 import React from "react";
-import styles from "../../util/style";
+import { FaChevronRight } from "react-icons/fa6";
 
 const CheckoutSteps = ({ active }) => {
-  
   return (
-    <div className="w-full flex justify-center">
-      <div className="w-[90%] 800px:w-[50%] flex items-center flex-wrap">
-        <div className={`${styles.noramlFlex}`}>
-          <div className={`${styles.cart_button}`}>
-            <span className={`${styles.cart_button_text}`}>1.Shipping</span>
-          </div>
-          <div
-            className={`${
-              active > 1
-                ? "w-[30px] 800px:w-[70px] h-[4px] !bg-[#f63b60]"
-                : "w-[30px] 800px:w-[70px] h-[4px] !bg-[#FDE1E6]"
-            }`}
-          />
+    <div className="flex items-center justify-center gap-2">
+      <div className="flex flex-col relative items-center justify-center">
+        <div
+          className={`w-8 h-8 border border-solid  rounded-full flex items-center justify-center ${
+            active >= 1
+              ? "border-primary text-white bg-primary font-semibold"
+              : "bg-none text-black border-black font-normal"
+          }`}
+        >
+          1
         </div>
-
-        <div className={`${styles.noramlFlex}`}>
-          <div
-            className={`${
-              active > 1
-                ? `${styles.cart_button}`
-                : `${styles.cart_button} !bg-[#FDE1E6]`
-            }`}
-          >
-            <span
-              className={`${
-                active > 1
-                  ? `${styles.cart_button_text}`
-                  : `${styles.cart_button_text} !text-[#f63b60]`
-              }`}
-            >
-              2.Payment
-            </span>
-          </div>
-        </div>
-
-        <div className={`${styles.noramlFlex}`}>
-          <div
-            className={`${
-              active > 3
-                ? "w-[30px] 800px:w-[70px] h-[4px] !bg-[#f63b60]"
-                : "w-[30px] 800px:w-[70px] h-[4px] !bg-[#FDE1E6]"
-            }`}
-          />
-          <div
-            className={`${
-              active > 2
-                ? `${styles.cart_button}`
-                : `${styles.cart_button} !bg-[#FDE1E6]`
-            }`}
-          >
-            <span
-              className={`${
-                active > 2
-                  ? `${styles.cart_button_text}`
-                  : `${styles.cart_button_text} !text-[#f63b60]`
-              }`}
-            >
-              3.Success
-            </span>
-          </div>
-        </div>
+        <p
+          className={`absolute -bottom-5 text-xs ${
+            active >= 1 ? "text-primary" : "text-black"
+          }`}
+        >
+          Checkout
+        </p>
       </div>
+
+      <div
+        className={`basis-[30%] border border-dashed ${
+          active === 2 ? "border-primary" : "border-black"
+        }`}
+      ></div>
+      <div className="flex flex-col relative items-center justify-center">
+        <div
+          className={`w-8 h-8 border border-solid  rounded-full flex items-center justify-center ${
+            active === 2
+              ? "border-primary text-white bg-primary"
+              : "bg-none text-black border-black"
+          }`}
+        >
+          2
+        </div>
+        <p
+          className={`absolute -bottom-5 text-xs ${
+            active === 2 ? "text-primary" : "text-black"
+          }`}
+        >
+          Payment
+        </p>
+      </div>
+      
     </div>
   );
 };

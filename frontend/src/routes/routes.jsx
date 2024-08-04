@@ -40,8 +40,6 @@ import ShopProducts from "../pages/dashboard/ShopProducts";
 import ShopOrders from "../pages/shop/ShopOrders";
 import ShopOrderDetails from "../pages/shop/ShopOrdersDetails";
 import CreateCoupons from "../pages/dashboard/CreateCoupon";
-import StripeRoutes from "./StripeRoutes";
-import PaymentPage from "../pages/PaymentPage";
 import Products from "../pages/Products";
 import Main from "../pages/Main";
 import Wishlist from "../components/wishlist/WishList";
@@ -328,12 +326,5 @@ export const router = createBrowserRouter([
       </SellerRoutes>
     ),
   },
-  {
-    path: "/payment",
-    element: (
-      <StripeRoutes>
-        <PaymentPage />
-      </StripeRoutes>
-    ),
-  },
+  
 ]);

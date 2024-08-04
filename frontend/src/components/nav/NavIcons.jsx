@@ -1,8 +1,4 @@
-import { useState } from "react";
-import styles from "../../util/style";
 import { useSelector } from "react-redux";
-import Cart from "../cart/Cart";
-import Wishlist from "../wishlist/WishList";
 import UserAvatar from "../ui/UserAvatar";
 import { CiHeart, CiShoppingCart, CiSearch } from "react-icons/ci";
 import SearchIcon from "../ui/SearchIcon";
@@ -16,7 +12,7 @@ function NavIcons() {
     <div className="flex items-center gap-2">
       <SearchIcon extraClass={"hidden 800px:inline-block"} />
 
-      <div className={`${styles.noramlFlex}`}>
+      <div className={`flex items-center`}>
         <Link
           to={"/wishlist"}
           className="hidden 800px:inline-block relative 800px:cursor-pointer"
@@ -29,7 +25,7 @@ function NavIcons() {
         </Link>
       </div>
 
-      <div className={`${styles.noramlFlex}`}>
+      <div className={`flex items-center`}>
         <Link
           className="hidden 800px:inline-block relative cursor-pointer"
           to={"/cart"}
@@ -40,7 +36,7 @@ function NavIcons() {
           </span>
         </Link>
       </div>
-      <div className={`${styles.noramlFlex}`}>
+      <div className={`flex items-center`}>
         <div className="relative cursor-pointer hidden 800px:block">
           <UserAvatar />
         </div>

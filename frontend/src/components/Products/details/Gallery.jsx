@@ -77,7 +77,7 @@ const Gallery = ({ images }) => {
 
     finalTranslate = initialTranslate + (movingPoint - clickedPoint);
 
-    containerRef.current.style.transform = `translateX(${finalTranslate * 2}px)`;
+    containerRef.current.style.transform = `translateX(${finalTranslate}px)`;
   };
 
   return (
@@ -102,7 +102,7 @@ const Gallery = ({ images }) => {
               <img
                 src={img.url}
                 alt=""
-                className="w-full object-contain h-[200px] 400px:h-[350px] sm:h-[380px] bg-slate-100"
+                className="w-full object-contain h-[200px] 400px:h-[350px] sm:h-[380px] bg-white"
                 onDragStart={(e) => e.preventDefault()}
               />
             </div>
