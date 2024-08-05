@@ -1,6 +1,6 @@
 
-import { brandingData } from "../util/data";
-import Container from "../util/Container";
+import { brandingData } from "../../util/data"; 
+import Container from "../../util/Container";
 
 function Branding() {
   return (

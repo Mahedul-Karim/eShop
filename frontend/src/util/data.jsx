@@ -235,7 +235,32 @@ export const categoriesData = [
   },
 ];
 
-
+export const status = {
+  delivered: {
+    bg: "bg-green-100",
+    text: "text-green-700",
+  },
+  shipping: {
+    bg: "bg-blue-100",
+    text: "text-blue-700",
+  },
+  processing: {
+    bg: "bg-slate-100",
+    text: "text-slate-700",
+  },
+  received: {
+    bg: "bg-yellow-100",
+    text: "text-yellow-700",
+  },
+  transferredtodeliverypartner: {
+    bg: "bg-red-100",
+    text: "text-red-700",
+  },
+  processingrefund:{
+    bg: "bg-green-100",
+    text: "text-green-700",
+  }
+};
 
 
 export const footerProductLinks = [

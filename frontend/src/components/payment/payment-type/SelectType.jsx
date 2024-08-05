@@ -15,7 +15,7 @@ const SelectType = ({ select, setSelect, value, title }) => {
         className="text-[16px] pl-2 font-[600] text-[#000000b1] cursor-pointer"
         onClick={setSelect}
       >
-        Pay with Debit/credit card
+        {title}
       </h4>
     </div>
   );

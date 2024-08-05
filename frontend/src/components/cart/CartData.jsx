@@ -11,7 +11,7 @@ const CartData = ({
 }) => {
   const [orderData, setOrderData] = useState([]);
 
-  console.log(cart);
+ 
 
   useEffect(() => {
     if (localStorage.getItem("latestOrder")) {

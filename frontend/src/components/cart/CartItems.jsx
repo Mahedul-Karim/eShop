@@ -8,7 +8,7 @@ import TableGrid from "../ui/table/Grid";
 import TableActions from "../ui/table/TableActions";
 
 const CartItems = ({ data, index }) => {
-  const [value, setValue] = useState(1);
+  
   const totalPrice = data?.price * data?.quantity;
 
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import EventCard from "./layout/EventCard";
+import EventCard from "./EventCard";
 
 
 function Events() {

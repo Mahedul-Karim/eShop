@@ -1,5 +1,5 @@
 import React from "react";
-import EventCard from "../components/layout/EventCard";
+import EventCard from "../components/home/EventCard";
 
 
 const EventsPage = () => {

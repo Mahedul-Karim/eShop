@@ -1,7 +1,5 @@
 import { RxCross1 } from "react-icons/rx";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import CreditCard from "./payment-type/CreditCard";
 import SelectType from "./payment-type/SelectType";
 import Paypal from "./payment-type/Paypal";

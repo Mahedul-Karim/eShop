@@ -1,8 +1,8 @@
-import Events from "../components/Events";
+import Events from "../components/home/Events";
 import HomeProducts from "../components/Products/HomeProducts";
-import Category from "../components/layout/Category";
-import Hero from "../components/layout/Hero";
-import Branding from "../components/Branding";
+import Category from "../components/home/Category";
+import Hero from "../components/home/Hero";
+import Branding from "../components/home/Branding";
 import NewsLetter from "../components/newsletter/NewsLetter";
 import FeaturedProducts from "../components/Products/FeaturedProducts";
 

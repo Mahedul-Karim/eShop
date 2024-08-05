@@ -112,7 +112,7 @@ exports.logout = catchAsync(async (req, res, next) => {
     status: "success",
     user: null,
     token: null,
-    message: "User loggedut!",
+    message: "User logged Out Successfully!",
   });
 });
 
@@ -131,10 +131,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide correct password"));
   }
 
-  fs.unlink(
-    `public/${user.avatar.url.split("/").slice(3).join("/")}`,
-    () => {}
-  );
+ 
 
   user.name = name;
   user.email = email;

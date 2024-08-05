@@ -12,8 +12,8 @@ function Modal({ children, onClick, extraClass, open }) {
       <div
         className={`${
           extraClass ? extraClass : "w-full md:w-[80%]"
-        }  bg-white rounded-md shadow-lg overflow-y-scroll relative duration-300 delay-200 transition-all origin-center ${
-          open ? "h-[80vh] md:h-[60vh] p-6 visible" : "h-0 p-0 invisible"
+        }  bg-white rounded-md shadow-lg overflow-y-scroll relative duration-300 delay-200 transition-all  ${
+          open ? "h-[60vh] p-6 visible" : "h-0 p-0 invisible"
         }`}
         id="modal"
       >

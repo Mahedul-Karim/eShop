@@ -18,7 +18,6 @@ function ProfileContent({ active }) {
   const [email, setEmail] = useState(user?.email);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [profileImage, setProfileImage] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState();
   const [_, fetchData] = useHttp();
 
@@ -28,7 +27,7 @@ function ProfileContent({ active }) {
 
   const handleImage = (e) => {
     const fileReader = new FileReader();
-    setProfileImage(e);
+  
     fileReader.onload = () => {
       if (fileReader.readyState === 2) {
         setAvatarPreview(fileReader.result);
@@ -59,7 +58,7 @@ function ProfileContent({ active }) {
         })
       );
 
-      setProfileImage(null);
+      
       dispatch(
         userActions.userRequestSuccess({ user: data.user, token: data.token })
       );

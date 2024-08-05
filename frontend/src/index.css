@@ -10,7 +10,7 @@
 }
 body {
   /* scroll-behavior: smooth; */
-  font-family: "Poppins",sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 input,
 select {
@@ -98,30 +98,27 @@ input[type="number"] {
   @apply text-white bg-secondary;
 }
 
-
-
 .swiper-slide {
   width: 100% !important;
 }
 .swiper-pagination-bullet-active {
   background-color: #e90074 !important;
 }
-.swiper-pagination-bullet{
+.swiper-pagination-bullet {
   width: 30px !important;
   border-radius: 10px !important;
   height: 5px !important;
-
 }
-input[type="range"]{
-  width:100%;
-  position:absolute;
+input[type="range"] {
+  width: 100%;
+  position: absolute;
   top: -5px;
   left: 0;
   background: none;
   pointer-events: none;
   appearance: none;
 }
-input[type="range"]::-webkit-slider-thumb{
+input[type="range"]::-webkit-slider-thumb {
   height: 20px;
   width: 20px;
   border-radius: 50%;
@@ -131,7 +128,7 @@ input[type="range"]::-webkit-slider-thumb{
   appearance: none;
   transition: all 0.3s;
 }
-input[type="range"]::-moz-range-thumb{
+input[type="range"]::-moz-range-thumb {
   height: 20px;
   width: 20px;
   border-radius: 50%;
@@ -141,43 +138,46 @@ input[type="range"]::-moz-range-thumb{
   appearance: none;
   transition: all 0.3s;
 }
-input[type="range"]::-webkit-slider-thumb:hover{
-  box-shadow: 0 0 6px #E90074;
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 6px #e90074;
   cursor: grab;
 }
-input[type="range"]::-moz-range-thumb:hover{
-  box-shadow: 0 0 6px #E90074;
+input[type="range"]::-moz-range-thumb:hover {
+  box-shadow: 0 0 6px #e90074;
   cursor: grab;
 }
-input[type="range"]::-webkit-slider-thumb:active{
+input[type="range"]::-webkit-slider-thumb:active {
   cursor: grabbing;
 }
-input[type="range"]::-moz-range-thumb:active{
+input[type="range"]::-moz-range-thumb:active {
   cursor: grabbing;
 }
 
-.slide{
+.slide {
   animation: slider 0.3s forwards;
 }
 
-.no-slide{
+.no-slide {
   animation: no-slider 0.3s forwards;
 }
 
-@keyframes no-slider{
-  0%{
+@keyframes no-slider {
+  0% {
     transform: translateX(0%);
   }
-  100%{
-    transform: translateX(100%);
+  50% {
+    transform: translateX(-80px);
+  }
+  100% {
+    transform: translateX(calc(100% + 80px));
   }
 }
 
-@keyframes slider{
-  0%{
+@keyframes slider {
+  0% {
     transform: translateX(100%);
   }
-  100%{
+  100% {
     transform: translateX(0%);
   }
 }
