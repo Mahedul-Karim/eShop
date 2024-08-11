@@ -1,11 +1,12 @@
 import Header from "../components/layout/Header";
 import ProfileSidebar from "../components/user/ProfileSidebar";
-import ProfileContent from "../components/user/ProfileContent";
 import { useState } from "react";
 import Container from "../util/Container";
+import { Outlet } from "react-router-dom";
+import Fallback from "../routes/Fallback";
 
 function Profile() {
-    const [active,setActive]=useState(1);
+  const [active, setActive] = useState(0);
   return (
     <>
       <Header />
@@ -13,7 +14,11 @@ function Profile() {
         <div className="w-[80px] sm:w-[335px] border-r border-solid">
           <ProfileSidebar active={active} setActive={setActive} />
         </div>
-        <ProfileContent active={active} />
+        <div className="w-full">
+          <Fallback>
+            <Outlet />
+          </Fallback>
+        </div>
       </Container>
     </>
   );

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { DataGrid } from "@material-ui/data-grid";
 import { BsPencil } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../../util/style";
@@ -8,6 +6,20 @@ import styles from "../../../util/style";
 import { useHttp } from "../../hooks/useHttp";
 import { useSelector } from "react-redux";
 import { useToast } from "../../hooks/useToast";
+import Table from "../../layout/data-table/Table";
+import { formatDate } from "../../../util/helpers";
+import Loading from "../common/Loading";
+
+const status = {
+  processing: {
+    bg: "bg-violet-100",
+    text: "text-violet-700",
+  },
+  succeed: {
+    bg: "bg-green-100",
+    text: "text-green-700",
+  },
+};
 
 const AllWithdraw = () => {
   const { token } = useSelector((state) => state.auth);
@@ -19,7 +31,7 @@ const AllWithdraw = () => {
 
   const [isLoading, fetchData] = useHttp();
 
-  const { success,error } = useToast()
+  const { success, error } = useToast();
 
   useEffect(() => {
     const getAllWithdraw = async function () {
@@ -31,72 +43,23 @@ const AllWithdraw = () => {
     getAllWithdraw();
   }, []);
 
-  const columns = [
-    { field: "id", headerName: "Withdraw Id", minWidth: 150, flex: 0.7 },
-    {
-      field: "name",
-      headerName: "Shop Name",
-      minWidth: 180,
-      flex: 1.4,
-    },
-    {
-      field: "shopId",
-      headerName: "Shop Id",
-      minWidth: 180,
-      flex: 1.4,
-    },
-    {
-      field: "amount",
-      headerName: "Amount",
-      minWidth: 100,
-      flex: 0.6,
-    },
-    {
-      field: "status",
-      headerName: "status",
-      type: "text",
-      minWidth: 80,
-      flex: 0.5,
-    },
-    {
-      field: "createdAt",
-      headerName: "Request given at",
-      type: "number",
-      minWidth: 130,
-      flex: 0.6,
-    },
-    {
-      field: " ",
-      headerName: "Update Status",
-      type: "number",
-      minWidth: 130,
-      flex: 0.6,
-      renderCell: (params) => {
-        return (
-          <BsPencil
-            size={20}
-            className={`${
-              params.row.status !== "Processing" ? "hidden" : ""
-            } mr-5 cursor-pointer`}
-            onClick={() => setOpen(true) || setWithdrawData(params.row)}
-          />
-        );
-      },
-    },
-  ];
+  
 
   const handleSubmit = async () => {
     try {
       const updateWithdraw = await fetchData(
-        `withdraw/${withdrawData.id}`,
+        `withdraw/${withdrawData._id}`,
         "PATCH",
         {
           "Content-Type": "application/json",
           authorization: `Bearer ${token}`,
         },
-        JSON.stringify({ sellerId: withdrawData.shopId })
+        JSON.stringify({ sellerId: withdrawData.seller._id })
       );
-      setData(prev=>[...prev,updateWithdraw.withdraw]);
+      setData((prev) => [
+        ...prev.filter((data) => data._id !== withdrawData._id),
+        updateWithdraw.withdraw,
+      ]);
       success("Payment status updated");
       setOpen(false);
     } catch (err) {
@@ -104,61 +67,123 @@ const AllWithdraw = () => {
     }
   };
 
-  const row = [];
-
-  data &&
-    data.length !== 0 &&
-    data?.forEach((item) => {
-      row.push({
-        id: item._id,
-        shopId: item.seller._id,
-        name: item.seller.name,
-        amount: "US$ " + item.amount,
-        status: item.status,
-        createdAt: item.createdAt.slice(0, 10),
-      });
-    });
+  
   return (
-    <div className="w-full flex items-center pt-5 justify-center">
-      <div className="w-[95%] bg-white">
-        <DataGrid
-          rows={row}
-          columns={columns}
-          pageSize={10}
-          disableSelectionOnClick
-          autoHeight
-        />
-      </div>
-      {open && (
-        <div className="w-full fixed h-screen top-0 left-0 bg-[#00000031] z-[9999] flex items-center justify-center">
-          <div className="w-[50%] min-h-[40vh] bg-white rounded shadow p-4">
-            <div className="flex justify-end w-full cursor-pointer">
-              <RxCross1 size={25} onClick={() => setOpen(false)} />
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="pt-5">
+          {data?.length > 0 ? (
+            <div className="border border-solid border-gray-200 rounded-md text-xs md:text-sm text-black/[0.87] font-Roboto">
+              <Table
+                extraStyles="hidden lg:grid border-b border-solid font-semibold bg-gray-100"
+                columns={"grid-cols-[0.2fr_0.3fr_0.1fr_0.2fr_0.2fr_0.1fr]"}
+              >
+                <div>Shop Name</div>
+                <div>Withdraw Id</div>
+                <div>Amount</div>
+                <div>Requested At</div>
+                <div>Status</div>
+                <div />
+              </Table>
+              {data.map((req, id) => {
+                const { bg, text } = status[req?.status?.toLowerCase()];
+                return (
+                  <Table
+                    extraStyles="border-b border-solid items-center gap-3 lg:gap-0"
+                    key={req._id}
+                    columns={
+                      "lg:grid-cols-[0.2fr_0.3fr_0.1fr_0.2fr_0.2fr_0.1fr]"
+                    }
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm inline-block lg:hidden">
+                        Name:
+                      </p>
+                      <p>{req?.seller?.name}</p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm inline-block lg:hidden">
+                        Id:
+                      </p>
+                      {req?._id}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm inline-block lg:hidden">
+                        Amount:
+                      </p>
+                      ${req?.amount}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm inline-block lg:hidden">
+                        At:
+                      </p>
+                      {formatDate(req?.createdAt)}
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm inline-block lg:hidden">
+                        Status:
+                      </p>
+                      <p
+                        className={`flex items-center justify-center uppercase font-semibold w-fit px-2 md:px-4 rounded-full py-[0.5px] md:py-1 text-[10px] md:text-[11px] ${bg} ${text} whitespace-nowrap max-w-full`}
+                      >
+                        {req?.status?.toLowerCase()}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setOpen(true) || setWithdrawData(req)}
+                      className={`${
+                        req?.status?.toLowerCase() === "succeed"
+                          ? "hidden"
+                          : "flex"
+                      } items-center justify-end lg:justify-normal`}
+                    >
+                      <BsPencil />
+                    </button>
+                  </Table>
+                );
+              })}
             </div>
-            <h1 className="text-[25px] text-center font-Poppins">
-              Update Withdraw status
-            </h1>
-            <br />
-            <select
-              name=""
-              id=""
-              onChange={(e) => setWithdrawStatus(e.target.value)}
-              className="w-[200px] h-[35px] border rounded"
-            >
-              <option value={withdrawStatus}>{withdrawData.status}</option>
-              <option value={withdrawStatus}>Succeed</option>
-            </select>
-            <button
-              type="submit"
-              className={`block ${styles.button} text-white !h-[42px] mt-4 text-[18px]`}
-              onClick={handleSubmit}
-            >
-              Update
-            </button>
-          </div>
+          ) : (
+            <div className="flex items-center justify-center text-lg h-full">
+              <p>No users were found!</p>
+            </div>
+          )}
+
+          {open && (
+            <div className="w-full fixed h-screen top-0 left-0 bg-[#00000031] z-[9999] flex items-center justify-center">
+              <div className="w-[50%] min-h-[40vh] bg-white rounded shadow p-4">
+                <div className="flex justify-end w-full cursor-pointer">
+                  <RxCross1 size={25} onClick={() => setOpen(false)} />
+                </div>
+                <h1 className="text-[25px] text-center font-Poppins">
+                  Update Withdraw status
+                </h1>
+                <br />
+                <select
+                  name=""
+                  id=""
+                  onChange={(e) => setWithdrawStatus(e.target.value)}
+                  className="w-[200px] h-[35px] border rounded"
+                >
+                  <option value={withdrawStatus}>{withdrawData.status}</option>
+                  <option value={withdrawStatus}>Succeed</option>
+                </select>
+                <button
+                  type="submit"
+                  className={`block ${styles.button} text-white !h-[42px] mt-4 text-[18px]`}
+                  onClick={handleSubmit}
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

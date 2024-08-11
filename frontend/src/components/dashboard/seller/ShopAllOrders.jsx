@@ -1,13 +1,11 @@
-import { Button } from "@material-ui/core";
-import { DataGrid } from "@material-ui/data-grid";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import Loader from "../../../util/Loader";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import { useHttp } from "../../hooks/useHttp";
 import { orderActions } from "../../../store/orderSlice";
 import { useToast } from "../../hooks/useToast";
+import Loading from "../common/Loading";
+import TableBody from "../../layout/data-table/TableBody";
+import Table from "../../layout/data-table/Table";
 
 const ShopAllOrders = () => {
   const { orders } = useSelector((state) => state.order);
@@ -17,7 +15,7 @@ const ShopAllOrders = () => {
 
   const dispatch = useDispatch();
 
-  const { error } = useToast()
+  const { error } = useToast();
 
   useEffect(() => {
     const allOrders = async function () {
@@ -35,82 +33,35 @@ const ShopAllOrders = () => {
     allOrders();
   }, []);
 
-  const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
-
-    {
-      field: "status",
-      headerName: "Status",
-      minWidth: 130,
-      flex: 0.7,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
-      },
-    },
-    {
-      field: "itemsQty",
-      headerName: "Items Qty",
-      type: "number",
-      minWidth: 130,
-      flex: 0.7,
-    },
-
-    {
-      field: "total",
-      headerName: "Total",
-      type: "number",
-      minWidth: 130,
-      flex: 0.8,
-    },
-
-    {
-      field: " ",
-      flex: 1,
-      minWidth: 150,
-      headerName: "",
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={`/order/${params.id}`}>
-              <Button>
-                <AiOutlineArrowRight size={20} />
-              </Button>
-            </Link>
-          </>
-        );
-      },
-    },
-  ];
-
-  const row = [];
-
-  orders &&
-    orders.forEach((item) => {
-      row.push({
-        id: item._id,
-        itemsQty: item.cart.length,
-        total: "US$ " + item.totalPrice,
-        status: item.status,
-      });
-    });
-
   return (
     <>
       {isLoading ? (
-        <Loader />
+        <Loading />
+      ) : orders.length > 0 ? (
+        <div className="border border-solid border-gray-200 rounded-md text-xs md:text-sm text-black/[0.87] font-Roboto my-8">
+          <Table
+            extraStyles="hidden md:grid border-b border-solid font-semibold bg-gray-100"
+          >
+            <div>Order Id</div>
+            <div>Status</div>
+            <div>Quantity</div>
+            <div>Total</div>
+            <div></div>
+          </Table>
+          {orders.map((order, id) => {
+            return (
+              <Table
+                extraStyles="border-b border-solid items-center"
+                key={order._id}
+              >
+                <TableBody order={order} link={`/order/${order._id}`} />
+              </Table>
+            );
+          })}
+        </div>
       ) : (
-        <div className="w-full mx-8 pt-1 mt-10 bg-white">
-          <DataGrid
-            rows={row}
-            columns={columns}
-            pageSize={10}
-            disableSelectionOnClick
-            autoHeight
-          />
+        <div className="flex items-center justify-center text-lg h-full">
+          <p>You have not placed any order!</p>
         </div>
       )}
     </>

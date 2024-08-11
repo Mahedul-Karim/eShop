@@ -20,7 +20,7 @@ const UserInbox = () => {
   const [newMessage, setNewMessage] = useState("");
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [activeStatus, setActiveStatus] = useState(false);
-  const [images, setImages] = useState();
+  const [image, setImage] = useState();
   const [open, setOpen] = useState(false);
 
   const { error } = useToast();
@@ -30,6 +30,7 @@ const UserInbox = () => {
   const [isLoading, fetchData] = useHttp();
 
   socketId.on("getMessage", (data) => {
+    console.log(data)
     setArrivalMessage({
       sender: data.senderId,
       text: data.text,
@@ -149,29 +150,40 @@ const UserInbox = () => {
   }
 
   const handleImageUpload = async (e) => {
+    let message = {
+      sender: user._id,
+      conversationId: currentChat._id,
+      text: newMessage,
+    };
+
     const receiverId = currentChat.members.find(
       (member) => member !== user._id
     );
 
+    const fileReader = new FileReader();
+
+    fileReader.onload = () => {
+      message.images = fileReader.result;
+    };
+
+    fileReader.readAsDataURL(e);
+
+    
+
     socketId.emit("sendMessage", {
       senderId: user._id,
       receiverId,
-      images: e,
+      images: message.images,
     });
-
-    const formData = new FormData();
-
-    formData.append("sender", user._id);
-    formData.append("conversationId", currentChat._id);
-    formData.append("text", newMessage);
-    formData.append("images", e);
 
     try {
       const data = await fetchData(
         "conversation/message",
         "POST",
-        {},
-        formData
+        {
+          "Content-Type": "application/json",
+        },
+        JSON.stringify(message)
       );
 
       setMessages((prev) => [...prev, data.messages]);
@@ -203,10 +215,9 @@ const UserInbox = () => {
   }
 
   return (
-    <div className="w-full">
+    <>
       {!open && (
         <>
-          <Header />
           <h1 className="text-center text-[30px] py-3 font-Poppins">
             All Messages
           </h1>
@@ -243,7 +254,7 @@ const UserInbox = () => {
           handleImageUpload={handleImageUpload}
         />
       )}
-    </div>
+    </>
   );
 };
 

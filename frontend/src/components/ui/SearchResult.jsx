@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { setHighlighText } from "../../util/helpers";
 
-function SearchResult({ data, setOpen }) {
+function SearchResult({ data, setOpen, search }) {
   return (
     <Link
       className="flex items-center py-2"
@@ -13,7 +14,9 @@ function SearchResult({ data, setOpen }) {
         alt="search text"
         className="w-[60px] h-[60px]"
       />
-      <p className="font-[600] text-grey-700 line-clamp-1">{data?.name}</p>
+      <p className="font-[600] text-grey-700 line-clamp-1">
+        {setHighlighText(data?.name, search)}
+      </p>
     </Link>
   );
 }

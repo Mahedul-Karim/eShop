@@ -1,21 +1,19 @@
-import React from 'react'
-import styles from '../../util/style';
-import ShopInfo from '../../components/shop/ShopInfo';
-import ShopProfileData from '../../components/shop/ShopProfileData';
+import React from "react";
+import ShopInfo from "../../components/shop/ShopInfo";
+import ShopProfileData from "../../components/shop/ShopProfileData";
+import Container from "../../util/Container";
 
 const ShopHome = () => {
   return (
-    <div className={`${styles.section} bg-[#f5f5f5]`}>
-         <div className="w-full flex py-10 justify-between">
-          <div className="w-[25%] bg-[#fff] rounded-[4px] shadow-sm overflow-y-scroll h-[90vh] sticky top-10 left-0 z-10">
-            <ShopInfo isOwner={true} />
-          </div>
-          <div className="w-[72%] rounded-[4px]">
-            <ShopProfileData isOwner={true} />
-          </div>
-         </div>
-    </div>
-  )
-}
+    <Container styles={"grid md:grid-cols-[200px_1fr] lg:grid-cols-[300px_1fr] md:h-screen"}>
+      <div className="bg-[#fff] rounded-[4px] shadow-sm md:overflow-y-auto md:h-screen hide-scrollbar ">
+        <ShopInfo isOwner={true} />
+      </div>
+      <div className="rounded-[4px] md:overflow-y-auto md:h-screen hide-scrollbar ">
+        <ShopProfileData isOwner={true} />
+      </div>
+    </Container>
+  );
+};
 
-export default ShopHome
+export default ShopHome;

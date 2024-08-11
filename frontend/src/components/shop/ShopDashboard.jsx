@@ -1,18 +1,23 @@
+import { Outlet, useLocation } from "react-router-dom";
 import ShopDashboardHeader from "../dashboard/seller/ShopDashboardHeader";
-import ShopDashboardHero from "../dashboard/seller/ShopDashboardHero";
-import ShopDashboardSidebar from "../dashboard/seller/ShopDashboardSidebar";
+
+import Sidebar from "../dashboard/common/Sidebar";
+import { SELLER_DASHBOARD_NAV } from "../../util/data";
+import Container from "../../util/Container";
 
 function ShopDashboard() {
   return (
-    <div>
-      <ShopDashboardHeader />
-      <div className="flex items-start justify-between w-full">
-            <div className="w-[80px] 800px:w-[330px]">
-              <ShopDashboardSidebar active={1} />
-            </div>
-            <ShopDashboardHero />
-          </div>
-    </div>
+    <>
+      <main className="grid grid-cols-[60px_1fr] md:grid-cols-[280px_1fr] h-screen overflow-clip">
+        <Sidebar navLinks={SELLER_DASHBOARD_NAV} />
+        <div className="bg-[#FEFEFE] h-full overflow-y-auto">
+          <ShopDashboardHeader />
+          <Container styles="">
+            <Outlet />
+          </Container>
+        </div>
+      </main>
+    </>
   );
 }
 export default ShopDashboard;

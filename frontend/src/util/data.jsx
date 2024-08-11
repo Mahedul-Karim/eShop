@@ -1,3 +1,117 @@
+import { FiPackage, FiShoppingBag } from "react-icons/fi";
+import { AiOutlineFolderAdd, AiOutlineGift } from "react-icons/ai";
+import { MdOutlineLocalOffer } from "react-icons/md";
+import { VscNewFile } from "react-icons/vsc";
+import { CiMoneyBill, CiSettings } from "react-icons/ci";
+import { BiMessageSquareDetail } from "react-icons/bi";
+import { HiOutlineReceiptRefund } from "react-icons/hi";
+import { RxDashboard } from "react-icons/rx";
+import { GrWorkshop } from "react-icons/gr";
+import { HiOutlineUserGroup } from "react-icons/hi";
+import { BsHandbag } from "react-icons/bs";
+import { AiOutlineSetting } from "react-icons/ai";
+
+export const ADMIN_DASHBOARD_NAV = [
+  {
+    to: "/admin/dashboard",
+    Icon: RxDashboard,
+    label: "Dashboard",
+  },
+  {
+    to: "/admin/dashboard/orders",
+    Icon: FiShoppingBag,
+    label: "All Orders",
+  },
+  {
+    to: "/admin/dashboard/sellers",
+    Icon: GrWorkshop,
+    label: "All Sellers",
+  },
+  {
+    to: "/admin/dashboard/users",
+    Icon: HiOutlineUserGroup,
+    label: "All Users",
+  },
+  {
+    to: "/admin/dashboard/products",
+    Icon: BsHandbag,
+    label: "All Products",
+  },
+  {
+    to: "/admin/dashboard/events",
+    Icon: MdOutlineLocalOffer,
+    label: "All Events",
+  },
+  {
+    to: "/admin/dashboard/withdraw-request",
+    Icon: CiMoneyBill,
+    label: "Withdraw Request",
+  },
+  {
+    to: "/profile",
+    Icon: AiOutlineSetting,
+    label: "Setting",
+  },
+];
+
+export const SELLER_DASHBOARD_NAV = [
+  {
+    to: "/seller/dashboard",
+    Icon: RxDashboard,
+    label: "Dashboard",
+  },
+  {
+    to: "/seller/dashboard/orders",
+    Icon: FiShoppingBag,
+    label: "All Orders",
+  },
+  {
+    to: "/seller/dashboard/products",
+    Icon: FiPackage,
+    label: "All Products",
+  },
+  {
+    to: "/seller/dashboard/create-product",
+    Icon: AiOutlineFolderAdd,
+    label: "Create Product",
+  },
+  {
+    to: "/seller/dashboard/events",
+    Icon: MdOutlineLocalOffer,
+    label: "All Events",
+  },
+  {
+    to: "/seller/dashboard/create-event",
+    Icon: VscNewFile,
+    label: "Create Event",
+  },
+  {
+    to: "/seller/dashboard/withdraw-money",
+    Icon: CiMoneyBill,
+    label: "Withdraw Money",
+  },
+  {
+    to: "/seller/dashboard/messages",
+    Icon: BiMessageSquareDetail,
+    label: "Shop Inbox",
+  },
+  {
+    to: "/seller/dashboard/coupons",
+    Icon: AiOutlineGift,
+    label: "Discount Codes",
+  },
+  {
+    to: "/seller/dashboard/refunds",
+    Icon: HiOutlineReceiptRefund,
+    label: "Refunds",
+  },
+  {
+    to: "/seller/dashboard/settings",
+    Icon: CiSettings,
+    label: "Settings",
+  },
+];
+
 // navigation Data
 export const navItems = [
   {
@@ -256,12 +370,15 @@ export const status = {
     bg: "bg-red-100",
     text: "text-red-700",
   },
-  processingrefund:{
+  processingrefund: {
+    bg: "bg-violet-100",
+    text: "text-violet-700",
+  },
+  refundsuccess: {
     bg: "bg-green-100",
     text: "text-green-700",
-  }
+  },
 };
-
 
 export const footerProductLinks = [
   {

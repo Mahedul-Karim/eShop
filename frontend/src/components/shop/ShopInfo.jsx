@@ -8,17 +8,18 @@ import { BASE_URL } from "../../util/base";
 import { sellerActions } from "../../store/sellerSlice";
 import { useHttp } from "../hooks/useHttp";
 import { useToast } from "../hooks/useToast";
+import { formatDate } from "../../util/helpers";
 
 const ShopInfo = ({ isOwner }) => {
   const [data, setData] = useState({});
 
   const [isLoading, fetchData, error] = useHttp();
 
-  const { error:toastError } = useToast();
+  const { error: toastError } = useToast();
 
   const { shopId } = useParams();
 
-  const { product } = useSelector(state=>state.product);
+  const { product } = useSelector((state) => state.product);
 
   const navigate = useNavigate();
 
@@ -34,8 +35,8 @@ const ShopInfo = ({ isOwner }) => {
 
       setData(shopData.shop);
     };
-    getShopInfo()
-  }, [error,fetchData,shopId]);
+    getShopInfo();
+  }, [error, fetchData, shopId]);
 
   const handleLogout = async function () {
     const res = await fetch(`${BASE_URL}/shop/shop-logout`);
@@ -46,16 +47,15 @@ const ShopInfo = ({ isOwner }) => {
     navigate("/");
   };
 
-  const sellerProduct =
-    product && product.filter((p) => p.shopId === data._id);
+  const sellerProduct = product && product.filter((p) => p.shopId === data._id);
 
-   const totalReviews=sellerProduct.reduce((a,p)=>a+p.reviews.length,0);
+  const allReviews = sellerProduct.flatMap((product) => product.reviews);
 
-  const totalRatings=sellerProduct.reduce((a,p)=>a+(p.ratings ? p.ratings : 0),0);
-  
+  const totalReviews = allReviews.length;
+  const totalRatings = allReviews.reduce((a, p) => a + p.rating, 0);
+
   const avgRating = totalRatings / totalReviews || 0;
-  
-  
+
   return (
     <>
       {isLoading ? (
@@ -67,7 +67,7 @@ const ShopInfo = ({ isOwner }) => {
               <img
                 src={`${data.avatar?.url}`}
                 alt=""
-                className="w-[150px] h-[150px] object-cover rounded-full"
+                className="w-[100px] h-[100px] object-cover rounded-full"
               />
             </div>
             <h3 className="text-center py-2 text-[20px]">{data.name}</h3>
@@ -93,21 +93,19 @@ const ShopInfo = ({ isOwner }) => {
           </div>
           <div className="p-3">
             <h5 className="font-[600]">Joined On</h5>
-            <h4 className="text-[#000000b0]">
-              {data?.createdAt?.slice(0, 10)}
-            </h4>
+            <h4 className="text-[#000000b0]">{formatDate(data?.createdAt)}</h4>
           </div>
           {isOwner && (
             <div className="py-3 px-4">
-              <Link to="/settings">
+              <Link to="/seller/dashboard/settings">
                 <div
-                  className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`}
+                  className={`bg-black flex items-center justify-center rounded-md cursor-pointer py-2`}
                 >
                   <span className="text-white">Edit Shop</span>
                 </div>
               </Link>
               <div
-                className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`}
+                className={`bg-black flex items-center justify-center rounded-md cursor-pointer py-2 mt-4`}
                 onClick={handleLogout}
               >
                 <span className="text-white">Log Out</span>

@@ -25,7 +25,7 @@ const ShopCreateEvents = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const { success,error } = useToast();
+  const { success, error } = useToast();
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -90,15 +90,17 @@ const ShopCreateEvents = () => {
 
       dispatch(eventActions.eventRequestSuccess(data.event));
       success("Event created");
-      navigate('/dashboard-events')
+      navigate("/dashboard-events");
     } catch (err) {
       error(err.message);
     }
   };
 
   return (
-    <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
-      <h5 className="text-[30px] font-Poppins text-center">Create Event</h5>
+    <div className="rounded-[4px] w-[90%] mx-auto my-8">
+      <h5 className="text-[24px] 400px:text-[30px] font-Poppins text-center">
+        Create Event
+      </h5>
       {/* create event form */}
       <form onSubmit={handleSubmit}>
         <br />
@@ -264,11 +266,12 @@ const ShopCreateEvents = () => {
           </div>
           <br />
           <div>
-            <input
+            <button
               type="submit"
-              value="Create"
-              className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
+              className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-primary rounded-[3px] placeholder-gray-400 focus:outline-none sm:text-sm text-primary"
+            >
+              Create
+            </button>
           </div>
         </div>
       </form>

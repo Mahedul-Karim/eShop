@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RxPerson } from "react-icons/rx";
 import { HiOutlineShoppingBag, HiOutlineReceiptRefund } from "react-icons/hi";
 import { AiOutlineMessage, AiOutlineLogin } from "react-icons/ai";
@@ -18,36 +18,43 @@ const USER_NAV_DATA = [
     id: 1,
     Icon: RxPerson,
     label: "Profile",
+    link: "/profile",
   },
   {
     id: 2,
     Icon: HiOutlineShoppingBag,
     label: "Orders",
+    link: "/profile/orders",
   },
   {
     id: 3,
     Icon: HiOutlineReceiptRefund,
     label: "Refunds",
+    link: "/profile/refunds",
   },
   {
     id: 4,
     Icon: AiOutlineMessage,
     label: "Inbox",
+    link: "/profile/inbox",
   },
   {
     id: 5,
     Icon: MdOutlineTrackChanges,
     label: "Track Order",
+    link: "/profile/track-order",
   },
   {
     id: 6,
     Icon: RiLockPasswordLine,
     label: "Change Password",
+    link: "/profile/change-password",
   },
   {
     id: 7,
     Icon: TbAddressBook,
     label: "Address",
+    link: "/profile/address",
   },
 ];
 
@@ -66,39 +73,30 @@ function ProfileSidebar({ active, setActive }) {
     const data = await res.json();
     localStorage.removeItem("user");
     dispatch(userActions.userLogOut());
-    success(data.message)
+    success(data.message);
     navigate("/");
   };
+
+  const location = useLocation();
 
   return (
     <div className="w-full bg-white rounded-[10px] p-4 pt-8">
       {USER_NAV_DATA.map((nav) => {
         const { id, Icon, label } = nav;
 
-        if(id === 4){
-         return <div
-            className={`flex items-center gap-2 cursor-pointer w-full mb-4 py-2 sm:pl-3 rounded-md justify-center sm:justify-normal ${
-              active === id ? "bg-primary text-white" : "bg-none text-black"
-            }`}
-            key={id}
-            onClick={() => navigate('/inbox')}
-          >
-            <Icon size={20} />
-            <span className={`sm:block hidden`}>{label}</span>
-          </div>
-        }
-
         return (
-          <div
+          <Link
             className={`flex items-center gap-2 cursor-pointer w-full mb-4 py-2 sm:pl-3 rounded-md justify-center sm:justify-normal ${
-              active === id ? "bg-primary text-white" : "bg-none text-black"
+              location.pathname === nav.link
+                ? "bg-primary text-white"
+                : "bg-none text-black"
             }`}
             key={id}
-            onClick={() => setActive(id)}
+            to={nav.link}
           >
             <Icon size={20} />
             <span className={`sm:block hidden`}>{label}</span>
-          </div>
+          </Link>
         );
       })}
       {user && user?.role === "admin" && (

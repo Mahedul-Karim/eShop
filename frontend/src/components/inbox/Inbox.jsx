@@ -34,7 +34,7 @@ const Inbox = ({
         </div>
   
         {/* messages */}
-        <div className="px-3 h-[65vh] py-3 overflow-y-scroll">
+        <div className="px-3 h-[65vh] py-3 overflow-y-auto hide-scrollbar">
           {messages &&
             messages.map((item, index) => {
               return (

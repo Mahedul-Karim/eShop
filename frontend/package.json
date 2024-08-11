@@ -10,9 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/data-grid": "^4.0.0-alpha.37",
-    "@material-ui/styles": "^4.11.5",
     "@paypal/react-paypal-js": "^8.1.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@stripe/react-stripe-js": "^2.1.1",

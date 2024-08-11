@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { DataGrid } from "@material-ui/data-grid";
 import { AiOutlineDelete } from "react-icons/ai";
-import { Button } from "@material-ui/core";
-import styles from "../../../util/style";
-import { RxCross1 } from "react-icons/rx";
 
 import { useHttp } from "../../hooks/useHttp";
 import { userActions } from "../../../store/userSlice";
-import Loader from "../../../util/Loader";
+import Loading from "../common/Loading";
 
-import { useToast } from '../../hooks/useToast'
+import { useToast } from "../../hooks/useToast";
+import { formatDate } from "../../../util/helpers";
+import Table from "../../layout/data-table/Table";
+import ConfirmationModal from "../../ui/modal/ConfirmationModal";
 
 const AllUsers = () => {
   const dispatch = useDispatch();
@@ -19,7 +17,7 @@ const AllUsers = () => {
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState("");
 
-  const { success,error } = useToast()
+  const { success, error } = useToast();
 
   const [isLoading, fetchData] = useHttp();
 
@@ -35,125 +33,91 @@ const AllUsers = () => {
     getAllUsers();
   }, []);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
-      const data = await fetchData(`user/${id}`, "DELETE", {
+      const data = await fetchData(`user/${userId}`, "DELETE", {
         authorization: `Bearer ${token}`,
       });
 
-      dispatch(userActions.deleteUser(id));
+      dispatch(userActions.deleteUser(userId));
       success(data.message);
     } catch (err) {
       error(err.message);
     }
   };
 
-  const columns = [
-    { field: "id", headerName: "User ID", minWidth: 150, flex: 0.7 },
-
-    {
-      field: "name",
-      headerName: "name",
-      minWidth: 130,
-      flex: 0.7,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      type: "text",
-      minWidth: 130,
-      flex: 0.7,
-    },
-    {
-      field: "role",
-      headerName: "User Role",
-      type: "text",
-      minWidth: 130,
-      flex: 0.7,
-    },
-
-    {
-      field: "joinedAt",
-      headerName: "joinedAt",
-      type: "text",
-      minWidth: 130,
-      flex: 0.8,
-    },
-
-    {
-      field: " ",
-      flex: 1,
-      minWidth: 150,
-      headerName: "Delete User",
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <>
-            <Button onClick={() => setUserId(params.id) || setOpen(true)}>
-              <AiOutlineDelete size={20} />
-            </Button>
-          </>
-        );
-      },
-    },
-  ];
-
-  const row = [];
-  allUsers &&
-    allUsers.forEach((item) => {
-      row.push({
-        id: item._id,
-        name: item.name,
-        email: item.email,
-        role: item.role,
-        joinedAt: item.createdAt.slice(0, 10),
-      });
-    });
-
   return (
     <>
       {isLoading ? (
-        <Loader />
+        <Loading />
       ) : (
-        <div className="w-full flex justify-center pt-5">
-          <div className="w-[97%]">
+        <div className="pt-5">
+          <div>
             <h3 className="text-[22px] font-Poppins pb-2">All Users</h3>
-            <div className="w-full min-h-[45vh] bg-white rounded">
-              <DataGrid
-                rows={row}
-                columns={columns}
-                pageSize={10}
-                disableSelectionOnClick
-                autoHeight
-              />
-            </div>
-            {open && (
-              <div className="w-full fixed top-0 left-0 z-[999] bg-[#00000039] flex items-center justify-center h-screen">
-                <div className="w-[95%] 800px:w-[40%] min-h-[20vh] bg-white rounded shadow p-5">
-                  <div className="w-full flex justify-end cursor-pointer">
-                    <RxCross1 size={25} onClick={() => setOpen(false)} />
-                  </div>
-                  <h3 className="text-[25px] text-center py-5 font-Poppins text-[#000000cb]">
-                    Are you sure you wanna delete this user?
-                  </h3>
-                  <div className="w-full flex items-center justify-center">
-                    <div
-                      className={`${styles.button} text-white text-[18px] !h-[42px] mr-4`}
-                      onClick={() => setOpen(false)}
+            {allUsers?.length > 0 ? (
+              <div className="border border-solid border-gray-200 rounded-md text-xs md:text-sm text-black/[0.87] font-Roboto">
+                <Table
+                  extraStyles="hidden sm:grid border-b border-solid font-semibold bg-gray-100"
+                  columns={"grid-cols-[0.3fr_0.5fr_0.4fr_0.2fr_0.1fr]"}
+                >
+                  <div>Name</div>
+                  <div>Email</div>
+                  <div>Joined At</div>
+                  <div>Role</div>
+                  <div />
+                </Table>
+                {allUsers.map((user, id) => {
+                  return (
+                    <Table
+                      extraStyles="border-b border-solid items-center"
+                      key={user._id}
+                      columns={"sm:grid-cols-[0.3fr_0.5fr_0.4fr_0.2fr_0.1fr]"}
                     >
-                      cancel
-                    </div>
-                    <div
-                      className={`${styles.button} text-white text-[18px] !h-[42px] ml-4`}
-                      onClick={() => setOpen(false) || handleDelete(userId)}
-                    >
-                      confirm
-                    </div>
-                  </div>
-                </div>
+                      <div className="flex items-center justify-between">
+                        <p className="font-medium text-sm inline-block sm:hidden">
+                          Name:
+                        </p>
+                        <p>{user?.name}</p>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p className="font-medium text-sm inline-block sm:hidden">
+                          Email:
+                        </p>
+                        {user?.email}
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p className="font-medium text-sm inline-block sm:hidden">
+                          Joined At:
+                        </p>
+                        {formatDate(user?.createdAt)}
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm inline-block sm:hidden">
+                          Role:
+                        </p>
+                        {user?.role}
+                      </div>
+                      <button
+                        onClick={() => setUserId(user._id) || setOpen(true)}
+                        className="flex items-center justify-end sm:justify-normal"
+                      >
+                        <AiOutlineDelete size={20} />
+                      </button>
+                    </Table>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center text-lg h-full">
+                <p>No users were found!</p>
               </div>
             )}
+
+            <ConfirmationModal
+              open={open}
+              setOpen={setOpen}
+              confirmationFunction={handleDelete}
+            />
           </div>
         </div>
       )}

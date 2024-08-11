@@ -28,26 +28,12 @@ exports.createConv = catchAsync(async (req, res, next) => {
 });
 
 exports.createMessage = catchAsync(async (req, res, next) => {
-  
-
   const { sender, text, conversationId } = req.body;
-
- 
-
-  if (req.file) {
-    req.body.images = {
-      public_id: "fdf",
-      url: `${req.protocol}://${req.get("host")}/${
-        req.file.destination.split("/")[1]
-      }/${req.file.filename}`,
-    };
-  }
 
   const messages = await Message.create({
     sender,
     text,
     conversationId,
-    images: req.body.images,
   });
 
   res.status(201).json({

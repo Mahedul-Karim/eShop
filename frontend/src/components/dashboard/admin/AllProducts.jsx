@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import Loader from "../../../util/Loader";
 import { useState } from "react";
 import { useHttp } from "../../hooks/useHttp";
+import Loading from "../common/Loading";
+import ProductTable from "../../layout/data-table/ProductTable";
 
 const AllProducts = () => {
   const [data, setData] = useState([]);
@@ -88,17 +90,9 @@ const AllProducts = () => {
   return (
     <>
       {isLoading ? (
-        <Loader />
+        <Loading />
       ) : (
-        <div className="w-full mx-8 pt-1 mt-10 bg-white">
-          <DataGrid
-            rows={row}
-            columns={columns}
-            pageSize={10}
-            disableSelectionOnClick
-            autoHeight
-          />
-        </div>
+        <ProductTable product={data} />
       )}
     </>
   );

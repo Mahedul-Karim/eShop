@@ -1,16 +1,11 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
+
+import Main from "../pages/Main";
 import Home from "../pages/Home";
-import BestSelling from "../pages/BestSelling";
-import EventsPage from "../pages/EventsPage";
-import FAQPage from "../pages/FAQPage";
-import Login from "../pages/auth/Login";
+import Fallback from "./Fallback";
 import ProtectedRoutes from "./ProtectedRoutes";
-import Profile from "../pages/Profile";
-import OrderDetailsPage from "../pages/OrderDetailsPage";
-import TrackOrderPage from "../pages/TrackOrderPage";
-import UserInbox from "../components/user/UserInbox";
-import SignUp from "../pages/auth/SignUp";
-import ActivePage from "../pages/auth/ActivePage";
+
 import AdminRoutes from "./AdminRoutes";
 import AdminDashboardPage from "../pages/dashboard/admin/AdminDashboardPage";
 import AdminDashboardUsers from "../pages/dashboard/admin/AdminDashboardUsers";
@@ -19,17 +14,16 @@ import AdminDashboardSellers from "../pages/dashboard/admin/AdminDashboardSeller
 import AdminDashboardProducts from "../pages/dashboard/admin/AdminDashboardProducts";
 import AdminDashboardEvents from "../pages/dashboard/admin/AdminDashboardEvents";
 import AdminDashboardWithdraw from "../pages/dashboard/admin/AdminDashboardWithdraw";
-import CheckoutPage from "../pages/CheckoutPage";
-import OrderSuccessPage from "../pages/OrderSuccess";
+import AdminDashboardMain from '../components/dashboard/admin/AdminDashboardMain';
+
 import SellerRoutes from "./SellerRoutes";
 import ShopSettingPage from "../pages/shop/ShopSettingPage";
 import ActiveSeller from "../pages/ActiveSeller";
-import ProductDetailsPage from "../pages/ProductDetailsPage";
+
 import ShopHome from "../pages/shop/ShopHome";
 import ShopPreviewPage from "../pages/shop/ShopPreviewPage";
 import ShopDashboard from "../components/shop/ShopDashboard";
-import ShopLogin from "../pages/ShopLogin";
-import ShopCreate from "../pages/ShopCreate";
+
 import ShopMessagesPage from "../pages/shop/ShopMessagesPage";
 import ShopWithDrawMoneyPage from "../pages/shop/ShopWithdrawPage";
 import ShopRefunds from "../pages/shop/ShopRefunds";
@@ -40,10 +34,37 @@ import ShopProducts from "../pages/dashboard/ShopProducts";
 import ShopOrders from "../pages/shop/ShopOrders";
 import ShopOrderDetails from "../pages/shop/ShopOrdersDetails";
 import CreateCoupons from "../pages/dashboard/CreateCoupon";
-import Products from "../pages/Products";
-import Main from "../pages/Main";
-import Wishlist from "../components/wishlist/WishList";
-import Cart from "../components/cart/Cart";
+
+import ShopDashboardHero from "../components/dashboard/seller/ShopDashboardHero";
+
+//Global routes
+const EventsPage = lazy(() => import("../pages/EventsPage"));
+const FAQPage = lazy(() => import("../pages/FAQPage"));
+const Login = lazy(() => import("../pages/auth/Login"));
+const SignUp = lazy(() => import("../pages/auth/SignUp"));
+const Products = lazy(() => import("../pages/Products"));
+const CheckoutPage = lazy(() => import("../pages/CheckoutPage"));
+const OrderSuccessPage = lazy(() => import("../pages/OrderSuccess"));
+const ShopLogin = lazy(() => import("../pages/ShopLogin"));
+const ShopCreate = lazy(() => import("../pages/ShopCreate"));
+const ProductDetailsPage = lazy(() => import("../pages/ProductDetailsPage"));
+const OrderDetailsPage = lazy(() => import("../pages/OrderDetailsPage"));
+const TrackOrderPage = lazy(() => import("../pages/TrackOrderPage"));
+const Wishlist = lazy(() => import("../components/wishlist/WishList"));
+const Cart = lazy(() => import("../components/cart/Cart"));
+const ActivePage = lazy(() => import("../pages/auth/ActivePage"));
+
+//User profile routes
+const Profile = lazy(() => import("../pages/Profile"));
+const ProfileContent = lazy(() => import("../components/user/ProfileContent"));
+const AllOrders = lazy(() => import("../components/orders/AllOrders"));
+const AllRefundOrders = lazy(() =>
+  import("../components/orders/AllRefundOrders")
+);
+const UserInbox = lazy(() => import("../components/user/UserInbox"));
+const TrackOrder = lazy(() => import("../components/orders/TrackOrder"));
+const ChangePassword = lazy(() => import("../components/user/ChangePassword"));
+const Address = lazy(() => import("../components/user/Address"));
 
 export const router = createBrowserRouter([
   {
@@ -53,10 +74,6 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "/best-selling",
-        element: <BestSelling />,
       },
       {
         path: "/products",
@@ -136,24 +153,107 @@ export const router = createBrowserRouter([
   {
     path: "/profile",
     element: (
-      <ProtectedRoutes to={"/login"}>
-        <Profile />
-      </ProtectedRoutes>
+      <Fallback>
+        <ProtectedRoutes to={"/login"}>
+          <Profile />
+        </ProtectedRoutes>
+      </Fallback>
     ),
+    children: [
+      {
+        path: "/profile",
+        element: <ProfileContent />,
+        index: true,
+      },
+      {
+        path: "/profile/orders",
+        element: <AllOrders />,
+      },
+      {
+        path: "/profile/refunds",
+        element: <AllRefundOrders />,
+      },
+      {
+        path: "/profile/inbox",
+        element: <UserInbox />,
+      },
+      {
+        path: "/profile/track-order",
+        element: <TrackOrder />,
+      },
+      {
+        path: "/profile/change-password",
+        element: <ChangePassword />,
+      },
+      {
+        path: "/profile/address",
+        element: <Address />,
+      },
+    ],
   },
-
   {
-    path: "/inbox",
+    path: "/seller/dashboard",
     element: (
-      <ProtectedRoutes>
-        <UserInbox />
-      </ProtectedRoutes>
+      <SellerRoutes to={"/shop-login"}>
+        <ShopDashboard />
+      </SellerRoutes>
     ),
+    children: [
+      {
+        path: "/seller/dashboard",
+        element: <ShopDashboardHero />,
+        index: true,
+      },
+      {
+        path: "/seller/dashboard/messages",
+        element: <ShopMessagesPage />,
+      },
+      {
+        path: "/seller/dashboard/withdraw-money",
+        element: <ShopWithDrawMoneyPage />,
+      },
+      {
+        path: "/seller/dashboard/refunds",
+        element: <ShopRefunds />,
+      },
+      {
+        path: "/seller/dashboard/create-product",
+        element: <CreateProduct />,
+      },
+      {
+        path: "/seller/dashboard/create-event",
+        element: <CreateEvent />,
+      },
+      {
+        path: "/seller/dashboard/events",
+        element: <ShopEvents />,
+      },
+      {
+        path: "/seller/dashboard/products",
+        element: <ShopProducts />,
+      },
+      {
+        path: "/seller/dashboard/orders",
+        element: <ShopOrders />,
+      },
+      {
+        path: "/seller/dashboard/coupons",
+        element: <CreateCoupons />,
+      },
+      {
+        path: "/seller/dashboard/settings",
+        element: <ShopSettingPage />,
+      },
+    ],
   },
 
   {
     path: "/activation",
-    element: <ActivePage />,
+    element: (
+      <Fallback>
+        <ActivePage />,
+      </Fallback>
+    ),
   },
   {
     path: "/admin/dashboard",
@@ -162,63 +262,37 @@ export const router = createBrowserRouter([
         <AdminDashboardPage />
       </AdminRoutes>
     ),
-  },
-  {
-    path: "/admin-users",
-    element: (
-      <AdminRoutes>
-        <AdminDashboardUsers />
-      </AdminRoutes>
-    ),
-  },
-  {
-    path: "/admin-orders",
-    element: (
-      <AdminRoutes>
-        <AdminDashboardOrders />
-      </AdminRoutes>
-    ),
-  },
-  {
-    path: "/admin-sellers",
-    element: (
-      <AdminRoutes>
-        <AdminDashboardSellers />
-      </AdminRoutes>
-    ),
-  },
-  {
-    path: "/admin-products",
-    element: (
-      <AdminRoutes>
-        <AdminDashboardProducts />
-      </AdminRoutes>
-    ),
-  },
-  {
-    path: "/admin-events",
-    element: (
-      <AdminRoutes>
-        <AdminDashboardEvents />
-      </AdminRoutes>
-    ),
-  },
-  {
-    path: "/admin-withdraw-request",
-    element: (
-      <AdminRoutes>
-        <AdminDashboardWithdraw />
-      </AdminRoutes>
-    ),
-  },
-
-  {
-    path: "/settings",
-    element: (
-      <SellerRoutes>
-        <ShopSettingPage />
-      </SellerRoutes>
-    ),
+    children: [
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboardMain />,
+        index: true,
+      },
+      {
+        path: "/admin/dashboard/users",
+        element: <AdminDashboardUsers />,
+      },
+      {
+        path: "/admin/dashboard/orders",
+        element: <AdminDashboardOrders />,
+      },
+      {
+        path: "/admin/dashboard/sellers",
+        element: <AdminDashboardSellers />,
+      },
+      {
+        path: "/admin/dashboard/products",
+        element: <AdminDashboardProducts />,
+      },
+      {
+        path: "/admin/dashboard/events",
+        element: <AdminDashboardEvents />,
+      },
+      {
+        path: "/admin/dashboard/withdraw-request",
+        element: <AdminDashboardWithdraw />,
+      },
+    ],
   },
 
   {
@@ -238,78 +312,7 @@ export const router = createBrowserRouter([
     path: "/shop/preview/:shopId",
     element: <ShopPreviewPage />,
   },
-  {
-    path: "/dashboard",
-    element: (
-      <SellerRoutes to={"/shop-login"}>
-        <ShopDashboard />
-      </SellerRoutes>
-    ),
-  },
-  {
-    path: "/dashboard-messages",
-    element: (
-      <SellerRoutes>
-        <ShopMessagesPage />
-      </SellerRoutes>
-    ),
-  },
-  {
-    path: "/dashboard-withdraw-money",
-    element: (
-      <SellerRoutes to={"/shop-login"}>
-        <ShopWithDrawMoneyPage />
-      </SellerRoutes>
-    ),
-  },
-  {
-    path: "/dashboard-refunds",
-    element: (
-      <SellerRoutes>
-        <ShopRefunds />
-      </SellerRoutes>
-    ),
-  },
-  {
-    path: "/dashboard-create-product",
-    element: (
-      <SellerRoutes>
-        <CreateProduct />
-      </SellerRoutes>
-    ),
-  },
-  {
-    path: "/dashboard-create-event",
-    element: (
-      <SellerRoutes>
-        <CreateEvent />
-      </SellerRoutes>
-    ),
-  },
-  {
-    path: "/dashboard-events",
-    element: (
-      <SellerRoutes>
-        <ShopEvents />
-      </SellerRoutes>
-    ),
-  },
-  {
-    path: "/dashboard-products",
-    element: (
-      <SellerRoutes>
-        <ShopProducts />
-      </SellerRoutes>
-    ),
-  },
-  {
-    path: "/dashboard-orders",
-    element: (
-      <SellerRoutes>
-        <ShopOrders />
-      </SellerRoutes>
-    ),
-  },
+
   {
     path: "/order/:id",
     element: (
@@ -318,13 +321,4 @@ export const router = createBrowserRouter([
       </SellerRoutes>
     ),
   },
-  {
-    path: "/dashboard-coupons",
-    element: (
-      <SellerRoutes>
-        <CreateCoupons />
-      </SellerRoutes>
-    ),
-  },
-  
 ]);

@@ -3,7 +3,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { status } from "../../../util/data";
 
-const TableBody = ({ order, link }) => {
+const TableBody = ({ order, link, inAdmin }) => {
   const { bg, text } = status[order?.status?.toLowerCase()?.replace(/ /g, "")];
 
   return (
@@ -28,9 +28,25 @@ const TableBody = ({ order, link }) => {
         <span className="font-semibold md:hidden inline-block">Total:</span>$
         {order.totalPrice}
       </div>
-      <Link to={link} className="mt-2 md:mt-0 flex justify-end md:justify-normal">
-        <FaArrowRight />
-      </Link>
+      {!inAdmin ? (
+        <Link
+          to={link}
+          className="mt-2 md:mt-0 flex justify-end md:justify-normal"
+        >
+          <FaArrowRight />
+        </Link>
+      ) : (
+        <div className="flex items-center justify-between mt-2 md:mt-0">
+          <p className="font-semibold md:hidden inline-block">Placed At:</p>
+          <p>
+            {new Date(order?.createdAt).toLocaleDateString("en", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+            })}
+          </p>
+        </div>
+      )}
     </>
   );
 };

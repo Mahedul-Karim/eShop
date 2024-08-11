@@ -4,15 +4,13 @@ import styles from "../../../util/style";
 import { Link } from "react-router-dom";
 import { MdBorderClear } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@material-ui/core";
-import { DataGrid } from "@material-ui/data-grid";
 import { useHttp } from "../../hooks/useHttp";
 import { productActions } from "../../../store/productSlice";
-import { eventActions } from "../../../store/eventSlice";
-import { useToast } from '../../hooks/useToast'
+import { useToast } from "../../hooks/useToast";
 import { orderActions } from "../../../store/orderSlice";
-import Loader from "../../../util/Loader";
-import { sellerActions } from "../../../store/sellerSlice";
+import Loading from "../common/Loading";
+import Table from "../../layout/data-table/Table";
+import TableBody from "../../layout/data-table/TableBody";
 
 const ShopDashboardHero = () => {
   const dispatch = useDispatch();
@@ -49,148 +47,109 @@ const ShopDashboardHero = () => {
   useEffect(() => {
     getProducts();
     allOrders();
-  }, [dispatch]);
+  }, []);
 
-
-  const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
-
-    {
-      field: "status",
-      headerName: "Status",
-      minWidth: 130,
-      flex: 0.7,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
-      },
-    },
-    {
-      field: "itemsQty",
-      headerName: "Items Qty",
-      type: "number",
-      minWidth: 130,
-      flex: 0.7,
-    },
-
-    {
-      field: "total",
-      headerName: "Total",
-      type: "number",
-      minWidth: 130,
-      flex: 0.8,
-    },
-
-    {
-      field: " ",
-      flex: 1,
-      minWidth: 150,
-      headerName: "",
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={`/order/${params.id}`}>
-              <Button>
-                <AiOutlineArrowRight size={20} />
-              </Button>
-            </Link>
-          </>
-        );
-      },
-    },
-  ];
-
-  const row = [];
-
-  orders &&
-    orders.forEach((item) => {
-      row.push({
-        id: item._id,
-        itemsQty: item.cart.reduce((acc, item) => acc + item.quantity, 0),
-        total: "US$ " + item.totalPrice,
-        status: item.status,
-      });
-    });
   return (
     <>
       {isLoading ? (
-        <Loader />
+        <Loading />
       ) : (
-        <div className="w-full p-8">
+        <div className="w-full py-8">
           <h3 className="text-[22px] font-Poppins pb-2">Overview</h3>
-          <div className="w-full block 800px:flex items-center justify-between">
-            <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
+          <div className="grid grid-cols-2 800px:grid-cols-3 gap-2 400px:gap-6">
+            <div className="w-full max-h-full border border-solid rounded px-2 py-5">
               <div className="flex items-center">
                 <AiOutlineMoneyCollect
-                  size={30}
-                  className="mr-2"
+                  className="mr-2 400px:text-[30px] text-lg"
                   fill="#00000085"
                 />
                 <h3
-                  className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
+                  className={`font-Roboto text-[#333] text-base 400px:text-[18px] leading-5 font-[400] text-[#00000085]`}
                 >
                   Account Balance{" "}
-                  <span className="text-[16px]">(with 10% service charge)</span>
                 </h3>
               </div>
-              <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">${seller?.availableBalance?.toFixed(2)}</h5>
-              <Link to="/dashboard-withdraw-money">
-                <h5 className="pt-4 pl-[2] text-[#077f9c]">Withdraw Money</h5>
+              <h5 className="pt-2 400px:pl-[36px] text-lg 400px:text-[22px] font-[500]">
+                ${seller?.availableBalance?.toFixed(2)}
+              </h5>
+              <Link to="/seller/dashboard/withdraw-money">
+                <h5 className="pt-4 pl-2 text-[#077f9c] 400px:text-base text-sm">
+                  Withdraw Money
+                </h5>
               </Link>
             </div>
 
-            <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
+            <div className="w-full max-h-full border border-solid rounded px-2 py-5">
               <div className="flex items-center">
-                <MdBorderClear size={30} className="mr-2" fill="#00000085" />
+                <MdBorderClear
+                  className="mr-2 400px:text-[30px] text-lg"
+                  fill="#00000085"
+                />
                 <h3
-                  className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
+                  className={`font-Roboto text-[#333] text-base 400px:text-[18px] leading-5 font-[400] text-[#00000085]`}
                 >
                   All Orders
                 </h3>
               </div>
-              <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
+              <h5 className="pt-2 400px:pl-[36px] text-lg 400px:text-[22px] font-[500]">
                 {orders && orders.length}
               </h5>
-              <Link to="/dashboard-orders">
-                <h5 className="pt-4 pl-2 text-[#077f9c]">View Orders</h5>
+              <Link to="/seller/dashboard/orders">
+                <h5 className="pt-4 pl-2 text-[#077f9c] 400px:text-base text-sm">
+                  View Orders
+                </h5>
               </Link>
             </div>
 
-            <div className="w-full mb-4 800px:w-[30%] min-h-[20vh] bg-white shadow rounded px-2 py-5">
+            <div className="w-full h-full border border-solid rounded px-2 py-5">
               <div className="flex items-center">
                 <AiOutlineMoneyCollect
-                  size={30}
-                  className="mr-2"
+                  className="mr-2 400px:text-[30px] text-lg"
                   fill="#00000085"
                 />
                 <h3
-                  className={`${styles.productTitle} !text-[18px] leading-5 !font-[400] text-[#00000085]`}
+                  className={`font-Roboto text-[#333] text-base 400px:text-[18px] leading-5 font-[400] text-[#00000085]`}
                 >
                   All Products
                 </h3>
               </div>
-              <h5 className="pt-2 pl-[36px] text-[22px] font-[500]">
+              <h5 className="pt-2 400px:pl-[36px] text-lg 400px:text-[22px] font-[500]">
                 {product && product.length}
               </h5>
-              <Link to="/dashboard-products">
-                <h5 className="pt-4 pl-2 text-[#077f9c]">View Products</h5>
+              <Link to="/seller/dashboard/products">
+                <h5 className="pt-4 pl-2 text-[#077f9c] 400px:text-base text-sm">
+                  View Products
+                </h5>
               </Link>
             </div>
           </div>
           <br />
           <h3 className="text-[22px] font-Poppins pb-2">Latest Orders</h3>
-          <div className="w-full min-h-[45vh] bg-white rounded">
-            <DataGrid
-              rows={row}
-              columns={columns}
-              pageSize={10}
-              disableSelectionOnClick
-              autoHeight
-            />
-          </div>
+          {orders.length > 0 ? (
+            <div className="border border-solid border-gray-200 rounded-md text-xs md:text-sm text-black/[0.87] font-Roboto">
+              <Table extraStyles="hidden md:grid border-b border-solid font-semibold bg-gray-100">
+                <div>Order Id</div>
+                <div>Status</div>
+                <div>Quantity</div>
+                <div>Total</div>
+                <div></div>
+              </Table>
+              {orders.map((order, id) => {
+                return (
+                  <Table
+                    extraStyles="border-b border-solid items-center"
+                    key={order._id}
+                  >
+                    <TableBody order={order} link={`/order/${order._id}`} />
+                  </Table>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center text-lg h-full">
+              <p>You have not placed any order!</p>
+            </div>
+          )}
         </div>
       )}
     </>

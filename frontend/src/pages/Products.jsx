@@ -53,7 +53,7 @@ function Products() {
             <AiFillFilter size={30} />
           </button>
           {open && (
-            <div className="absolute top-[27px] right-0 bg-white shadow-lg p-2 w-max z-10 border border-solid">
+            <div className="absolute top-[27px] right-0 bg-white shadow-lg p-2 400px:w-max w-[90%] z-10 border border-solid">
               <Filter
                 searchText={searchText}
                 handleSearch={handleSearch}

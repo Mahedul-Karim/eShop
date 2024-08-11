@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { BASE_URL } from "../../util/base";
 
 function ActivePage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [error, setError] = useState(false);
   const activeToken = searchParams.get("token");
 

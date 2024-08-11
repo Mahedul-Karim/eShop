@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useToast } from '../../hooks/useToast'
+import { useToast } from "../../hooks/useToast";
 import { categoriesData } from "../../../util/data";
 import { BASE_URL } from "../../../util/base";
 import { productActions } from "../../../store/productSlice";
+import { FaTrash } from "react-icons/fa";
 
 const ShopCreateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
@@ -13,7 +14,7 @@ const ShopCreateProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { success,error } = useToast();
+  const { success, error, warning } = useToast();
 
   const [images, setImages] = useState([]);
 
@@ -25,6 +26,11 @@ const ShopCreateProduct = () => {
   const [stock, setStock] = useState();
 
   const handleImageChange = (e) => {
+    if (images.length === 4) {
+      warning("Maximum image reached!");
+      return;
+    }
+
     const fileReader = new FileReader();
 
     fileReader.onload = function () {
@@ -36,20 +42,25 @@ const ShopCreateProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    if (images.length < 4 || images.length > 4) {
+      warning("4 Images are required");
+      return;
+    }
+
     try {
       dispatch(productActions.productRequest());
       const res = await fetch(`${BASE_URL}/product/create-product`, {
         method: "POST",
-        headers:{
-          'Content-Type':'application/json'
+        headers: {
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name,
           description,
           category,
           tags,
-         price,
+          price,
           stock,
           shopId: seller._id,
           images,
@@ -71,9 +82,15 @@ const ShopCreateProduct = () => {
     }
   };
 
+  const handleImageDelete = (id) => {
+    setImages((prev) => prev.filter((_, i) => i !== id));
+  };
+
   return (
-    <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
-      <h5 className="text-[30px] font-Poppins text-center">Create Product</h5>
+    <div className="rounded-[4px] w-[90%] mx-auto my-8">
+      <h5 className="text-[24px] 400px:text-[30px] font-Poppins text-center">
+        Create Product
+      </h5>
       {/* create product form */}
       <form onSubmit={handleSubmit}>
         <br />
@@ -86,7 +103,7 @@ const ShopCreateProduct = () => {
             name="name"
             value={name}
             required
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:border-primary sm:text-sm"
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter your product name..."
           />
@@ -103,7 +120,7 @@ const ShopCreateProduct = () => {
             type="text"
             name="description"
             value={description}
-            className="mt-2 appearance-none block w-full pt-2 px-3 border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-2 appearance-none block w-full pt-2 px-3 border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:border-primary sm:text-sm"
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter your product description..."
           ></textarea>
@@ -134,7 +151,7 @@ const ShopCreateProduct = () => {
             type="text"
             name="tags"
             value={tags}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:border-primary sm:text-sm"
             onChange={(e) => setTags(e.target.value)}
             placeholder="Enter your product tags..."
           />
@@ -146,7 +163,7 @@ const ShopCreateProduct = () => {
             type="number"
             name="price"
             value={price}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:border-primary sm:text-sm"
             onChange={(e) => setPrice(e.target.value)}
             placeholder="Enter your product price..."
           />
@@ -161,7 +178,7 @@ const ShopCreateProduct = () => {
             type="number"
             name="price"
             value={stock}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:border-primary sm:text-sm"
             onChange={(e) => setStock(e.target.value)}
             placeholder="Enter your product stock..."
           />
@@ -169,7 +186,7 @@ const ShopCreateProduct = () => {
         <br />
         <div>
           <label className="pb-2">
-            Upload Images <span className="text-red-500">*</span>
+            Upload Images <span className="text-red-500">*</span>(4-images)
           </label>
           <input
             type="file"
@@ -180,26 +197,35 @@ const ShopCreateProduct = () => {
             onChange={handleImageChange}
           />
           <div className="w-full flex items-center flex-wrap">
-            <label htmlFor="upload">
+            <label htmlFor="upload" className="cursor-pointer">
               <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
             </label>
             {images &&
               images.map((i, index) => (
-                <img
-                  src={i}
-                  key={index}
-                  alt=""
-                  className="h-[120px] w-[120px] object-cover m-2"
-                />
+                <div key={index} className="relative">
+                  <img
+                    src={i}
+                    alt=""
+                    className="h-[120px] w-[120px] object-cover m-2"
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-4 right-4 bg-white p-1 rounded-md"
+                    onClick={handleImageDelete.bind(null, index)}
+                  >
+                    <FaTrash className="text-primary" />
+                  </button>
+                </div>
               ))}
           </div>
           <br />
           <div>
-            <input
+            <button
               type="submit"
-              value="Create"
-              className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
+              className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-primary rounded-[3px] placeholder-gray-400 focus:outline-none sm:text-sm text-primary"
+            >
+              Create
+            </button>
           </div>
         </div>
       </form>

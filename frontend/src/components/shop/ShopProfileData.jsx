@@ -15,7 +15,7 @@ const ShopProfileData = ({ isOwner }) => {
 
   const [isLoading, fetchData, error] = useHttp();
 
-  const { error:toastError } = useToast();
+  const { error: toastError } = useToast();
 
   const { product } = useSelector((state) => state.product);
   const { event } = useSelector((state) => state.event);
@@ -49,22 +49,22 @@ const ShopProfileData = ({ isOwner }) => {
     getEvents();
   }, [dispatch]);
 
-
-  const reviews =product && product.flatMap(p=>p.reviews); 
-
-  
+  const reviews = product && product.flatMap((p) => p.reviews);
 
   return (
     <>
       {isLoading ? (
+        <div className="flex items-center justify-center h-[80vh]">
+
         <Loader />
+        </div>
       ) : (
-        <div className="w-full">
-          <div className="flex w-full items-center justify-between">
-            <div className="w-full flex">
+        <div className="my-4">
+          <div className="flex md:items-center md:flex-row flex-col md:justify-between">
+            <div className="flex">
               <div className="flex items-center" onClick={() => setActive(1)}>
                 <h5
-                  className={`font-[600] text-[20px] ${
+                  className={`font-[600] text-xs 400px:text-base ${
                     active === 1 ? "text-red-500" : "text-[#333]"
                   } cursor-pointer pr-[20px]`}
                 >
@@ -73,7 +73,7 @@ const ShopProfileData = ({ isOwner }) => {
               </div>
               <div className="flex items-center" onClick={() => setActive(2)}>
                 <h5
-                  className={`font-[600] text-[20px] ${
+                  className={`font-[600] text-xs 400px:text-base ${
                     active === 2 ? "text-red-500" : "text-[#333]"
                   } cursor-pointer pr-[20px]`}
                 >
@@ -83,7 +83,7 @@ const ShopProfileData = ({ isOwner }) => {
 
               <div className="flex items-center" onClick={() => setActive(3)}>
                 <h5
-                  className={`font-[600] text-[20px] ${
+                  className={`font-[600] text-xs 400px:text-base ${
                     active === 3 ? "text-red-500" : "text-[#333]"
                   } cursor-pointer pr-[20px]`}
                 >
@@ -92,33 +92,31 @@ const ShopProfileData = ({ isOwner }) => {
               </div>
             </div>
             <div>
-              
-                <div>
-                  {isOwner ? (
-                    <Link to="/dashboard">
-                      <div
-                        className={`${styles.button} !rounded-[4px] h-[42px]`}
-                      >
-                        <span className="text-[#fff]">Go Dashboard</span>
-                      </div>
-                    </Link>
-                  ) : (
-                    <Link to="/">
-                      <div
-                        className={`${styles.button} !rounded-[4px] h-[42px]`}
-                      >
-                        <span className="text-[#fff]">Go Home</span>
-                      </div>
-                    </Link>
-                  )}
-                </div>
-              
+              <div className="flex items-center justify-end md:justify-normal mt-4 md:mt-0">
+                {isOwner ? (
+                  <Link to="/seller/dashboard">
+                    <div
+                      className={`bg-black flex items-center justify-center rounded-md cursor-pointer py-2 px-3 400px:text-base text-sm`}
+                    >
+                      <span className="text-[#fff]">Go Dashboard</span>
+                    </div>
+                  </Link>
+                ) : (
+                  <Link to="/">
+                    <div
+                      className={`bg-black flex items-center justify-center rounded-md cursor-pointer py-2 px-3`}
+                    >
+                      <span className="text-[#fff]">Go Home</span>
+                    </div>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
 
           <br />
           {active === 1 && (
-            <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[25px] xl:grid-cols-4 xl:gap-[20px] mb-12 border-0">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 overflow-hidden">
               {product &&
                 product.map((i, index) => (
                   <ProductCard data={i} key={index} isShop={true} />
@@ -150,30 +148,32 @@ const ShopProfileData = ({ isOwner }) => {
           {active === 3 && (
             <div className="w-full">
               {reviews &&
-            reviews.map((item, index) => (
-              
-              <div className="w-full flex my-4" key={item._id}>
-                
-                <img
-                  src={`${item.user?.avatar?.url}`}
-                  className="w-[50px] h-[50px] rounded-full"
-                  alt=""
-                />
-                <div className="pl-2">
-                  <div className="flex w-full items-center">
-                    <h1 className="font-[600] pr-2">{item.user?.name}</h1>
-                    <Ratings rating={item.rating} />
+                reviews.map((item, index) => (
+                  <div className="w-full flex my-4" key={item._id}>
+                    <img
+                      src={`${item.user?.avatar?.url}`}
+                      className="w-[50px] h-[50px] rounded-full"
+                      alt=""
+                    />
+                    <div className="pl-2">
+                      <div className="flex w-full items-center">
+                        <h1 className="font-[600] pr-2">{item.user?.name}</h1>
+                        <Ratings rating={item.rating} />
+                      </div>
+                      <p className="font-[400] text-[#000000a7]">
+                        {item?.comment}
+                      </p>
+                      <p className="text-[#000000a7] text-[14px]">
+                        {item.createdAt.slice(0, 10)}
+                      </p>
+                    </div>
                   </div>
-                  <p className="font-[400] text-[#000000a7]">{item?.comment}</p>
-                  <p className="text-[#000000a7] text-[14px]">{item.createdAt.slice(0,10)}</p>
-                </div>
-              </div>
-            ))}
+                ))}
               {product.reviews && product.reviews.length === 0 && (
-            <h5 className="w-full text-center py-5 text-[18px]">
-              No Reviews have for this shop!
-            </h5>
-          )}
+                <h5 className="w-full text-center py-5 text-[18px]">
+                  No Reviews have for this shop!
+                </h5>
+              )}
             </div>
           )}
         </div>

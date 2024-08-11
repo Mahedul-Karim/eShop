@@ -13,7 +13,7 @@ function Modal({ children, onClick, extraClass, open }) {
         className={`${
           extraClass ? extraClass : "w-full md:w-[80%]"
         }  bg-white rounded-md shadow-lg overflow-y-scroll relative duration-300 delay-200 transition-all  ${
-          open ? "h-[60vh] p-6 visible" : "h-0 p-0 invisible"
+          open ? "max-h-[60vh] p-6 visible" : "max-h-0 p-0 invisible"
         }`}
         id="modal"
       >
