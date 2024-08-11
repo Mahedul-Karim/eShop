@@ -54,7 +54,7 @@ const ShopLogin = () => {
         "seller",
         JSON.stringify({ seller: data.shop, sellerToken: data.token })
       );
-      navigate(`/dashboard`);
+      navigate(`/seller/dashboard`);
     } catch (err) {
       error(err.message);
       dispatch(sellerActions.clearError());

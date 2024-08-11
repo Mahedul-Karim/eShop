@@ -90,7 +90,7 @@ const ShopCreateEvents = () => {
 
       dispatch(eventActions.eventRequestSuccess(data.event));
       success("Event created");
-      navigate("/dashboard-events");
+      navigate("/seller/dashboard/events");
     } catch (err) {
       error(err.message);
     }

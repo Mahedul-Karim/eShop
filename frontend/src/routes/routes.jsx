@@ -5,37 +5,8 @@ import Main from "../pages/Main";
 import Home from "../pages/Home";
 import Fallback from "./Fallback";
 import ProtectedRoutes from "./ProtectedRoutes";
-
-import AdminRoutes from "./AdminRoutes";
-import AdminDashboardPage from "../pages/dashboard/admin/AdminDashboardPage";
-import AdminDashboardUsers from "../pages/dashboard/admin/AdminDashboardUsers";
-import AdminDashboardOrders from "../pages/dashboard/admin/AdminDashboardOrders";
-import AdminDashboardSellers from "../pages/dashboard/admin/AdminDashboardSellers";
-import AdminDashboardProducts from "../pages/dashboard/admin/AdminDashboardProducts";
-import AdminDashboardEvents from "../pages/dashboard/admin/AdminDashboardEvents";
-import AdminDashboardWithdraw from "../pages/dashboard/admin/AdminDashboardWithdraw";
-import AdminDashboardMain from '../components/dashboard/admin/AdminDashboardMain';
-
 import SellerRoutes from "./SellerRoutes";
-import ShopSettingPage from "../pages/shop/ShopSettingPage";
-import ActiveSeller from "../pages/ActiveSeller";
-
-import ShopHome from "../pages/shop/ShopHome";
-import ShopPreviewPage from "../pages/shop/ShopPreviewPage";
-import ShopDashboard from "../components/shop/ShopDashboard";
-
-import ShopMessagesPage from "../pages/shop/ShopMessagesPage";
-import ShopWithDrawMoneyPage from "../pages/shop/ShopWithdrawPage";
-import ShopRefunds from "../pages/shop/ShopRefunds";
-import CreateProduct from "../pages/dashboard/CreateProduct";
-import CreateEvent from "../pages/dashboard/CreateEvent";
-import ShopEvents from "../pages/dashboard/ShopEvents";
-import ShopProducts from "../pages/dashboard/ShopProducts";
-import ShopOrders from "../pages/shop/ShopOrders";
-import ShopOrderDetails from "../pages/shop/ShopOrdersDetails";
-import CreateCoupons from "../pages/dashboard/CreateCoupon";
-
-import ShopDashboardHero from "../components/dashboard/seller/ShopDashboardHero";
+import AdminRoutes from "./AdminRoutes";
 
 //Global routes
 const EventsPage = lazy(() => import("../pages/EventsPage"));
@@ -65,6 +36,54 @@ const UserInbox = lazy(() => import("../components/user/UserInbox"));
 const TrackOrder = lazy(() => import("../components/orders/TrackOrder"));
 const ChangePassword = lazy(() => import("../components/user/ChangePassword"));
 const Address = lazy(() => import("../components/user/Address"));
+
+//Shop routes
+const ShopDashboard = lazy(() => import("../components/shop/ShopDashboard"));
+const ShopDashboardHero = lazy(() =>
+  import("../components/dashboard/seller/ShopDashboardHero")
+);
+const ShopMessagesPage = lazy(() => import("../pages/shop/ShopMessagesPage"));
+const ShopWithDrawMoneyPage = lazy(() =>
+  import("../pages/shop/ShopWithdrawPage")
+);
+const ShopRefunds = lazy(() => import("../pages/shop/ShopRefunds"));
+const CreateProduct = lazy(() => import("../pages/dashboard/CreateProduct"));
+const CreateEvent = lazy(() => import("../pages/dashboard/CreateEvent"));
+const ShopEvents = lazy(() => import("../pages/dashboard/ShopEvents"));
+const ShopProducts = lazy(() => import("../pages/dashboard/ShopProducts"));
+const ShopOrders = lazy(() => import("../pages/shop/ShopOrders"));
+const ShopOrderDetails = lazy(() => import("../pages/shop/ShopOrdersDetails"));
+const CreateCoupons = lazy(() => import("../pages/dashboard/CreateCoupon"));
+const ShopSettingPage = lazy(() => import("../pages/shop/ShopSettingPage"));
+const ShopHome = lazy(() => import("../pages/shop/ShopHome"));
+const ShopPreviewPage = lazy(() => import("../pages/shop/ShopPreviewPage"));
+const ActiveSeller = lazy(() => import("../pages/ActiveSeller"));
+
+//Admin routes
+const AdminDashboardPage = lazy(() =>
+  import("../pages/dashboard/admin/AdminDashboardPage")
+);
+const AdminDashboardUsers = lazy(() =>
+  import("../pages/dashboard/admin/AdminDashboardUsers")
+);
+const AdminDashboardOrders = lazy(() =>
+  import("../pages/dashboard/admin/AdminDashboardOrders")
+);
+const AdminDashboardSellers = lazy(() =>
+  import("../pages/dashboard/admin/AdminDashboardSellers")
+);
+const AdminDashboardProducts = lazy(() =>
+  import("../pages/dashboard/admin/AdminDashboardProducts")
+);
+const AdminDashboardEvents = lazy(() =>
+  import("../pages/dashboard/admin/AdminDashboardEvents")
+);
+const AdminDashboardWithdraw = lazy(() =>
+  import("../pages/dashboard/admin/AdminDashboardWithdraw")
+);
+const AdminDashboardMain = lazy(() =>
+  import("../components/dashboard/admin/AdminDashboardMain")
+);
 
 export const router = createBrowserRouter([
   {
@@ -194,9 +213,11 @@ export const router = createBrowserRouter([
   {
     path: "/seller/dashboard",
     element: (
-      <SellerRoutes to={"/shop-login"}>
-        <ShopDashboard />
-      </SellerRoutes>
+      <Fallback>
+        <SellerRoutes to={"/shop-login"}>
+          <ShopDashboard />
+        </SellerRoutes>
+      </Fallback>
     ),
     children: [
       {
@@ -258,9 +279,11 @@ export const router = createBrowserRouter([
   {
     path: "/admin/dashboard",
     element: (
-      <AdminRoutes>
-        <AdminDashboardPage />
-      </AdminRoutes>
+      <Fallback>
+        <AdminRoutes>
+          <AdminDashboardPage />
+        </AdminRoutes>
+      </Fallback>
     ),
     children: [
       {
@@ -297,28 +320,40 @@ export const router = createBrowserRouter([
 
   {
     path: "/seller",
-    element: <ActiveSeller />,
+    element: (
+      <Fallback>
+        <ActiveSeller />,
+      </Fallback>
+    ),
   },
 
   {
     path: "/shop-home/:shopId",
     element: (
-      <SellerRoutes to="/shop-login" path={"login"}>
-        <ShopHome />
-      </SellerRoutes>
+      <Fallback>
+        <SellerRoutes to="/shop-login" path={"login"}>
+          <ShopHome />
+        </SellerRoutes>
+      </Fallback>
     ),
   },
   {
     path: "/shop/preview/:shopId",
-    element: <ShopPreviewPage />,
+    element: (
+      <Fallback>
+        <ShopPreviewPage />,
+      </Fallback>
+    ),
   },
 
   {
     path: "/order/:id",
     element: (
-      <SellerRoutes>
-        <ShopOrderDetails />
-      </SellerRoutes>
+      <Fallback>
+        <SellerRoutes>
+          <ShopOrderDetails />
+        </SellerRoutes>
+      </Fallback>
     ),
   },
 ]);

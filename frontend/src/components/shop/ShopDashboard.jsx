@@ -4,6 +4,7 @@ import ShopDashboardHeader from "../dashboard/seller/ShopDashboardHeader";
 import Sidebar from "../dashboard/common/Sidebar";
 import { SELLER_DASHBOARD_NAV } from "../../util/data";
 import Container from "../../util/Container";
+import Fallback from "../../routes/Fallback";
 
 function ShopDashboard() {
   return (
@@ -12,9 +13,11 @@ function ShopDashboard() {
         <Sidebar navLinks={SELLER_DASHBOARD_NAV} />
         <div className="bg-[#FEFEFE] h-full overflow-y-auto">
           <ShopDashboardHeader />
-          <Container styles="">
-            <Outlet />
-          </Container>
+          <Fallback>
+            <Container styles="">
+              <Outlet />
+            </Container>
+          </Fallback>
         </div>
       </main>
     </>
