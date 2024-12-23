@@ -18,7 +18,7 @@ const PaymentInfo = ({
   const [select, setSelect] = useState(1);
 
   return (
-    <div className="w-full 800px:w-[95%] bg-[#fff] rounded-md  py-8">
+    <div className="w-full 800px:w-[95%] rounded-md  py-8">
      
       <div>
         <SelectType

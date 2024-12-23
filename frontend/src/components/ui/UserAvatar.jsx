@@ -1,7 +1,8 @@
 import React from "react";
-import { CiUser } from "react-icons/ci";
+import { LuUser } from "react-icons/lu";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { AiOutlineUser } from "react-icons/ai";
 
 
 function UserAvatar() {
@@ -18,9 +19,9 @@ function UserAvatar() {
         </Link>
       ) : (
         <Link to="/login">
-          <CiUser
+          <AiOutlineUser
             size={25}
-            style={{stroke:'black',strokeWidth:'0.8px'}}
+           strokeWidth={'0.1px'}
             className="inline-block"
           />
           

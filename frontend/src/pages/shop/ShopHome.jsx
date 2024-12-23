@@ -5,11 +5,15 @@ import Container from "../../util/Container";
 
 const ShopHome = () => {
   return (
-    <Container styles={"grid md:grid-cols-[200px_1fr] lg:grid-cols-[300px_1fr] md:h-screen"}>
-      <div className="bg-[#fff] rounded-[4px] shadow-sm md:overflow-y-auto md:h-screen hide-scrollbar ">
+    <Container
+      styles={
+        "grid md:grid-cols-[200px_1fr] lg:grid-cols-[300px_1fr] py-8 gap-4"
+      }
+    >
+      <div className="shadow-sm rounded-md bg-white h-max">
         <ShopInfo isOwner={true} />
       </div>
-      <div className="rounded-[4px] md:overflow-y-auto md:h-screen hide-scrollbar ">
+      <div className="rounded-[4px]">
         <ShopProfileData isOwner={true} />
       </div>
     </Container>

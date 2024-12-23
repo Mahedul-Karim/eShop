@@ -123,9 +123,8 @@ const Details = ({
           <button className="h-8 400px:h-10 border border-solid border-gray-700 rounded-md flex items-center justify-center w-[10%]">
             {isInWishlist ? (
               <AiFillHeart
-                className="cursor-pointer text-[20px] 400px:text-[30px]"
+                className="cursor-pointer text-[20px] 400px:text-[30px] text-primary-red"
                 onClick={() => removeFromWishlist(data._id)}
-                color={"#e90074"}
                 title="Remove from wishlist"
               />
             ) : (

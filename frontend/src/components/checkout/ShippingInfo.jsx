@@ -15,7 +15,7 @@ const ShippingInfo = ({
   setZipCode,
 }) => {
   return (
-    <div className="w-full bg-white rounded-md">
+    <div className="w-full rounded-md">
       <h5 className="text-[18px] font-[500]">Shipping Address</h5>
       <br />
       <form>

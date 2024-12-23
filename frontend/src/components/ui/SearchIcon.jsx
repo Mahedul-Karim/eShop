@@ -12,7 +12,7 @@ const SearchIcon = ({ extraClass,containerStyle }) => {
         className={`${extraClass} relative 800px:cursor-pointer`}
         onClick={() => setOpen(true)}
       >
-        <CiSearch size={30} style={{ strokeWidth: "0.8px" }} />
+        <CiSearch size={30}  />
       </div>
      
         <Modal onClick={setOpen.bind(null, false)} extraClass={'w-[80%] md:w-[40%]'} open={open}>

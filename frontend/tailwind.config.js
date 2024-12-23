@@ -9,6 +9,7 @@ export default {
     fontFamily: {
       Roboto: ["Roboto", "sans-serif"],
       Poppins: ['Poppins', "sans-serif"],
+      sans:['DM Sans','sans-serif']
     },
     extend: {
       screens: {
@@ -19,13 +20,16 @@ export default {
         "400px":"400px"
       },
       colors:{
-        'primary':'#E90074',
+        'primary':'#2e86de',
         'grey-50':'#f9fafb',
         'grey-200':'#d1d5db',
         'grey-700':'#6b7280',
         'dot':'#666666',
-        'secondary':'#E90074',
+        'secondary':'#ff497c',
         'text-secondary':'#333',
+        'background':'#fafafa',
+        'primary-red':'#FF4667',
+        'border':'#e9ecef'
       }
     },
   },

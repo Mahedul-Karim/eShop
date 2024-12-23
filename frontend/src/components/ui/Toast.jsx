@@ -4,22 +4,25 @@ import { useToast } from "../hooks/useToast";
 import { RxCross1 } from "react-icons/rx";
 
 import { useSelector } from "react-redux";
+import { FaRegCircleCheck } from "react-icons/fa6";
+import { MdErrorOutline } from "react-icons/md";
+import { IoWarningOutline } from "react-icons/io5";
 
 const styles = {
   error: {
-    bg: "bg-primary",
-    text: "text-primary",
-    title: "Error!",
+    bg: "bg-primary-red",
+    text: "text-white",
+    title: <MdErrorOutline size={20} />,
   },
   success: {
     bg: "bg-blue-700",
-    text: "text-blue-700",
-    title: "Success!",
+    text: "text-white",
+    title: <FaRegCircleCheck size={18} />,
   },
   warning: {
     bg: "bg-yellow-500",
-    text: "text-yellow-500",
-    title: "Warning!",
+    text: "text-white",
+    title: <IoWarningOutline size={20} />,
   },
 };
 
@@ -40,14 +43,14 @@ const Toast = () => {
 
             return (
               <div
-                className={`w-[270px] min-h-[75px] bg-white rounded-md border border-solid overflow-clip flex gap-2 pointer-events-auto slide`}
+                className={`w-[270px] 400px:w-[300px] sm:w-[350px] min-h-[75px] rounded-md border border-solid overflow-clip flex gap-2 pointer-events-auto slide px-4 ${bg} ${text}`}
                 key={toast?.id}
                 data-id={toast?.id}
               >
-                <div className={`w-4 h-full ${bg}`} />
+                
                 <div className="flex items-center justify-between w-full py-2">
-                  <div className="flex flex-col pl-1">
-                    <h2 className={`${text} font-semibold text-sm`}>{title}</h2>
+                  <div className="flex items-center gap-2">
+                    <p className={`font-semibold`}>{title}</p>
                     <p className="font-medium whitespace-pre-line">
                       {toast?.message}
                     </p>

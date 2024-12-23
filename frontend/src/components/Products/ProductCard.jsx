@@ -49,7 +49,7 @@ const ProductCard = ({ data, isEvent }) => {
 
   return (
     <>
-      <div className="border-[1px] border-solid border-grey-200 rounded-md p-2 sm:p-3 flex flex-col cursor-pointer group transition-all w-full h-[230px] sm:h-[350px]">
+      <div className="border-[1px] border-solid border-border rounded-md p-2 sm:p-3 flex flex-col cursor-pointer group transition-all w-full h-[230px] sm:h-[350px] bg-white">
         <div className="h-[120px] sm:h-[250px] max-w-[270px] flex items-center justify-center relative">
           <img
             src={`${data.images && data.images.at(0)?.url}`}
@@ -59,10 +59,10 @@ const ProductCard = ({ data, isEvent }) => {
           <div className="absolute right-0 top-5 flex flex-col gap-2 items-center justify-center ">
             {isInWishlist ? (
               <AiFillHeart
-                color={"#E90074"}
+                
                 title="Remove from wishlist"
                 onClick={() => removeFromWishlist(data._id)}
-                className="text-[22px] lg:text-[27px]"
+                className="text-[22px] lg:text-[27px] text-primary-red"
               />
             ) : (
               <AiOutlineHeart

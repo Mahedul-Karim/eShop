@@ -30,7 +30,7 @@ function Products() {
     setMinValue,
   } = useSearch();
 
-  const [open, setOpen] = useState(false);
+ 
   const [searchParams] = useSearchParams();
 
   const activePage = +searchParams.get("page") || 1;
@@ -45,33 +45,12 @@ function Products() {
 
   return (
     <>
-      <Container>
+      <Container styles={"py-12"}>
         <br />
         <br />
-        <div className="flex justify-end relative lg:hidden">
-          <button className="block" onClick={() => setOpen((prev) => !prev)}>
-            <AiFillFilter size={30} />
-          </button>
-          {open && (
-            <div className="absolute top-[27px] right-0 bg-white shadow-lg p-2 400px:w-max w-[90%] z-10 border border-solid">
-              <Filter
-                searchText={searchText}
-                handleSearch={handleSearch}
-                setSearchText={setSearchText}
-                catValue={catValue}
-                setCatValue={setCatValue}
-                ratingValue={ratingValue}
-                setRatingValue={setRatingValue}
-                maxValue={maxValue}
-                setMaxValue={setMaxValue}
-                minValue={minValue}
-                setMinValue={setMinValue}
-              />
-            </div>
-          )}
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-4">
-          <div className="hidden p-3 lg:flex flex-col gap-4">
+       
+        <div className="grid md:grid-cols-[0.3fr_1fr] gap-6">
+          <div className="py-4 order-3 md:order-1 px-6 flex flex-col gap-4 bg-white rounded-md h-[630px] border-[1px] border-solid border-border">
             <Filter
               searchText={searchText}
               handleSearch={handleSearch}
@@ -87,12 +66,12 @@ function Products() {
             />
           </div>
           {loading ? (
-            <div className="w-full h-screen">
+            <div className="w-full h-screen order-1 md:order-2">
               <Loader />
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 overflow-hidden place-items-center">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 overflow-hidden order-1 md:order-2">
                 {!loading &&
                   !error &&
                   searchData &&

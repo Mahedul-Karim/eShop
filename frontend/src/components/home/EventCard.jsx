@@ -37,7 +37,7 @@ function EventCard({ active }) {
             Shop now <span>&rarr;</span>
           </Link>
         </div>
-        <CountDown eventFinishDate={{ endDate: "2024-10-31T10:07:13.000Z" }} />
+        <CountDown eventFinishDate={{ endDate: "2030-10-31T10:07:13.000Z" }} />
       </div>
     </Container>
   );

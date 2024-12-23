@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -102,7 +103,7 @@ input[type="number"] {
   width: 100% !important;
 }
 .swiper-pagination-bullet-active {
-  background-color: #e90074 !important;
+  background-color: #ff497c !important;
 }
 .swiper-pagination-bullet {
   width: 30px !important;
@@ -139,11 +140,11 @@ input[type="range"]::-moz-range-thumb {
   transition: all 0.3s;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 6px #e90074;
+  box-shadow: 0 0 6px #2e86de;
   cursor: grab;
 }
 input[type="range"]::-moz-range-thumb:hover {
-  box-shadow: 0 0 6px #e90074;
+  box-shadow: 0 0 6px #2e86de;
   cursor: grab;
 }
 input[type="range"]::-webkit-slider-thumb:active {
@@ -184,6 +185,23 @@ input[type="range"]::-moz-range-thumb:active {
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+.show-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.horizontalScrollbar::-webkit-scrollbar {
+  height: 5px;
+}
+
+.horizontalScrollbar::-webkit-scrollbar-track,
+.show-scrollbar::-webkit-scrollbar-track {
+  background-color: #e9ecef;
+}
+.horizontalScrollbar::-webkit-scrollbar-thumb,
+.show-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #2e86de;
+  border-radius: 10px;
 }
 
 .indicator::before {

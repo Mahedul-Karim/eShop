@@ -9,9 +9,9 @@ import Fallback from "../../routes/Fallback";
 function ShopDashboard() {
   return (
     <>
-      <main className="grid grid-cols-[60px_1fr] md:grid-cols-[280px_1fr] h-screen overflow-clip">
+      <main className="grid grid-cols-[60px_1fr] md:grid-cols-[280px_1fr]">
         <Sidebar navLinks={SELLER_DASHBOARD_NAV} />
-        <div className="bg-[#FEFEFE] h-full overflow-y-auto">
+        <div className="bg-[#FEFEFE]">
           <ShopDashboardHeader />
           <Fallback>
             <Container styles="">

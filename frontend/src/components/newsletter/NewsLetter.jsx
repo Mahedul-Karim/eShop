@@ -3,9 +3,9 @@ import Container from "../../util/Container";
 
 function NewsLetter() {
   return (
-    <Container>
-      <div className="bg-[url('/assets/bg-2.jpg')] bg-cover bg-no-repeat py-4 sm:p-4">
-        <div className="bg-white px-2 py-6 flex flex-col items-center justify-center">
+    <div className="bg-[url('/assets/bg-2.jpg')] bg-cover bg-no-repeat py-4 sm:p-4">
+      <div className="bg-white px-2 py-6">
+        <Container styles={"flex flex-col items-center justify-center"}>
           <h2 className="text-2xl font-[600]">Get the Latest Deals</h2>
           <span className="text-dot">and</span>
           <p className="text-dot">
@@ -22,9 +22,9 @@ function NewsLetter() {
               &rarr;
             </button>
           </div>
-        </div>
+        </Container>
       </div>
-    </Container>
+    </div>
   );
 }
 

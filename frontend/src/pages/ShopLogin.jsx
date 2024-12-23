@@ -58,6 +58,9 @@ const ShopLogin = () => {
     } catch (err) {
       error(err.message);
       dispatch(sellerActions.clearError());
+      
+    }finally{
+      dispatch(sellerActions.sellerRequestFailed())
     }
   };
 

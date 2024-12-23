@@ -17,7 +17,7 @@ function NavIcons() {
           to={"/wishlist"}
           className="hidden 800px:inline-block relative 800px:cursor-pointer"
         >
-          <CiHeart size={30} style={{ strokeWidth: "0.8px" }} />
+          <CiHeart size={30} />
 
           <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
             {wishlist && wishlist.length}
@@ -30,7 +30,7 @@ function NavIcons() {
           className="hidden 800px:inline-block relative cursor-pointer"
           to={"/cart"}
         >
-          <CiShoppingCart size={30} style={{ strokeWidth: "0.8px" }} />
+          <CiShoppingCart size={30} />
           <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
             {cart && cart.length}
           </span>

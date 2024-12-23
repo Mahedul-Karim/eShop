@@ -23,7 +23,7 @@ function Login() {
   const { user, token, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const { error } = useToast()
+  const { error } = useToast();
 
   const [visible, setVisible] = useState(false);
 
@@ -55,8 +55,9 @@ function Login() {
         JSON.stringify({ user: data.user, token: data.token })
       );
     } catch (err) {
-      dispatch(userActions.userRequestFailed());
       error(err.message);
+    } finally {
+      dispatch(userActions.userRequestFailed());
     }
   };
 
@@ -159,7 +160,7 @@ function Login() {
                 type="submit"
                 className="group relative w-full h-[40px] flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary disabled:bg-primary/[0.4]"
               >
-                {isLoading ? 'Submitting...' : 'Submit'}
+                {isLoading ? "Submitting..." : "Submit"}
               </button>
             </div>
             <div className={`${styles.noramlFlex} w-full`}>

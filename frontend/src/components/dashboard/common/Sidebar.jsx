@@ -8,7 +8,7 @@ const Sidebar = ({ navLinks }) => {
   const location = useLocation();
 
   return (
-    <aside className="bg-primary py-4 h-full overflow-auto hide-scrollbar">
+    <aside className="bg-primary py-4 h-full">
       <Logo
         classes={"flex items-center justify-center"}
         text1="!text-[#FEFEFE]"

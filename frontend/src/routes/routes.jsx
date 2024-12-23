@@ -166,50 +166,50 @@ export const router = createBrowserRouter([
         path: "/cart",
         element: <Cart />,
       },
+      {
+        path: "/profile",
+        element: (
+          <Fallback>
+            <ProtectedRoutes to={"/login"}>
+              <Profile />
+            </ProtectedRoutes>
+          </Fallback>
+        ),
+        children: [
+          {
+            path: "/profile",
+            element: <ProfileContent />,
+            index: true,
+          },
+          {
+            path: "/profile/orders",
+            element: <AllOrders />,
+          },
+          {
+            path: "/profile/refunds",
+            element: <AllRefundOrders />,
+          },
+          {
+            path: "/profile/inbox",
+            element: <UserInbox />,
+          },
+          {
+            path: "/profile/track-order",
+            element: <TrackOrder />,
+          },
+          {
+            path: "/profile/change-password",
+            element: <ChangePassword />,
+          },
+          {
+            path: "/profile/address",
+            element: <Address />,
+          },
+        ],
+      },
     ],
   },
 
-  {
-    path: "/profile",
-    element: (
-      <Fallback>
-        <ProtectedRoutes to={"/login"}>
-          <Profile />
-        </ProtectedRoutes>
-      </Fallback>
-    ),
-    children: [
-      {
-        path: "/profile",
-        element: <ProfileContent />,
-        index: true,
-      },
-      {
-        path: "/profile/orders",
-        element: <AllOrders />,
-      },
-      {
-        path: "/profile/refunds",
-        element: <AllRefundOrders />,
-      },
-      {
-        path: "/profile/inbox",
-        element: <UserInbox />,
-      },
-      {
-        path: "/profile/track-order",
-        element: <TrackOrder />,
-      },
-      {
-        path: "/profile/change-password",
-        element: <ChangePassword />,
-      },
-      {
-        path: "/profile/address",
-        element: <Address />,
-      },
-    ],
-  },
   {
     path: "/seller/dashboard",
     element: (

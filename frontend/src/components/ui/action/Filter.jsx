@@ -29,7 +29,7 @@ function Filter({
         <input
           type="text"
           placeholder="Search"
-          className="border-[1px] border-solid border-grey-200 p-2 rounded-md"
+          className="border-[1px] border-solid border-border p-2 rounded-md w-full"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
@@ -37,7 +37,7 @@ function Filter({
       <div className="flex flex-col gap-2">
         <label className="text-2xl font-[500]">Category</label>
         <select
-          className="border-[1px] border-solid border-grey-200 p-2 rounded-md"
+          className="border-[1px] border-solid border-border p-2 rounded-md"
           value={catValue}
           onChange={(e) => setCatValue(e.target.value)}
         >

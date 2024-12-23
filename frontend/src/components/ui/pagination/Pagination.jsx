@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 const ITEM_PER_PAGE = 10;
 
-function Pagination({ totalItem }) {
+function Pagination({ totalItem,className }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const activePage = +searchParams.get("page") || 1;
@@ -61,7 +61,7 @@ function Pagination({ totalItem }) {
   };
 
   return (
-    <ul className="lg:col-start-2 flex items-center gap-2 mx-auto">
+    <ul className={`md:col-start-2 flex items-center gap-2 mx-auto order-2 md:order-3`}>
       <li>
         <button
           className={`block p-2 rounded-md ${

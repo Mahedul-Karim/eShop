@@ -23,8 +23,12 @@ const Footer = () => {
 
   return (
     <>
-      <Container styles={"bg-white text-black"}>
-        <div className="grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-5 py-16 sm:text-center">
+      <footer className="bg-white text-black">
+        <Container
+          styles={
+            "grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-5 py-16 sm:text-center"
+          }
+        >
           <ul className="px-5 text-center sm:text-start flex sm:block flex-col items-center">
             <Logo />
             <br />
@@ -52,7 +56,7 @@ const Footer = () => {
               <li key={index}>
                 <Link
                   className="text-gray-400 hover:text-teal-400 duration-300
-                text-sm cursor-pointer leading-6"
+                  text-sm cursor-pointer leading-6"
                   to={link.link}
                 >
                   {link.name}
@@ -67,7 +71,7 @@ const Footer = () => {
               <li key={index}>
                 <Link
                   className="text-gray-400 hover:text-teal-400 duration-300
-                text-sm cursor-pointer leading-6"
+                  text-sm cursor-pointer leading-6"
                   to={link.link}
                 >
                   {link.name}
@@ -90,8 +94,8 @@ const Footer = () => {
               </li>
             ))}
           </ul>
-        </div>
-      </Container>
+        </Container>
+      </footer>
       <div className="sticky bottom-0 block 800px:hidden bg-white z-[9] border-t border-solid">
         <div className="flex items-center justify-around gap-2">
           <SearchIcon containerStyle={"w-full justify-center py-2"} />
