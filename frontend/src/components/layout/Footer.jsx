@@ -106,7 +106,7 @@ const Footer = () => {
               to={"/wishlist"}
               className="inline-block 800px:hidden relative cursor-pointer"
             >
-              <CiHeart size={30} style={{ strokeWidth: "0.8px" }} />
+              <CiHeart size={30} />
               <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
                 {wishlist && wishlist.length}
               </span>
@@ -118,7 +118,7 @@ const Footer = () => {
               className="inliner-block 800px:hidden relative cursor-pointer"
               to="/cart"
             >
-              <CiShoppingCart size={30} style={{ strokeWidth: "0.8px" }} />
+              <CiShoppingCart size={30} />
               <span className="absolute right-0 top-0 rounded-full bg-primary w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
                 {cart && cart.length}
               </span>

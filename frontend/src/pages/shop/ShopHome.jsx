@@ -10,7 +10,7 @@ const ShopHome = () => {
         "grid md:grid-cols-[200px_1fr] lg:grid-cols-[300px_1fr] py-8 gap-4"
       }
     >
-      <div className="shadow-sm rounded-md bg-white h-max">
+      <div className="shadow-sm rounded-md bg-white h-[710px]">
         <ShopInfo isOwner={true} />
       </div>
       <div className="rounded-[4px]">

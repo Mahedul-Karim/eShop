@@ -7,23 +7,14 @@ function HeaderSidebar({ setOpen }) {
   return (
     <>
       <div className="w-full justify-between flex pr-6 items-center mx-3 flex-row-reverse">
-        
         <RxCross1
           size={30}
           className="ml-4 mt-5"
           onClick={() => setOpen(false)}
         />
       </div>
-      
 
-      <Nav setOpen={setOpen}/>
-      <br />
-      <br />
-      <br />
-      <div className="flex items-center justify-center">
-
-      <SellerLink />
-      </div>
+      <Nav setOpen={setOpen} />
     </>
   );
 }

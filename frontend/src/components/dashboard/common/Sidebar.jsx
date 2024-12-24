@@ -12,7 +12,7 @@ const Sidebar = ({ navLinks }) => {
       <Logo
         classes={"flex items-center justify-center"}
         text1="!text-[#FEFEFE]"
-        text2="md:inline-block hidden"
+        text2="md:block hidden"
       />
       <NavItems navLinks={navLinks} pathname={location.pathname} />
     </aside>

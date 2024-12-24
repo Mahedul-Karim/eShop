@@ -15,7 +15,7 @@ const SearchIcon = ({ extraClass,containerStyle }) => {
         <CiSearch size={30}  />
       </div>
      
-        <Modal onClick={setOpen.bind(null, false)} extraClass={'w-[80%] md:w-[40%]'} open={open}>
+        <Modal onClick={setOpen.bind(null, false)} extraClass={'w-full md:w-[40%]'} open={open}>
           <SearchBar setOpen={setOpen}/>
         </Modal>
  

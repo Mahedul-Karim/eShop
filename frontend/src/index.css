@@ -89,9 +89,7 @@ input[type="number"] {
   transform: scale(1);
 }
 
-#modal::-webkit-scrollbar {
-  display: none;
-}
+
 .page_active {
   @apply text-white bg-secondary;
 }
