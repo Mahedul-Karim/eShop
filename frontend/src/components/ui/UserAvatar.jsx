@@ -18,7 +18,6 @@ function UserAvatar() {
   useOutsideClick(dropDownRef, () => {
     setOpen(false);
   });
-
   return (
     <div ref={dropDownRef} className="relative">
       {/* <div className="border-t-0 border-b-background absolute border-l-transparent border-r-transparent border-l-[12px] border-r-[12px] border-b-[12px] border-solid rounded-[6px] top-[25px] right-[15px]" /> */}
