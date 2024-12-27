@@ -11,7 +11,7 @@ function Modal({ children, onClick, extraClass, open }) {
     >
       <div
         className={`${
-          extraClass ? extraClass : "w-full md:w-[80%]"
+          extraClass ? extraClass : "w-full md:w-[40%]"
         }  bg-white rounded-md shadow-lg overflow-y-scroll relative duration-300 delay-200 transition-all  ${
           open ? "max-h-[300px] md:max-h-[400px] p-6 visible" : "max-h-0 p-0 invisible"
         } show-scrollbar`}

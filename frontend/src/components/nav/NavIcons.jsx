@@ -36,10 +36,8 @@ function NavIcons() {
           </span>
         </Link>
       </div>
-      <div className={`flex items-center`}>
-        <div className="relative cursor-pointer hidden 800px:block">
-          <UserAvatar />
-        </div>
+      <div className="cursor-pointer hidden 800px:flex items-center">
+        <UserAvatar />
       </div>
     </div>
   );

@@ -4,17 +4,9 @@ import Logo from "../ui/Logo";
 import Siderbar from "../ui/sidebar/Siderbar";
 import UserAvatar from "../ui/UserAvatar";
 
-
-function MobileNav({
-  open,
-  setOpen,
-  setOpenWishlist,
-  styles,
-}) {
-  
+function MobileNav({ open, setOpen, setOpenWishlist, styles }) {
   return (
     <>
-     
       <div
         className={`w-full bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
       >
@@ -27,14 +19,11 @@ function MobileNav({
             />
           </div>
           <Logo />
-          <div>
-            <div className="relative mr-[20px]">
-              <UserAvatar />
-            </div>
+          <div className="mr-[20px]">
+            <UserAvatar />
           </div>
         </div>
 
-        
         <Siderbar
           open={open}
           setOpen={setOpen}
