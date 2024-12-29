@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import styles from "../../util/style";
 import ProductCard from "../Products/ProductCard";
 import { productActions } from "../../store/productSlice";
 import { eventActions } from "../../store/eventSlice";

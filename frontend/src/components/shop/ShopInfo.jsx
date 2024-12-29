@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import styles from "../../util/style";
 import Loader from "../../util/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../../util/base";

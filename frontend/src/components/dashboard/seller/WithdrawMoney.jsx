@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../../../util/style";
 import { RxCross1 } from "react-icons/rx";
 import { AiOutlineDelete } from "react-icons/ai";
 import { orderActions } from "../../../store/orderSlice";
@@ -139,7 +138,7 @@ const WithdrawMoney = () => {
           Available Balance: ${seller?.availableBalance?.toFixed(2)}
         </h5>
         <div
-          className={`${styles.button} text-white !h-[42px] !rounded`}
+          className={`w-[150px] bg-black  my-3 flex items-center justify-center  cursor-pointer text-white !h-[42px] !rounded`}
           onClick={() =>
             seller?.availableBalance?.toFixed(2) < 50
               ? error("You dont have enough balance to withdraw")
@@ -183,7 +182,7 @@ const WithdrawMoney = () => {
                       }
                       id=""
                       placeholder="Enter your Bank name!"
-                      className={`${styles.input} mt-2`}
+                      className={`w-full border p-1 rounded-[5px] mt-2`}
                     />
                   </div>
                   <div className="pt-2">
@@ -203,7 +202,7 @@ const WithdrawMoney = () => {
                       id=""
                       required
                       placeholder="Enter your bank Country!"
-                      className={`${styles.input} mt-2`}
+                      className={`w-full border p-1 rounded-[5px] mt-2`}
                     />
                   </div>
                   <div className="pt-2">
@@ -223,7 +222,7 @@ const WithdrawMoney = () => {
                         })
                       }
                       placeholder="Enter your Bank Swift Code!"
-                      className={`${styles.input} mt-2`}
+                      className={`w-full border p-1 rounded-[5px] mt-2`}
                     />
                   </div>
 
@@ -245,7 +244,7 @@ const WithdrawMoney = () => {
                       }
                       required
                       placeholder="Enter your bank account number!"
-                      className={`${styles.input} mt-2`}
+                      className={`w-full border p-1 rounded-[5px] mt-2`}
                     />
                   </div>
                   <div className="pt-2">
@@ -265,7 +264,7 @@ const WithdrawMoney = () => {
                       }
                       id=""
                       placeholder="Enter your bank Holder name!"
-                      className={`${styles.input} mt-2`}
+                      className={`w-full border p-1 rounded-[5px] mt-2`}
                     />
                   </div>
 
@@ -286,13 +285,13 @@ const WithdrawMoney = () => {
                         })
                       }
                       placeholder="Enter your bank address!"
-                      className={`${styles.input} mt-2`}
+                      className={`w-full border p-1 rounded-[5px] mt-2`}
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className={`${styles.button} mb-3 text-white`}
+                    className={`w-[150px] bg-black h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer mb-3 text-white`}
                   >
                     Add
                   </button>
@@ -337,7 +336,7 @@ const WithdrawMoney = () => {
                         className="800px:w-[100px] w-[full] border 800px:mr-3 p-1 rounded"
                       />
                       <div
-                        className={`${styles.button} !h-[42px] text-white`}
+                        className={`w-[150px] bg-black my-3 flex items-center justify-center rounded-xl cursor-pointer !h-[42px] text-white`}
                         onClick={withdrawHandler}
                       >
                         Withdraw
@@ -351,7 +350,7 @@ const WithdrawMoney = () => {
                     </p>
                     <div className="w-full flex items-center">
                       <div
-                        className={`${styles.button} text-[#fff] text-[18px] mt-4`}
+                        className={`w-[150px] bg-black h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer text-[#fff] text-[18px] mt-4`}
                         onClick={() => setPaymentMethod(true)}
                       >
                         Add new

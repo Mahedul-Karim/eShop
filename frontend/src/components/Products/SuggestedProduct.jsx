@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import styles from "../../util/style";
 import ProductCard from "./ProductCard";
 
 const SuggestedProduct = ({ data }) => {
@@ -17,7 +16,7 @@ const SuggestedProduct = ({ data }) => {
       {data ? (
         <div className={``}>
           <h2
-            className={`${styles.heading} text-[25px] font-[500] border-b mb-5`}
+            className={`text-center md:text-start font-Roboto pb-[20px] text-[25px] font-[500] border-b mb-5`}
           >
             Related Product
           </h2>

@@ -1,5 +1,4 @@
 import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
-import styles from "../../util/style";
 import { TfiGallery } from "react-icons/tfi";
 import { format } from 'timeago.js';
 
@@ -102,7 +101,7 @@ const Inbox = ({
               placeholder="Enter your message..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              className={`${styles.input}`}
+              className={`w-full border p-1 rounded-[5px]`}
             />
             <input type="submit" value="Send" className="hidden" id="send" />
             <label htmlFor="send">

@@ -42,10 +42,10 @@ function UserAvatar() {
       </button>
 
       <div
-        className={`absolute right-0 top-[45px] bg-white rounded-md border border-border border-solid flex flex-col text-[#717171] font-medium z-[10] [&>*:not(:first-child)]:py-2 [&>*:not(:first-child)]:px-4 w-max shadow-lg transition-all duration-[600ms] ${
+        className={`absolute right-0 top-[45px] bg-white rounded-md border border-border border-solid flex flex-col text-[#717171] font-medium z-[10] [&>*:not(:first-child)]:py-2 [&>*:not(:first-child)]:px-4 w-max shadow-lg transition-all duration-300 ${
           open
             ? "visible translate-y-0 opacity-100"
-            : "invisible -translate-y-[10px] opacity-0"
+            : "invisible -translate-y-[20px] opacity-0"
         }`}
         onClick={() => setOpen(false)}
       >

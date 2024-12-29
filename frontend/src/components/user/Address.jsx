@@ -1,8 +1,5 @@
 import { useState } from "react";
-import styles from "../../util/style";
-import { RxCross1 } from "react-icons/rx";
 import { useToast } from "../hooks/useToast";
-import { Country, State } from "country-state-city";
 import { useHttp } from "../hooks/useHttp";
 import { useSelector, useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";

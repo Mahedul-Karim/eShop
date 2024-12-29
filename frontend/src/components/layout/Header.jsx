@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import styles from "../../util/style";
 import Nav from "../nav/Nav";
 import MobileNav from "../nav/MobileNav";
 import Container from "../../util/Container";
 
-import SellerLink from "../ui/SellerLink";
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -21,7 +19,7 @@ function Header() {
       </Container>
         </div>
 
-      <MobileNav open={open} setOpen={setOpen} styles={styles} />
+      <MobileNav open={open} setOpen={setOpen}  />
     </>
   );
 }

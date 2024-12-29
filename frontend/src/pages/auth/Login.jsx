@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useReducer, useState } from "react";
-import styles from "../../util/style";
 import loginReducer from "../../reducers/formReducer";
 import { BASE_URL } from "../../util/base";
 
@@ -133,8 +132,8 @@ function Login() {
                 )}
               </div>
             </div>
-            <div className={`${styles.noramlFlex} justify-between`}>
-              <div className={`${styles.noramlFlex}`}>
+            <div className={`flex items-center justify-between`}>
+              <div className={`flex items-center`}>
                 <input
                   type="checkbox"
                   name="remember-me"
@@ -163,7 +162,7 @@ function Login() {
                 {isLoading ? "Submitting..." : "Submit"}
               </button>
             </div>
-            <div className={`${styles.noramlFlex} w-full`}>
+            <div className={`flex items-center w-full`}>
               <h4>Not have any account?</h4>
               <Link to="/signup" className="text-primary pl-2">
                 Sign Up

@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import styles from "../../util/style";
 import { useHttp } from "../hooks/useHttp";
 import { useToast } from "../hooks/useToast";
 import { useSelector } from "react-redux";
@@ -56,7 +55,7 @@ const ChangePassword = () => {
                 <label className="block pb-2">Enter your old password</label>
                 <input
                   type="password"
-                  className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                  className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
                   required
                   value={oldPassword}
                   onChange={(e) => setOldPassword(e.target.value)}
@@ -66,7 +65,7 @@ const ChangePassword = () => {
                 <label className="block pb-2">Enter your new password</label>
                 <input
                   type="password"
-                  className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                  className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
                   required
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -78,7 +77,7 @@ const ChangePassword = () => {
                 </label>
                 <input
                   type="password"
-                  className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                  className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}

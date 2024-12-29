@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineCamera } from "react-icons/ai";
-import styles from "../../util/style";
 import { useToast } from '../hooks/useToast'
 import { useHttp } from "../hooks/useHttp";
 import { sellerActions } from "../../store/sellerSlice";
@@ -107,7 +106,7 @@ const ShopSettings = () => {
               placeholder={`${seller.name}`}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+              className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
               required
             />
           </div>
@@ -124,7 +123,7 @@ const ShopSettings = () => {
               }`}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+              className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
             />
           </div>
           <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
@@ -136,7 +135,7 @@ const ShopSettings = () => {
               placeholder={seller?.address}
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+              className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
               required
             />
           </div>
@@ -150,7 +149,7 @@ const ShopSettings = () => {
               placeholder={seller?.phoneNumber}
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+              className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
               required
             />
           </div>
@@ -164,7 +163,7 @@ const ShopSettings = () => {
               placeholder={seller?.zipCode}
               value={zipCode}
               onChange={(e) => setZipcode(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+              className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
               required
             />
           </div>
@@ -173,7 +172,7 @@ const ShopSettings = () => {
             <input
               type="submit"
               value="Update Shop"
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+              className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
               required
               readOnly
             />

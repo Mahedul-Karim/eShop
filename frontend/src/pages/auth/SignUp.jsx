@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import { useReducer, useState } from "react";
-import styles from "../../util/style";
 import signupReducer from "../../reducers/formReducer";
 import { BASE_URL } from "../../util/base";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
 import { useToast } from "../../components/hooks/useToast";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const initialState = {
@@ -207,7 +205,7 @@ function SignUp() {
                 {isLoading ? 'Submitting...' : 'Submit'}
               </button>
             </div>
-            <div className={`${styles.noramlFlex} w-full`}>
+            <div className={`flex items-center w-full`}>
               <h4>Already have an account?</h4>
               <Link to="/login" className="text-primary pl-2">
                 Sign In

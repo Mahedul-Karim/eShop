@@ -4,7 +4,7 @@ import Logo from "../ui/Logo";
 import Siderbar from "../ui/sidebar/Siderbar";
 import UserAvatar from "../ui/UserAvatar";
 
-function MobileNav({ open, setOpen, setOpenWishlist, styles }) {
+function MobileNav({ open, setOpen }) {
   return (
     <>
       <div
@@ -27,7 +27,7 @@ function MobileNav({ open, setOpen, setOpenWishlist, styles }) {
         <Siderbar
           open={open}
           setOpen={setOpen}
-          setOpenWishlist={setOpenWishlist}
+          
         />
       </div>
     </>

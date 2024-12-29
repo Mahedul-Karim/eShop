@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsPencil } from "react-icons/bs";
 import { RxCross1 } from "react-icons/rx";
-import styles from "../../../util/style";
 
 import { useHttp } from "../../hooks/useHttp";
 import { useSelector } from "react-redux";
@@ -173,7 +172,7 @@ const AllWithdraw = () => {
                 </select>
                 <button
                   type="submit"
-                  className={`block ${styles.button} text-white !h-[42px] mt-4 text-[18px]`}
+                  className={`w-[150px] bg-black my-3 flex items-center justify-center rounded-xl cursor-pointer text-white !h-[42px] mt-4 text-[18px]`}
                   onClick={handleSubmit}
                 >
                   Update

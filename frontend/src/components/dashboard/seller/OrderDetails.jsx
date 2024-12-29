@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styles from "../../../util/style";
 import { BsFillBagFill } from "react-icons/bs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,7 +55,7 @@ const OrderDetails = () => {
   };
 
   return (
-    <div className={`py-4 min-h-screen ${styles.section}`}>
+    <div className={`py-4 min-h-screen w-11/12 mx-auto`}>
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center">
           <BsFillBagFill size={30} color="crimson" />
@@ -64,7 +63,7 @@ const OrderDetails = () => {
         </div>
         <Link to="/dashboard-orders">
           <div
-            className={`${styles.button} !bg-[#fce1e6] !rounded-[4px] text-[#e94560] font-[600] !h-[45px] text-[18px]`}
+            className={`w-[150px]  my-3 flex items-center justify-center  cursor-pointer !bg-[#fce1e6] !rounded-[4px] text-[#e94560] font-[600] !h-[45px] text-[18px]`}
           >
             Order List
           </div>
@@ -182,7 +181,7 @@ const OrderDetails = () => {
       ) : null}
 
       <div
-        className={`${styles.button} mt-5 !bg-[#FCE1E6] !rounded-[4px] text-[#E94560] font-[600] !h-[45px] text-[18px]`}
+        className={`w-[150px]  my-3 flex items-center justify-center cursor-pointer mt-5 !bg-[#FCE1E6] !rounded-[4px] text-[#E94560] font-[600] !h-[45px] text-[18px]`}
         onClick={orderUpdateHandler}
       >
         Update Status

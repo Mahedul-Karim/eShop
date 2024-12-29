@@ -1,6 +1,5 @@
 import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import styles from "../../util/style";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useToast } from "../hooks/useToast";
@@ -251,7 +250,7 @@ const Shop = () => {
                 Submit
               </button>
             </div>
-            <div className={`${styles.noramlFlex} w-full`}>
+            <div className={`flex items-center w-full`}>
               <h4>Already have an account?</h4>
               <Link to="/shop-login" className="text-primary pl-2">
                 Sign in

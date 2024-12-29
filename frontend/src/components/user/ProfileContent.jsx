@@ -1,12 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../../util/style";
 import { AiOutlineCamera } from "react-icons/ai";
 import { useState } from "react";
-import AllOrders from "../orders/AllOrders";
-import AllRefundOrders from "../orders/AllRefundOrders";
-import TrackOrder from "../orders/TrackOrder";
-import Address from "./Address";
-import ChangePassword from "./ChangePassword";
 import { useHttp } from "../hooks/useHttp";
 import { userActions } from "../../store/userSlice";
 import { useToast } from "../hooks/useToast";
@@ -102,7 +96,7 @@ function ProfileContent({ active }) {
               <label className="block pb-2">Full Name</label>
               <input
                 type="text"
-                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -112,7 +106,7 @@ function ProfileContent({ active }) {
               <label className="block pb-2">Email Address</label>
               <input
                 type="text"
-                className={`${styles.input} !w-[95%] mb-1 800px:mb-0`}
+                className={`border p-1 rounded-[5px] !w-[95%] mb-1 800px:mb-0`}
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -125,7 +119,7 @@ function ProfileContent({ active }) {
               <label className="block pb-2">Phone Number</label>
               <input
                 type="number"
-                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
                 required
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -136,7 +130,7 @@ function ProfileContent({ active }) {
               <label className="block pb-2">Enter your password</label>
               <input
                 type="password"
-                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
