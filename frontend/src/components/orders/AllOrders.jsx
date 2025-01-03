@@ -29,14 +29,13 @@ const AllOrders = () => {
 
         dispatch(orderActions.orderRequestSuccess(data.order));
       } catch (err) {
-        error(err.message);
+        console.log(err.message);
       }
     };
 
     allOrders();
   }, []);
 
-  console.log(orders);
 
   //bg-silver-100,text-silver-700
   return (
@@ -62,8 +61,8 @@ const AllOrders = () => {
           })}
         </div>
       ) : (
-        <div className="flex items-center justify-center text-lg h-full">
-          <p>You have not placed any order!</p>
+        <div className="flex items-center justify-center text-lg h-screen">
+          <p>No orders found!</p>
         </div>
       )}
     </>

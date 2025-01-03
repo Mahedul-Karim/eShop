@@ -16,7 +16,10 @@ const SLIDES = [
     subtitle: "Daily deals",
     title: "Airpods<br />Earphones",
     price: 1499,
-    link: "",
+    link: `/product/${"Apple AirPods 3rd generation with Charging Case".replace(
+      /\s+/,
+      "-"
+    )}`,
   },
   {
     id: 1,
@@ -27,7 +30,6 @@ const SLIDES = [
     price: 29,
     link: "",
   },
-
 ];
 
 const Carousel = () => {
@@ -63,10 +65,11 @@ const Carousel = () => {
               <h3 className="text-secondary text-[12px] 400px:text-[20px] font-[300] leading-[5px] mb-2">
                 {slide.subtitle}
               </h3>
-              <h1
-                className="text-[20px] 400px:text-[30px] sm:text-[50px] font-[700] 400px:leading-[45px] sm:leading-[65px] text-text-secondary whitespace-pre"
+              <Link
+                to={slide.link}
+                className="text-[20px] 400px:text-[30px] sm:text-[50px] font-[700] 400px:leading-[45px] sm:leading-[65px] text-text-secondary whitespace-pre hover:underline box-decoration-clone"
                 dangerouslySetInnerHTML={{ __html: slide.title }}
-              ></h1>
+              ></Link>
               <div className="flex gap-1">
                 <p className="text-[12px] 400px:text-[18px] font-[400] sm:mt-[10px]">
                   Today:

@@ -3,27 +3,21 @@ const Shop = require("../model/shopModel");
 const catchAsync = require("../util/catchAsync");
 const fs = require("fs");
 const AppError = require("../model/errorModel");
+const cloudinary = require("cloudinary");
 
 exports.createEvent = catchAsync(async (req, res, next) => {
-  if (req.files) {
-    req.body.images = req.files.map((file) => {
-      return {
-        public_id: "fdf",
-        url: `${req.protocol}://${req.get("host")}/${
-          file.destination.split("/")[1]
-        }/${file.filename}`,
-      };
-    });
-  }
+  const images = [];
 
-  const shop = await Shop.findById(req.body.shopId);
+  await Promise.all(
+    req.body.images.map(async (img) => {
+      const myCloud = await cloudinary.v2.uploader.upload(img, {
+        folder: "avatars",
+      });
+      images.push({ public_id: myCloud.public_id, url: myCloud.url });
+    })
+  );
 
-  if (!shop) {
-    return next(new AppError("Create a shop first to create products", 401));
-  }
-
-  req.body.shop = shop;
-  const event = await Event.create(req.body);
+  const event = await Event.create({ ...req.body, images });
 
   res.status(201).json({
     status: "success",
@@ -52,9 +46,15 @@ exports.allEvents = catchAsync(async (req, res, next) => {
 exports.deleteEvent = catchAsync(async (req, res, next) => {
   const event = await Event.findByIdAndDelete(req.params.id);
 
-  event.images.forEach((image) => {
-    fs.unlink(`public/${image.url.split("/").slice(3).join("/")}`, () => {});
-  });
+  // event.images.forEach((image) => {
+  //   fs.unlink(`public/${image.url.split("/").slice(3).join("/")}`, () => {});
+  // });
+
+  await Promise.all(
+    event.images.map(async (img) => {
+      await cloudinary.v2.uploader.destroy(img.public_id);
+    })
+  );
 
   res.status(200).json({
     status: "success",

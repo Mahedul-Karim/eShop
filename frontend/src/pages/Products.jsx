@@ -30,7 +30,6 @@ function Products() {
     setMinValue,
   } = useSearch();
 
- 
   const [searchParams] = useSearchParams();
 
   const activePage = +searchParams.get("page") || 1;
@@ -48,7 +47,7 @@ function Products() {
       <Container styles={"py-12"}>
         <br />
         <br />
-       
+
         <div className="grid md:grid-cols-[0.3fr_1fr] gap-6">
           <div className="py-4 order-3 md:order-1 px-6 flex flex-col gap-4 bg-white rounded-md h-[630px] border-[1px] border-solid border-border">
             <Filter
@@ -71,7 +70,8 @@ function Products() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 overflow-hidden order-1 md:order-2">
+              {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 overflow-hidden order-1 md:order-2"> */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-hidden order-1 md:order-2 h-max">
                 {!loading &&
                   !error &&
                   searchData &&
@@ -79,7 +79,7 @@ function Products() {
                     <ProductCard data={dt} key={dt._id} />
                   ))}
                 {(error || searchData.length === 0) && (
-                  <div className="flex items-center justify-center w-full col-span-full">
+                  <div className="flex items-center justify-center w-full col-span-full h-screen">
                     <img src="/assets/images.png" alt="No products" />
                   </div>
                 )}

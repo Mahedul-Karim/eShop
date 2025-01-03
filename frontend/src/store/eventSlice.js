@@ -30,6 +30,9 @@ const eventSlice = createSlice({
     clearError(state) {
       state.eventError = null;
     },
+    setLoading(state){
+      state.isEventLoading = false
+    }
   },
 });
 

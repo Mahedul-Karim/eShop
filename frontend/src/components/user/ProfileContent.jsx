@@ -9,11 +9,10 @@ function ProfileContent({ active }) {
   const { user, token } = useSelector((state) => state.auth);
 
   const [name, setName] = useState(user?.name);
-  const [email, setEmail] = useState(user?.email);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [avatarPreview, setAvatarPreview] = useState();
-  const [_, fetchData] = useHttp();
+  const [isLoading, fetchData] = useHttp();
 
   const { success, error } = useToast();
 
@@ -44,7 +43,6 @@ function ProfileContent({ active }) {
         },
         JSON.stringify({
           name,
-          email,
           phoneNumber,
           avatar: avatarPreview,
           password,
@@ -71,7 +69,7 @@ function ProfileContent({ active }) {
         <div className="relative">
           <img
             src={`${!avatarPreview ? user?.avatar?.url : avatarPreview}`}
-            className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-[#3ad132]"
+            className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-secondary"
             alt=""
           />
           <div className="w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center cursor-pointer absolute bottom-[5px] right-[5px]">
@@ -81,7 +79,7 @@ function ProfileContent({ active }) {
               className="hidden"
               onChange={(e) => handleImage(e.target.files[0])}
             />
-            <label htmlFor="image">
+            <label htmlFor="image" className="cursor-pointer">
               <AiOutlineCamera />
             </label>
           </div>
@@ -96,20 +94,21 @@ function ProfileContent({ active }) {
               <label className="block pb-2">Full Name</label>
               <input
                 type="text"
-                className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
+                className={`border p-2 rounded-[5px] !w-[95%] mb-4 800px:mb-0 disabled:bg-background`}
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                disabled={isLoading}
               />
             </div>
             <div className=" w-[100%] 800px:w-[50%]">
               <label className="block pb-2">Email Address</label>
               <input
                 type="text"
-                className={`border p-1 rounded-[5px] !w-[95%] mb-1 800px:mb-0`}
+                className={`border p-2 rounded-[5px] !w-[95%] mb-1 800px:mb-0 disabled:bg-background`}
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={user?.email}
+                disabled
               />
             </div>
           </div>
@@ -119,10 +118,11 @@ function ProfileContent({ active }) {
               <label className="block pb-2">Phone Number</label>
               <input
                 type="number"
-                className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
+                className={`border p-2 rounded-[5px] !w-[95%] mb-4 800px:mb-0 disabled:bg-background`}
                 required
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
+                disabled={isLoading}
               />
             </div>
 
@@ -130,19 +130,20 @@ function ProfileContent({ active }) {
               <label className="block pb-2">Enter your password</label>
               <input
                 type="password"
-                className={`border p-1 rounded-[5px] !w-[95%] mb-4 800px:mb-0`}
+                className={`border p-2 rounded-[5px] !w-[95%] mb-4 800px:mb-0 disabled:bg-background`}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
               />
             </div>
           </div>
-          <input
-            className={`w-[120px] md:w-[200px] md:text-base text-sm h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px]  cursor-pointer`}
-            required
-            value="Update"
-            type="submit"
-          />
+          <button
+            className={`w-[120px] md:w-[200px] md:text-base text-sm h-[40px] border border-primary text-center text-primary rounded-[3px] disabled:border-primary/[0.4] disabled:text-primary/[0.4]`}
+            disabled={isLoading}
+          >
+            {isLoading ? "Updating..." : "Update"}
+          </button>
         </form>
       </div>
     </>

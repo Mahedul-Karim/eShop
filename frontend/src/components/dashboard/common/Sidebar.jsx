@@ -8,7 +8,7 @@ const Sidebar = ({ navLinks }) => {
   const location = useLocation();
 
   return (
-    <aside className="bg-primary py-4 h-full">
+    <aside className="bg-primary py-4 h-full min-h-screen">
       <Logo
         classes={"flex items-center justify-center"}
         text1="!text-[#FEFEFE]"

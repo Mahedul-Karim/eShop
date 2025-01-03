@@ -69,7 +69,7 @@ const CheckoutPage = () => {
   const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
 
-  const [_, fetchData] = useHttp();
+  const [isLoading, fetchData] = useHttp();
 
   const subTotalPrice = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -125,20 +125,13 @@ const CheckoutPage = () => {
       const data = await fetchData(`coupon/shop/${couponCode}`);
 
       const validProduct =
-        cart && cart.filter((c) => c.shopId === data.coupon.shopId);
+        cart && cart.filter((c) => c.shopId === data.coupon.shop);
 
       if (validProduct.length === 0) {
         throw new Error("This coupon is not eligible for this product");
       }
 
-      const validProductPrice = validProduct.reduce(
-        (acc, p) => acc + p.quantity * p.discountPrice,
-        0
-      );
-
-      const discountedPrice = (validProductPrice * data.coupon.value) / 100;
-
-      setDiscountPrice(discountedPrice);
+      setDiscountPrice(data.coupon.value);
       setCouponCodeData(data.coupon);
       setCouponCode("");
     } catch (err) {
@@ -182,6 +175,7 @@ const CheckoutPage = () => {
           totalPrice={totalPrice.toFixed(2)}
           subTotalPrice={subTotalPrice.toFixed(2)}
           discountPercentage={discountPercentage}
+          isLoading={isLoading}
         />
       </div>
     </Container>

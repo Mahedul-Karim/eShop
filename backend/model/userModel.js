@@ -24,24 +24,8 @@ const userSchema = new mongoose.Schema(
     },
     addresses: [
       {
-        country: {
-          type: String,
-        },
-        city: {
-          type: String,
-        },
-        address1: {
-          type: String,
-        },
-        address2: {
-          type: String,
-        },
-        zipCode: {
-          type: Number,
-        },
-        addressType: {
-          type: String,
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Address",
       },
     ],
     role: {
@@ -72,8 +56,6 @@ userSchema.pre("save", async function (next) {
   }
   this.password = await bcrypt.hash(this.password, 10);
 });
-
-
 
 userSchema.methods.getToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {

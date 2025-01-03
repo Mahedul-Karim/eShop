@@ -12,8 +12,6 @@ const ShopAllCoupons = () => {
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [coupouns, setCoupouns] = useState([]);
-  const [minAmount, setMinAmout] = useState(null);
-  const [maxAmount, setMaxAmount] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [value, setValue] = useState(null);
   const { seller, sellerToken } = useSelector((state) => state.seller);
@@ -79,9 +77,7 @@ const ShopAllCoupons = () => {
         },
         body: JSON.stringify({
           name,
-          minAmount,
-          maxAmount,
-          selectedProducts,
+          selectedProducts:selectedProducts._id,
           value,
         }),
       });
@@ -178,12 +174,9 @@ const ShopAllCoupons = () => {
               setName={setName}
               value={value}
               setValue={setValue}
-              minAmount={minAmount}
-              setMinAmout={setMinAmout}
-              maxAmount={maxAmount}
-              setMaxAmount={setMaxAmount}
               selectedProducts={selectedProducts}
               setSelectedProducts={setSelectedProducts}
+              isLoading={isLoading}
             />
           )}
         </div>

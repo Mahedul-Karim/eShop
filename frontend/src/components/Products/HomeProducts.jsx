@@ -41,7 +41,7 @@ const HomeProducts = () => {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4  place-items-center">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 place-items-center">
               {productCards.length !== 0 ? (
                 productCards.map((pro) => (
                   <ProductCard data={pro} key={pro._id}  />

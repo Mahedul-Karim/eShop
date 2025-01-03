@@ -9,7 +9,6 @@ function Profile() {
   const [active, setActive] = useState(0);
   return (
     <>
-      
       <Container styles={`flex py-10`}>
         <div className="w-[80px] sm:w-[335px] border border-border rounded-md border-solid">
           <ProfileSidebar active={active} setActive={setActive} />

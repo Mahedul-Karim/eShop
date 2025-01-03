@@ -10,6 +10,7 @@ import { FaTrash } from "react-icons/fa";
 
 const ShopCreateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
+  const { isProductLoading } = useSelector((state) => state.product);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -72,13 +73,12 @@ const ShopCreateProduct = () => {
       if (data.status === "failed") {
         throw new Error(data.message);
       }
-      console.log(data);
       dispatch(productActions.productRequestSuccess(data.product));
-      navigate("/dashboard");
+      navigate("/seller/dashboard");
       success("Product created successfully");
     } catch (err) {
-      dispatch(productActions.productRequestFailed());
       error(err.message);
+      dispatch(productActions.productRequestFailed());
     }
   };
 
@@ -213,7 +213,7 @@ const ShopCreateProduct = () => {
                     className="absolute top-4 right-4 bg-white p-1 rounded-md"
                     onClick={handleImageDelete.bind(null, index)}
                   >
-                    <FaTrash className="text-primary" />
+                    <FaTrash className="text-secondary" />
                   </button>
                 </div>
               ))}
@@ -222,9 +222,10 @@ const ShopCreateProduct = () => {
           <div>
             <button
               type="submit"
-              className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-primary rounded-[3px] placeholder-gray-400 focus:outline-none sm:text-sm text-primary"
+              className="mt-2 appearance-none text-center block w-full px-3 h-[35px] border border-border rounded-[3px] placeholder-gray-400 focus:outline-none sm:text-sm text-white bg-primary disabled:bg-primary/[0.4]"
+              disabled={isProductLoading}
             >
-              Create
+              {isProductLoading ? "Creating..." : "Create"}
             </button>
           </div>
         </div>

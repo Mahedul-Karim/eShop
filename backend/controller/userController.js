@@ -1,4 +1,5 @@
 const User = require("../model/userModel");
+const Address = require("../model/addressModel");
 const catchAsync = require("../util/catchAsync");
 const sendEmail = require("../util/sendMail");
 const AppError = require("../model/errorModel");
@@ -80,7 +81,9 @@ exports.activateUser = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ email })
+    .select("+password")
+    .populate("addresses")
 
   if (!user || !(await user.comparePassword(password))) {
     return next(new AppError("Please provide correct credentials", 401));
@@ -93,11 +96,14 @@ exports.login = catchAsync(async (req, res, next) => {
     httpOnly: true,
   };
 
-  res.status(200).cookie("jwt", token, cookieOptions).json({
-    status: "success",
-    user,
-    token,
-  });
+  res
+    .status(200)
+    .cookie("jwt", token, cookieOptions)
+    .json({
+      status: "success",
+      user,
+      token,
+    });
 });
 
 exports.getUser = catchAsync(async (req, res, next) => {
@@ -117,7 +123,7 @@ exports.logout = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
-  const { name, email, phoneNumber, password, avatar } = req.body;
+  const { name, phoneNumber, password, avatar } = req.body;
 
   const myCloud = await cloudinary.v2.uploader.upload(avatar, {
     folder: "avatars",
@@ -131,10 +137,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide correct password"));
   }
 
- 
-
   user.name = name;
-  user.email = email;
   user.phoneNumber = phoneNumber;
   user.avatar = {
     public_id: myCloud.public_id,
@@ -151,9 +154,13 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateAddress = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).populate(
+    "addresses"
+  );
 
-  const existingType = user.addresses.find(
+  console.log(user)
+
+  const existingType = user?.addresses?.find(
     (address) => address.addressType === req.body.addressType
   );
 
@@ -161,16 +168,9 @@ exports.updateAddress = catchAsync(async (req, res, next) => {
     return next(new AppError(`${req.body.addressType} address already exists`));
   }
 
-  const existingAddress = user.addresses.find(
-    (address) => address._id === req.body._id
-  );
+  const address = await Address.create(req.body);
 
-  if (existingAddress) {
-    Object.assign(existingAddress, req.body);
-  } else {
-    user.addresses.push(req.body);
-  }
-
+  user.addresses.push(address.id);
   await user.save();
 
   res.status(200).json({
@@ -183,16 +183,15 @@ exports.updateAddress = catchAsync(async (req, res, next) => {
 exports.deleteAddress = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
 
-  await User.updateOne(
+  const user = await User.findByIdAndUpdate(
+    userId,
+
     {
-      _id: userId,
-    },
-    {
-      $pull: { addresses: { _id: req.params.id } },
+      $pull: { addresses: req.params.id },
     }
   );
 
-  const user = await User.findById(req.user._id);
+  await Address.findByIdAndDelete(req.params.id);
 
   res.status(200).json({
     status: "success",

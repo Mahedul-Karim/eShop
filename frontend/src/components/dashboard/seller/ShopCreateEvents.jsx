@@ -10,6 +10,7 @@ import { useToast } from "../../hooks/useToast";
 
 const ShopCreateEvents = () => {
   const { seller } = useSelector((state) => state.seller);
+  const { isEventLoading } = useSelector((state) => state.event);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const ShopCreateEvents = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
-  const [originalPrice, setOriginalPrice] = useState();
+  const [price, setPrice] = useState();
   const [discountPrice, setDiscountPrice] = useState();
   const [stock, setStock] = useState();
   const [startDate, setStartDate] = useState(null);
@@ -28,9 +29,13 @@ const ShopCreateEvents = () => {
   const { success, error } = useToast();
 
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
+    const files = new FileReader();
 
-    setImages((prev) => [...prev, ...files]);
+    files.onload=()=>{
+      setImages(prev=>[...prev,files.result])
+    }
+
+    files.readAsDataURL(e.target.files[0])
   };
 
   const handleStartDateChange = function (e) {
@@ -67,10 +72,10 @@ const ShopCreateEvents = () => {
     formData.append("description", description);
     formData.append("category", category);
     formData.append("tags", tags);
-    formData.append("originalPrice", originalPrice);
+    formData.append("price", price);
     formData.append("discountPrice", discountPrice);
     formData.append("stock", stock);
-    formData.append("shopId", seller._id);
+    formData.append("shop", seller._id);
     formData.append("startDate", startDate);
     formData.append("endDate", endDate);
 
@@ -79,7 +84,22 @@ const ShopCreateEvents = () => {
 
       const res = await fetch(`${BASE_URL}/event`, {
         method: "POST",
-        body: formData,
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          description,
+          category,
+          tags,
+          price,
+          discountPrice,
+          stock,
+          shop: seller._id,
+          startDate,
+          endDate,
+          images
+        }),
       });
 
       const data = await res.json();
@@ -93,6 +113,7 @@ const ShopCreateEvents = () => {
       navigate("/seller/dashboard/events");
     } catch (err) {
       error(err.message);
+      dispatch(eventActions.eventRequestFailed(err.message));
     }
   };
 
@@ -171,9 +192,9 @@ const ShopCreateEvents = () => {
           <input
             type="number"
             name="price"
-            value={originalPrice}
+            value={price}
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setOriginalPrice(e.target.value)}
+            onChange={(e) => setPrice(e.target.value)}
             placeholder="Enter your event product price..."
           />
         </div>
@@ -255,9 +276,9 @@ const ShopCreateEvents = () => {
               <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
             </label>
             {images &&
-              images.map((i) => (
+              images.map((img,i) => (
                 <img
-                  src={URL.createObjectURL(i)}
+                  src={img}
                   key={i}
                   alt=""
                   className="h-[120px] w-[120px] object-cover m-2"
@@ -268,7 +289,8 @@ const ShopCreateEvents = () => {
           <div>
             <button
               type="submit"
-              className="mt-2 cursor-pointer appearance-none text-center block w-full px-3 h-[35px] border border-primary rounded-[3px] placeholder-gray-400 focus:outline-none sm:text-sm text-primary"
+              className="mt-2 appearance-none text-center block w-full px-3 h-[35px] bg-primary disabled:bg-primary/[0.4] rounded-[3px] placeholder-gray-400 focus:outline-none sm:text-sm text-white"
+              disabled={isEventLoading}
             >
               Create
             </button>

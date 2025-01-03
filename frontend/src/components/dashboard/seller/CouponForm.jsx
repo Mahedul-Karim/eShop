@@ -8,13 +8,10 @@ const CouponForm = ({
   setName,
   value,
   setValue,
-  minAmount,
-  setMinAmout,
-  maxAmount,
-  setMaxAmount,
   selectedProducts,
   setSelectedProducts,
-  product
+  product,
+  isLoading
 }) => {
   return (
     <div className="fixed top-0 left-0 w-full h-screen bg-[#00000062] z-[20000] flex items-center justify-center">
@@ -62,30 +59,8 @@ const CouponForm = ({
             />
           </div>
           <br />
-          <div>
-            <label className="pb-2">Min Amount</label>
-            <input
-              type="number"
-              name="value"
-              value={minAmount}
-              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:border-primary sm:text-sm"
-              onChange={(e) => setMinAmout(e.target.value)}
-              placeholder="Enter your coupon code min amount..."
-            />
-          </div>
-          <br />
-          <div>
-            <label className="pb-2">Max Amount</label>
-            <input
-              type="number"
-              name="value"
-              value={maxAmount}
-              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:border-primary sm:text-sm"
-              onChange={(e) => setMaxAmount(e.target.value)}
-              placeholder="Enter your coupon code max amount..."
-            />
-          </div>
-          <br />
+          
+          
           <div>
             <label className="pb-2">Selected Product</label>
             <select
@@ -109,9 +84,10 @@ const CouponForm = ({
             <button
               type="submit"
               value="Create"
-              className="mt-2 block w-full px-3 h-[35px] border border-primary rounded-[3px] focus:outline-none sm:text-sm text-primary"
+              className="mt-2 block w-full px-3 h-[35px] border border-border rounded-[3px] focus:outline-none sm:text-sm text-white bg-primary     disabled:bg-primary/[0.4]"
+              disabled={isLoading}
             >
-              Create
+              {isLoading ? 'Creating...' : 'Create'}
             </button>
           </div>
         </form>

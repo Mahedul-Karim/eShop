@@ -8,23 +8,30 @@ const Order = require("../model/orderModel");
 const cloudinary = require("cloudinary");
 
 exports.createProduct = catchAsync(async (req, res, next) => {
-  const images = [];
+  const { name, description, category, tags, price, stock, shopId, images } =
+    req.body;
 
-  for (const img of req.body.images) {
-    const myCloud = await cloudinary.v2.uploader.upload(img, {
-      folder: "avatars",
-    });
-    images.push({ public_id: myCloud.public_id, url: myCloud.url });
-  }
+  const uploadedImages = [];
 
-  const shop = await Shop.findById(req.body.shopId);
+  await Promise.all(
+    images.map(async (img) => {
+      const myCloud = await cloudinary.v2.uploader.upload(img, {
+        folder: "avatars",
+      });
+      uploadedImages.push({ public_id: myCloud.public_id, url: myCloud.url });
+    })
+  );
 
-  if (!shop) {
-    return next(new AppError("Create a shop first to create products", 401));
-  }
-
-  req.body.shop = shop;
-  const product = await Product.create({ ...req.body, images });
+  const product = await Product.create({
+    name,
+    description,
+    category,
+    tags,
+    price,
+    stock,
+    shop: shopId,
+    images: uploadedImages,
+  });
 
   res.status(201).json({
     status: "success",
@@ -33,7 +40,10 @@ exports.createProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.getProductDetail = catchAsync(async (req, res, next) => {
-  const product = await Product.findOne({ name: req.params.name });
+  const product = await Product.findOne({ name: req.params.name }).populate(
+    "shop",
+    "name avatar"
+  );
 
   if (product.length === 0) {
     return next(new AppError("No product found!"));
@@ -54,7 +64,7 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 });
 
 exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.find({ shopId: req.params.id });
+  const product = await Product.find({ shop: req.params.id });
 
   res.status(200).json({
     status: "success",
@@ -65,9 +75,11 @@ exports.getProduct = catchAsync(async (req, res, next) => {
 exports.deleteProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
 
-  for (const img of product.images) {
-    await cloudinary.v2.uploader.destroy(img.public_id);
-  }
+  await Promise.all(
+    product.images.map(async (img) => {
+      await cloudinary.v2.uploader.destroy(img.public_id);
+    })
+  );
 
   res.status(200).json({
     status: "success",

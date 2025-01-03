@@ -16,6 +16,7 @@ const AddAddress = ({
   addressType,
   setAddressType,
   addressTypeData,
+  isLoading,
 }) => {
   return (
     <>
@@ -131,12 +132,12 @@ const AddAddress = ({
             </div>
 
             <div className=" w-full pb-2">
-              <input
-                type="submit"
-                className={`w-full border p-1 rounded-[5px] mt-5 cursor-pointer`}
-                required
-                readOnly
-              />
+              <button
+                className={`w-full border border-solid border-border bg-primary text-white disabled:bg-primary/[0.4] p-1 rounded-[5px] mt-5`}
+                disabled={isLoading}
+              >
+                {isLoading ? "Adding..." : "Add"}
+              </button>
             </div>
           </div>
         </form>

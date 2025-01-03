@@ -22,7 +22,7 @@ const Address = () => {
 
   const dispatch = useDispatch();
 
-  const [_, fetchData] = useHttp();
+  const [isLoading, fetchData] = useHttp();
 
   const addressTypeData = [
     {
@@ -77,6 +77,7 @@ const Address = () => {
 
   const handleDelete = async (id) => {
     try {
+      warning("Deleting Address...");
       const data = await fetchData(`user/address/${id}`, "DELETE", {
         authorization: `Bearer ${token}`,
       });
@@ -113,6 +114,7 @@ const Address = () => {
           addressType={addressType}
           setAddressType={setAddressType}
           addressTypeData={addressTypeData}
+          isLoading={isLoading}
         />
       </Modal>
       <div className="flex w-full 400px:flex-row flex-col-reverse 400px:items-center justify-between">
@@ -134,7 +136,9 @@ const Address = () => {
             key={index}
           >
             <div className="flex items-center">
-              <h5 className="font-[600] 400px:text-base text-sm">{item.addressType}</h5>
+              <h5 className="font-[600] 400px:text-base text-sm">
+                {item.addressType}
+              </h5>
             </div>
             <div className="flex items-center">
               <h6 className="text-[10px] 400px:text-[12px] 800px:text-[unset]">

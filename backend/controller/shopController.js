@@ -5,7 +5,8 @@ const AppError = require("../model/errorModel");
 
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const cloudinary=require('cloudinary');
+const cloudinary = require("cloudinary");
+
 
 exports.createShop = catchAsync(async (req, res, next) => {
   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
@@ -129,8 +130,9 @@ exports.getShopData = catchAsync(async (req, res, next) => {
 });
 
 exports.updateShop = catchAsync(async (req, res, next) => {
+  const { name, description, phoneNumber, zipCode, address, avatar } = req.body;
 
-  const { name, description, phoneNumber, zipCode, address,avatar } = req.body;
+  
 
   const myCloud = await cloudinary.v2.uploader.upload(avatar, {
     folder: "avatars",
@@ -138,10 +140,10 @@ exports.updateShop = catchAsync(async (req, res, next) => {
 
   const shop = await Shop.findOne({ email: req.shop.email });
 
-  fs.unlink(
-    `public/${shop.avatar.url.split("/").slice(3).join("/")}`,
-    () => {}
-  );
+  // fs.unlink(
+  //   `public/${shop.avatar.url.split("/").slice(3).join("/")}`,
+  //   () => {}
+  // );
 
   shop.name = name;
   shop.description = description;

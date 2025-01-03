@@ -6,12 +6,11 @@ const CartData = ({
   setCouponCode,
   totalPrice,
   subTotalPrice,
-  discountPercentage,
+  discountPercentage=0,
   cart,
+  isLoading,
 }) => {
   const [orderData, setOrderData] = useState([]);
-
- 
 
   useEffect(() => {
     if (localStorage.getItem("latestOrder")) {
@@ -24,7 +23,10 @@ const CartData = ({
       <div className="mb-8 flex flex-col gap-2">
         {cart &&
           cart.map((data, index) => (
-            <div key={index} className="flex items-center justify-between gap-4">
+            <div
+              key={index}
+              className="flex items-center justify-between gap-4"
+            >
               <div className="flex items-center">
                 <img
                   src={data?.images?.[0].url}
@@ -57,17 +59,20 @@ const CartData = ({
       <div className="flex justify-between border-b pb-3">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount:</h3>
         <h5 className="text-[18px] font-[600]">
-          - $
-          {orderData?.discountPercentage
-            ? orderData.discountPercentage
-            : discountPercentage}
+          $
+          {discountPercentage}
         </h5>
       </div>
       <div className="flex items-center justify-between">
-      <h3 className="text-[16px] font-[400] text-[#000000a4]">Total:</h3>
-      <h5 className="text-[18px] font-[600] text-end pt-3">
-        ${orderData?.totalPrice ? orderData.totalPrice : totalPrice}
-      </h5>
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Total:</h3>
+        <h5 className="text-[18px] font-[600] text-end pt-3">
+          $
+          {discountPercentage
+            ? totalPrice - discountPercentage < 0
+              ? 0
+              : totalPrice - discountPercentage
+            : totalPrice}
+        </h5>
       </div>
       <br />
       {orderData?.length !== 0 && orderData ? (
@@ -83,10 +88,11 @@ const CartData = ({
             required
           />
           <button
-            className={`w-full h-[40px] border border-primary text-center text-primary rounded-[3px] mt-8`}
+            className={`w-full h-[40px] text-center text-white bg-primary disabled:bg-primary/[0.4] rounded-[3px] mt-8`}
             type="submit"
+            disabled={isLoading}
           >
-            Apply Code
+            {isLoading ? "Applying..." : " Apply Code"}
           </button>
         </form>
       )}

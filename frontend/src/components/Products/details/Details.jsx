@@ -77,7 +77,7 @@ const Details = ({
                 className="w-[50px] h-[50px] rounded-full mr-2"
               />
             </Link>
-            <Link to={`/shop/preview/${data?.shopId}`}>
+            <Link to={`/shop/preview/${data?._id}`}>
               <h3
                 className={`text-[15px] text-primary underline hidden 400px:block`}
               >

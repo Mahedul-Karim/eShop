@@ -102,7 +102,7 @@ const Gallery = ({ images }) => {
               <img
                 src={img.url}
                 alt=""
-                className="w-full object-contain h-[200px] 400px:h-[350px] sm:h-[380px] bg-white"
+                className="w-full object-cover h-[200px] 400px:h-[350px] sm:h-[380px] bg-white"
                 onDragStart={(e) => e.preventDefault()}
               />
             </div>

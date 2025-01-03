@@ -5,7 +5,7 @@ const Shop = require("../model/shopModel");
 
 exports.requestWithdraw = catchAsync(async (req, res, next) => {
   const data = {
-    seller: req.shop,
+    seller: req.shop._id,
     amount: req.body.amount,
   };
 
@@ -25,7 +25,9 @@ exports.requestWithdraw = catchAsync(async (req, res, next) => {
 });
 
 exports.allWithdraw = catchAsync(async (req, res, next) => {
-  const withdraw = await Withdraw.find().sort({ createdAt: -1 });
+  const withdraw = await Withdraw.find()
+    .sort({ createdAt: -1 })
+    .populate("seller",'name');
 
   res.status(200).json({
     status: "success",
@@ -57,7 +59,7 @@ exports.updateWithdraw = catchAsync(async (req, res, next) => {
   };
 
   shop.transections = [...shop.transections, transection];
- 
+
   await shop.save();
 
   res.status(200).json({

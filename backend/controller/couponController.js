@@ -9,7 +9,7 @@ exports.createCoupon = catchAsync(async (req, res, next) => {
     return next(new AppError("Coupon already exists", 400));
   }
 
-  req.body.shopId = req.shop._id;
+  req.body.shop = req.shop._id;
 
   const coupon = await Coupon.create(req.body);
 
@@ -20,7 +20,7 @@ exports.createCoupon = catchAsync(async (req, res, next) => {
 });
 
 exports.getCoupons = catchAsync(async (req, res, next) => {
-  const coupons = await Coupon.find({ shopId: req.params.id });
+  const coupons = await Coupon.find({ shop: req.params.id });
 
   res.status(200).json({
     status: "success",

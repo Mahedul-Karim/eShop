@@ -11,7 +11,7 @@ function Ratings({ rating }) {
         <AiFillStar
           key={i}
           // size={16}
-          color="#ff9f43"
+          color="#ffdc60"
           className="cursor-pointer text-[14px] sm:text-[16px]"
         />
       );
@@ -20,7 +20,7 @@ function Ratings({ rating }) {
         <BsStarHalf
           key={i}
           size={17}
-          color="#ff9f43"
+          color="#ffdc60"
           className="cursor-pointer"
         />
       );
@@ -29,7 +29,7 @@ function Ratings({ rating }) {
         <AiOutlineStar
           key={i}
           // size={16}
-          color="#222f3e"
+          color="#777777"
           className="cursor-pointer text-[14px] sm:text-[16px]"
         />
       );

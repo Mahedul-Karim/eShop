@@ -5,7 +5,7 @@ import Table from "./Table";
 const EventTable = ({ event, handleDelete, isAdmin }) => {
   return (
     <>
-      {event.length > 0 ? (
+      {event && event.length > 0 ? (
         <div className="border border-solid border-gray-200 ml-2 md:ml-8 rounded-md text-xs md:text-sm text-black/[0.87] font-Roboto my-8">
           <Table
             extraStyles="hidden md:grid border-b border-solid font-semibold bg-gray-100"
@@ -23,7 +23,7 @@ const EventTable = ({ event, handleDelete, isAdmin }) => {
             return (
               <Table
                 extraStyles=" border-b border-solid items-center"
-                key={evnt._id}
+                key={evnt?._id}
                 columns={
                   "grid-cols-1 md:grid-cols-[0.5fr_0.6fr_0.3fr_0.3fr_0.2fr_0.1fr]"
                 }
@@ -32,7 +32,7 @@ const EventTable = ({ event, handleDelete, isAdmin }) => {
                   <p className="font-medium text-sm inline-block md:hidden">
                     Id:
                   </p>
-                  {evnt._id}
+                  {evnt?._id}
                 </div>
                 <div className="font-medium w-[95%] line-clamp-2 text-xs lg:text-sm flex items-center justify-between mt-3 md:mt-0">
                   <p className="font-medium text-sm inline-block md:hidden">
@@ -61,7 +61,7 @@ const EventTable = ({ event, handleDelete, isAdmin }) => {
 
                 {!isAdmin && (
                   <button
-                    onClick={handleDelete.bind(null, evnt._id)}
+                    onClick={handleDelete.bind(null, evnt?._id)}
                     className="flex justify-end md:justify-normal"
                   >
                     <FaTrash />

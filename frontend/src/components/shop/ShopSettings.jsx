@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineCamera } from "react-icons/ai";
-import { useToast } from '../hooks/useToast'
+import { useToast } from "../hooks/useToast";
 import { useHttp } from "../hooks/useHttp";
 import { sellerActions } from "../../store/sellerSlice";
 
-
 const ShopSettings = () => {
-  const { seller,sellerToken } = useSelector((state) => state.seller);
+  const { seller, sellerToken } = useSelector((state) => state.seller);
   const [avatar, setAvatar] = useState();
   const [name, setName] = useState(seller && seller.name);
   const [description, setDescription] = useState(
@@ -17,14 +16,14 @@ const ShopSettings = () => {
   const [phoneNumber, setPhoneNumber] = useState(seller && seller.phoneNumber);
   const [zipCode, setZipcode] = useState(seller && seller.zipCode);
 
-  const { success,error } = useToast();
+  const { success, error } = useToast();
 
   const dispatch = useDispatch();
 
-  const [_,fetchData]=useHttp();
+  const [_, fetchData] = useHttp();
 
-  const handleImage=function(e){
-
+  const handleImage = function (e) {
+   
     const fileReader=new FileReader();
 
     fileReader.onload=()=>{
@@ -33,19 +32,17 @@ const ShopSettings = () => {
       }
     }
     fileReader.readAsDataURL(e);
-
-  }
+  };
 
   const updateHandler = async (e) => {
     e.preventDefault();
-
 
     try {
       const data = await fetchData(
         `shop`,
         "PATCH",
         {
-          'Content-Type':'application/json',
+          "Content-Type": "application/json",
           authorization: `Bearer ${sellerToken}`,
         },
         JSON.stringify({
@@ -53,18 +50,21 @@ const ShopSettings = () => {
           phoneNumber,
           avatar,
           address,
-          zipCode
+          zipCode,
         })
       );
-      setAvatar(null)
+      setAvatar(null);
       dispatch(
-        sellerActions.sellerRequestSuccess({ seller: data.shop, sellerToken: data.token })
+        sellerActions.sellerRequestSuccess({
+          seller: data.shop,
+          sellerToken: data.token,
+        })
       );
       localStorage.setItem(
         "seller",
         JSON.stringify({ seller: data.shop, sellerToken: data.token })
       );
-      
+
       success("Shop updated");
     } catch (err) {
       error(err.message);
@@ -86,7 +86,7 @@ const ShopSettings = () => {
                 type="file"
                 id="image"
                 className="hidden"
-                onChange={(e)=>handleImage(e.target.files[0])}
+                onChange={(e) => handleImage(e.target.files[0])}
               />
               <label htmlFor="image">
                 <AiOutlineCamera />
