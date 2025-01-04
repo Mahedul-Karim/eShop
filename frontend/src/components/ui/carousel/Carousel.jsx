@@ -3,7 +3,7 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import CarouselButton from "../button/CarouselButton";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -28,7 +28,10 @@ const SLIDES = [
     subtitle: "Deals and promotions",
     title: "Echo dot<br/>3rd gen",
     price: 29,
-    link: "",
+    link: `/product/${"Amazon Echo Dot 3rd Gen Smart Voice Assistant Speaker".replace(
+      /\s+/,
+      "-"
+    )}`,
   },
 ];
 
@@ -50,7 +53,11 @@ const Carousel = () => {
         pagination={{
           clickable: true,
         }}
-        modules={[Pagination]}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: true,
+        }}
+        modules={[Autoplay, Pagination]}
         className=""
         onSwiper={(swiper) => (swiperRef.current = swiper)}
       >

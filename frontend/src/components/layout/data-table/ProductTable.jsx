@@ -41,7 +41,7 @@ const ProductTable = ({ product = [], isSeller, handleDelete }) => {
                   <img
                     src={product?.images?.[0]?.url}
                     alt=""
-                    className="w-[60px] object-contain scale-[1.15]"
+                    className="w-[60px] h-[60px] object-cover"
                   />
                   <p className="font-medium text-sm line-clamp-2 inline-block sm:hidden">
                     {product?.name}

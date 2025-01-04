@@ -84,7 +84,7 @@ const ProductCard = ({ data, isEvent }) => {
             </button>
           </div>
         </div>
-        <div className="flex flex-col gap-2 px-4">
+        <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <div>
               <Ratings rating={data?.ratings} />
@@ -95,7 +95,7 @@ const ProductCard = ({ data, isEvent }) => {
           </div>
           <Link
             to={`/product/${productName}`}
-            className="font-sans font-medium text-[12px] 400px:text-[14px] sm:text-[16px] line-clamp-2 text-[#777777] transition-all duration-300 group-hover:text-primary"
+            className="font-sans font-semibold text-[14px] sm:text-[16px] line-clamp-2 text-[#777777] transition-all duration-300 group-hover:text-primary"
           >
             {data.name}
           </Link>

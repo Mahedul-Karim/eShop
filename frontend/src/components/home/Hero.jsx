@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Container from "../../util/Container";
 import Carousel from "../ui/carousel/Carousel";
-import { Link } from "react-router-dom";
 import HeroBanner from "../ui/hero/HeroBanner";
 
 const HERO_BANNER = [
@@ -9,19 +8,19 @@ const HERO_BANNER = [
     src: "/assets/banner-1.png",
     subtitle: "Smart offer",
     title: "Samsung galaxy<br /> Note9",
-    to: "#",
+    to: `/product/${'Samsung Galaxy Note9(128gb)'.replace(/\s+/, "-")}`,
   },
   {
     src: "/assets/banner-2 (1).jpg",
     subtitle: "Time deals",
     title: "Bose SoundSport",
-    to: "#",
+    to: `/product/${'Bose SoundSport Wireless Headphones'.replace(/\s+/, "-")}`,
   },
   {
     src: "/assets/banner-2.jpg",
     subtitle: "Featured",
     title: "GoPro - Fusion 360",
-    to: "#",
+    to: `/product/${'GoPro Max 360'.replace(/\s+/, "-")}`,
   },
 ];
 //800px:grid-cols-[1fr_0.4fr]
