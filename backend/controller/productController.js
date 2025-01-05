@@ -54,7 +54,7 @@ exports.getProductDetail = catchAsync(async (req, res, next) => {
       $ne:product.name
     },
     category:product.category
-  })
+  }).limit(4);
 
   res.status(200).json({
     status: "success",
