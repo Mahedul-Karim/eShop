@@ -1,7 +1,10 @@
 import React from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { BsStarHalf } from "react-icons/bs";
-
+/**
+ * #ff497c
+ * #ffdc60
+ */
 function Ratings({ rating }) {
   const stars = [];
 
@@ -11,7 +14,7 @@ function Ratings({ rating }) {
         <AiFillStar
           key={i}
           // size={16}
-          color="#ffdc60"
+          color="#ff497c"
           className="cursor-pointer text-[14px] sm:text-[16px]"
         />
       );
@@ -20,7 +23,7 @@ function Ratings({ rating }) {
         <BsStarHalf
           key={i}
           size={17}
-          color="#ffdc60"
+          color="#ff497c"
           className="cursor-pointer"
         />
       );

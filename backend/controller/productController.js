@@ -49,9 +49,17 @@ exports.getProductDetail = catchAsync(async (req, res, next) => {
     return next(new AppError("No product found!"));
   }
 
+  const suggestedProducts = await Product.find({
+    name:{
+      $ne:product.name
+    },
+    category:product.category
+  })
+
   res.status(200).json({
     status: "success",
     product,
+    suggestedProducts
   });
 });
 
@@ -64,7 +72,8 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 });
 
 exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.find({ shop: req.params.id });
+  const product = await Product.find({ shop: req.params.id }).sort({createdAt:-1});
+
 
   res.status(200).json({
     status: "success",
@@ -185,7 +194,7 @@ exports.searchProduct = catchAsync(async (req, res, next) => {
   }
 
   const products = await Product.find(query)
-    .sort({ ratings: -1, createdAt: -1, price: -1 })
+    .sort({  createdAt: -1 })
     .limit(itemsPerPage)
     .skip(skipedPage);
 

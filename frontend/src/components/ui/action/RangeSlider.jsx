@@ -56,7 +56,7 @@ const RangeSlider = ({ maxValue, minValue, setMaxValue, setMinValue }) => {
         onClick={containerClick}
       >
         <div
-          className="absolute left-[20%] bg-primary right-[20%] h-[10px] rounded-md slider__track cursor-default"
+          className="absolute left-[20%] bg-secondary right-[20%] h-[10px] rounded-md slider__track cursor-default"
           ref={trackRef}
         />
       </div>

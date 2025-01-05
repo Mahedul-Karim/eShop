@@ -39,7 +39,7 @@ const ShopDashboardHero = () => {
 
       dispatch(orderActions.orderRequestSuccess(data.order));
     } catch (err) {
-      error(err.message);
+      console.log(err.message);
     }
   };
 

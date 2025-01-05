@@ -25,7 +25,7 @@ const ProductDetailsPage = () => {
       try {
         const data = await fetchData(`product/single/${productName}`);
 
-        setData(data.product);
+        setData(data);
       } catch (err) {
         toastError(err.message);
       }
@@ -41,9 +41,13 @@ const ProductDetailsPage = () => {
           <Loader />
         </div>
       ) : (
-        <ProductDetails data={data} />
+        <>
+          <ProductDetails data={data?.product} />
+          {data?.suggestedProducts?.length > 0 && (
+            <SuggestedProduct data={data?.suggestedProducts} />
+          )}
+        </>
       )}
-      {data && <SuggestedProduct data={data} />}
     </Container>
   );
 };

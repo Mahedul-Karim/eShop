@@ -19,7 +19,7 @@ const NavItems = ({ navLinks, pathname }) => {
           </Link>
         </div>
       ))}
-      <div className="absolute bg-white py-5 md:py-6 rounded-tl-[20px] rounded-bl-[20px] -left-[10px] md:left-3 right-0 indicator -top-[3px] z-[1] transition-all duration-300" />
+      <div className="absolute bg-white py-5 md:py-6 rounded-tl-[20px] rounded-bl-[20px] -left-[70px] md:left-3 right-0 indicator -top-[3px] z-[1] transition-all duration-300" />
     </div>
   );
 };
