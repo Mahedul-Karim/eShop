@@ -14,8 +14,8 @@ function Home() {
       <HomeProducts />
       <Events />
       <FeaturedProducts />
-      <Branding />
       <NewsLetter />
+      <Branding />
     </>
   );
 }

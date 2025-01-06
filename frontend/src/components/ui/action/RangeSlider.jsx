@@ -79,10 +79,10 @@ const RangeSlider = ({ maxValue, minValue, setMaxValue, setMinValue }) => {
         />
       </div>
       <div className="grid grid-cols-2 gap-2 place-items-center mt-3">
-        <p className="border border-solid border-border p-2 flex items-center justify-center rounded-md w-full max-w-[80%]">
+        <p className="border border-solid border-border p-2 flex items-center justify-center rounded-md w-full max-w-[80%] text-sm">
           {minValue < maxValue ? minValue : maxValue}$
         </p>
-        <p className="border border-solid border-border p-2 flex items-center justify-center rounded-md w-full max-w-[80%]">
+        <p className="border border-solid border-border p-2 flex items-center justify-center rounded-md w-full max-w-[80%] text-sm">
           {minValue > maxValue ? minValue : maxValue}$
         </p>
       </div>

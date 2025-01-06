@@ -138,11 +138,11 @@ input[type="range"]::-moz-range-thumb {
   transition: all 0.3s;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 6px #2e86de;
+  box-shadow: 0 0 6px #ff497c;
   cursor: grab;
 }
 input[type="range"]::-moz-range-thumb:hover {
-  box-shadow: 0 0 6px #2e86de;
+  box-shadow: 0 0 6px #ff497c;
   cursor: grab;
 }
 input[type="range"]::-webkit-slider-thumb:active {
