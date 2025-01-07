@@ -1,6 +1,5 @@
 import React from "react";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { BsStarHalf } from "react-icons/bs";
+import { FaStar,FaRegStar,FaStarHalfAlt } from "react-icons/fa";
 /**
  * #ff497c
  * #ffdc60
@@ -11,29 +10,28 @@ function Ratings({ rating }) {
   for (let i = 1; i <= 5; i++) {
     if (i <= rating) {
       stars.push(
-        <AiFillStar
+        <FaStar
           key={i}
           // size={16}
           color="#ff497c"
-          className="cursor-pointer text-[14px] sm:text-[16px]"
+          className="cursor-pointer text-[12px] sm:text-[14px]"
         />
       );
     } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
       stars.push(
-        <BsStarHalf
+        <FaStarHalfAlt
           key={i}
-          size={17}
+         
           color="#ff497c"
-          className="cursor-pointer"
+          className="cursor-pointer text-[12px] sm:text-[14px]"
         />
       );
     } else {
       stars.push(
-        <AiOutlineStar
+        <FaRegStar
           key={i}
-          // size={16}
           color="#777777"
-          className="cursor-pointer text-[14px] sm:text-[16px]"
+          className="cursor-pointer text-[12px] sm:text-[14px]"
         />
       );
     }

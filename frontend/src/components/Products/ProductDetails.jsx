@@ -57,14 +57,14 @@ const ProductDetails = ({ data }) => {
   const isInWishlist = !!wishlist?.find((w) => w._id === data?._id);
   const isInCart = !!cart?.find((c) => c._id === data?._id);
 
-  const handleCardAdd = function (product) {
+  const handleCardAdd = function (product,isBuying=false) {
     if (isInCart) {
-      error("Product is already in the cart");
+     !isBuying && error("Product is already in the cart");
       return;
     }
 
     dispatch(cartAction.addToCart({ ...product, quantity: count }));
-    success("Product added to cart");
+    !isBuying && success("Product added to cart");
   };
 
   const addToWishlist = function (product) {
@@ -78,7 +78,7 @@ const ProductDetails = ({ data }) => {
   };
 
   return (
-    <div className="my-6">
+    <div className="my-6 font-sans">
       <BreadCrumb category={data?.category} name={data?.name} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8">
         <Gallery images={data?.images} />
@@ -92,6 +92,7 @@ const ProductDetails = ({ data }) => {
           addToWishlist={addToWishlist}
           handleCardAdd={handleCardAdd}
           isInWishlist={isInWishlist}
+          isInCart={isInCart}
         />
       </div>
       <Description description={data?.description} />

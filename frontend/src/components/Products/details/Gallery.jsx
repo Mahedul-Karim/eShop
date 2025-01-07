@@ -1,7 +1,6 @@
-import React, {  useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import CarouselButton from "../../ui/button/CarouselButton";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-
 
 let slide = 0;
 
@@ -110,7 +109,7 @@ const Gallery = ({ images }) => {
         </div>
         <CarouselButton
           classes={
-            "left-4 bg-white opacity-50 hover:bg-primary group-hover:opacity-100 hover:text-white z-[10]"
+            "left-4 bg-white opacity-50 hover:bg-secondary group-hover:opacity-100 hover:text-white z-[10]"
           }
           onClick={prevSlide}
         >
@@ -119,7 +118,7 @@ const Gallery = ({ images }) => {
 
         <CarouselButton
           classes={
-            "right-4 bg-white opacity-50 hover:bg-primary group-hover:opacity-100 hover:text-white z-[10]"
+            "right-4 bg-white opacity-50 hover:bg-secondary group-hover:opacity-100 hover:text-white z-[10]"
           }
           onClick={nextSlide}
         >
@@ -137,12 +136,13 @@ const Gallery = ({ images }) => {
             }}
             className="cursor-pointer"
           >
+            {/**h-[60px] 400px:h-[100px] md:h-[90px] lg:h-[140px] */}
             <img
               src={img.url}
               alt=""
-              className={`w-full object-cover bg-slate-100 h-[60px] 400px:h-[100px] sm:h-[140px] ${
+              className={`w-full object-cover bg-slate-100 aspect-square ${
                 activeSlide === i
-                  ? "border-2 border-solid border-primary"
+                  ? "border-2 border-solid border-secondary"
                   : "border-none"
               }`}
             />

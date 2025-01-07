@@ -11,7 +11,7 @@ const SuggestedProduct = ({ data }) => {
           <h2
             className={`text-center md:text-start font-Roboto pb-[20px] text-[25px] font-[500] border-b mb-5`}
           >
-            Related Product
+            More Products
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
             {data.map((i, index) => <ProductCard data={i} key={index} />)}
