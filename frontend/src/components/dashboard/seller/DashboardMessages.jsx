@@ -10,7 +10,6 @@ import { useToast } from "../../hooks/useToast";
 
 const socketId = socketIO(SOCKET_URL, { transports: ["websocket"] });
 
-
 const DashboardMessages = () => {
   const { seller, sellerToken } = useSelector((state) => state.seller);
 
@@ -32,18 +31,18 @@ const DashboardMessages = () => {
 
   const { error } = useToast();
 
-  socketId.on("getMessage", (data) => {
-    setArrivalMessage({
-      sender: data.senderId,
-      text: data.text,
-      createdAt: Date.now(),
+  useEffect(() => {
+    socketId.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
     });
-  });
+  }, []);
 
   useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
@@ -85,9 +84,7 @@ const DashboardMessages = () => {
       conversationId: currentChat._id,
     };
 
-    const receiverId = currentChat.members.find(
-      (member) => member !== seller._id
-    );
+    const receiverId = currentChat.userId._id !== seller._id ? currentChat.userId._id : currentChat.participentId._id;
 
     socketId.emit("sendMessage", {
       senderId: seller._id,
@@ -123,12 +120,7 @@ const DashboardMessages = () => {
     }
   }, [seller]);
 
-  const onlineCheck = (chat) => {
-    const chatMembers = chat.members.find((member) => member !== seller?._id);
-    const online = onlineUsers.find((user) => user.userId === chatMembers);
-
-    return online ? true : false;
-  };
+  
 
   async function updateLastMessage() {
     socketId.emit("updateLastMessage", {
@@ -152,9 +144,7 @@ const DashboardMessages = () => {
   }
 
   const handleImageUpload = async (e) => {
-    const receiverId = currentChat.members.find(
-      (member) => member !== seller._id
-    );
+    const receiverId = currentChat.userId._id !== seller._id ? currentChat.userId._id : currentChat.participentId._id;
 
     socketId.emit("sendMessage", {
       senderId: seller._id,
@@ -224,8 +214,6 @@ const DashboardMessages = () => {
                 me={seller._id}
                 setUserData={setUserData}
                 userData={userData}
-                online={onlineCheck(item)}
-                setActiveStatus={setActiveStatus}
                 isLoading={isLoading}
                 endpoint={"user"}
               />

@@ -12,10 +12,9 @@ const ShopAllCoupons = () => {
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [coupouns, setCoupouns] = useState([]);
-  const [selectedProducts, setSelectedProducts] = useState(null);
+  const [maxUsage, setMaxUsage] = useState(null);
   const [value, setValue] = useState(null);
   const { seller, sellerToken } = useSelector((state) => state.seller);
-  const { product } = useSelector((state) => state.product);
 
   const { success, error } = useToast();
 
@@ -77,7 +76,7 @@ const ShopAllCoupons = () => {
         },
         body: JSON.stringify({
           name,
-          selectedProducts:selectedProducts._id,
+          maxUsage,
           value,
         }),
       });
@@ -94,6 +93,7 @@ const ShopAllCoupons = () => {
       error(err.message);
     } finally {
       setIsLoading(false);
+      setOpen(false);
     }
   };
 
@@ -147,7 +147,7 @@ const ShopAllCoupons = () => {
                       <p className="font-medium text-sm inline-block md:hidden">
                         Value:
                       </p>
-                      {coupon?.value}%
+                      {coupon?.value}$
                     </div>
 
                     <button
@@ -162,24 +162,23 @@ const ShopAllCoupons = () => {
             </div>
           ) : (
             <div className="flex items-center justify-center text-lg h-full">
-              <p>No event is happening at this moment!</p>
+              <p>No coupon has been created!</p>
             </div>
           )}
-          {open && (
-            <CouponForm
-              product={product}
-              setOpen={setOpen}
-              handleSubmit={handleSubmit}
-              name={name}
-              setName={setName}
-              value={value}
-              setValue={setValue}
-              selectedProducts={selectedProducts}
-              setSelectedProducts={setSelectedProducts}
-              isLoading={isLoading}
-            />
-          )}
         </div>
+      )}
+      {open && (
+        <CouponForm
+          setOpen={setOpen}
+          handleSubmit={handleSubmit}
+          name={name}
+          setName={setName}
+          value={value}
+          setValue={setValue}
+          isLoading={isLoading}
+          maxUsage={maxUsage}
+          setMaxUsage={setMaxUsage}
+        />
       )}
     </>
   );

@@ -7,7 +7,7 @@ const cloudinary = require("cloudinary");
 exports.createConv = catchAsync(async (req, res, next) => {
   const { groupTitle, userId, participentId } = req.body;
 
-  const existingConv = await Conversation.findOne({ groupTitle });
+  const existingConv = await Conversation.findOne({ userId, participentId });
 
   if (existingConv) {
     return res.status(200).json({
@@ -17,7 +17,8 @@ exports.createConv = catchAsync(async (req, res, next) => {
   }
 
   const newConv = await Conversation.create({
-    members: [userId, participentId],
+    userId,
+    participentId,
     groupTitle,
   });
 
@@ -45,10 +46,11 @@ exports.createMessage = catchAsync(async (req, res, next) => {
 //seller conversation
 exports.sellerConv = catchAsync(async (req, res, next) => {
   const sellerConversation = await Conversation.find({
-    members: {
-      $in: [req.params.id],
-    },
-  }).sort({ updatedAt: -1, createdAt: -1 });
+    $or: [{ participentId: req.params.id }, { userId: req.params.id }],
+  })
+    .sort({ updatedAt: -1, createdAt: -1 })
+    .populate("participentId")
+    .populate("userId");
 
   if (!sellerConversation || sellerConversation.length === 0) {
     return next(new AppError("No conversation yet"));

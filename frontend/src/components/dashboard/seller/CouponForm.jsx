@@ -8,14 +8,13 @@ const CouponForm = ({
   setName,
   value,
   setValue,
-  selectedProducts,
-  setSelectedProducts,
-  product,
+  maxUsage,
+  setMaxUsage,
   isLoading
 }) => {
   return (
     <div className="fixed top-0 left-0 w-full h-screen bg-[#00000062] z-[20000] flex items-center justify-center">
-      <div className="w-[90%] 800px:w-[40%] h-[80vh] bg-white rounded-md shadow p-4 overflow-y-auto hide-scrollbar">
+      <div className="w-[90%] 800px:w-[40%] max-h-[80vh] bg-white rounded-md shadow p-4 overflow-y-auto hide-scrollbar">
         <div className="w-full flex justify-end">
           <RxCross1
             size={30}
@@ -49,37 +48,33 @@ const CouponForm = ({
               Discount Percentenge <span className="text-red-500">*</span>
             </label>
             <input
-              type="text"
+              type="number"
               name="value"
               value={value}
               required
               className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:border-primary sm:text-sm"
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => setValue(+e.target.value)}
               placeholder="Enter your coupon code value..."
+            />
+          </div>
+          <br />
+          <div>
+            <label className="pb-2">
+              Max Usage <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="number"
+              name="value"
+              value={maxUsage}
+              required
+              className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:border-primary sm:text-sm"
+              onChange={(e) => setMaxUsage(+e.target.value)}
+              placeholder="Enter your coupon code maximum usage"
             />
           </div>
           <br />
           
           
-          <div>
-            <label className="pb-2">Selected Product</label>
-            <select
-              className="w-full mt-2 border h-[35px] rounded-[5px]"
-              value={selectedProducts}
-              onChange={(e) => setSelectedProducts(e.target.value)}
-            >
-              <option value="Choose your selected products">
-                Choose a selected product
-              </option>
-              {product &&
-                product.map((i) => (
-                  <option value={i.name} key={i.name}>
-                    {i.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-          <br />
           <div>
             <button
               type="submit"

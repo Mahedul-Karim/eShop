@@ -1,16 +1,13 @@
-import React from 'react'
-import Header from '../components/layout/Header';
-import Footer from '../components/layout/Footer';
-import UserOrderDetails from '../components/user/UserOrderDetails';
+import React from "react";
+import UserOrderDetails from "../components/user/UserOrderDetails";
+import Container from '../util/Container'
 
 const OrderDetailsPage = () => {
   return (
-    <div>
-        
-        <UserOrderDetails />
-  
-    </div>
-  )
-}
+    <Container styles={"py-4 font-sans"}>
+      <UserOrderDetails />
+    </Container>
+  );
+};
 
-export default OrderDetailsPage
+export default OrderDetailsPage;

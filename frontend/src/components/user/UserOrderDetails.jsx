@@ -8,6 +8,8 @@ import { useHttp } from "../hooks/useHttp";
 import { useToast } from "../hooks/useToast";
 import { productActions } from "../../store/productSlice";
 import { orderActions } from "../../store/orderSlice";
+import { status } from "../../util/data";
+import { FaStar,FaRegStar } from "react-icons/fa";
 
 const UserOrderDetails = () => {
   const { orders } = useSelector((state) => state.order);
@@ -20,11 +22,13 @@ const UserOrderDetails = () => {
 
   const { id } = useParams();
 
-  const { success,error } = useToast();
+  const { success, error } = useToast();
 
-  const [_, fetchData] = useHttp();
+  const [isLoading, fetchData] = useHttp();
 
   const data = orders && orders?.find((item) => item._id === id);
+
+  const { bg, text } = status[data?.status?.toLowerCase()?.replace(/ /g, "")];
 
   const reviewHandler = async (e) => {
     try {
@@ -54,7 +58,6 @@ const UserOrderDetails = () => {
   };
 
   const refundHandler = async () => {
-
     try {
       const data = await fetchData(
         `order/shop/${id}`,
@@ -64,7 +67,7 @@ const UserOrderDetails = () => {
           authorization: `Bearer ${token}`,
         },
         JSON.stringify({
-         status:'Processing Refund'
+          status: "Processing Refund",
         })
       );
       dispatch(orderActions.updateOrder(data.order));
@@ -72,15 +75,12 @@ const UserOrderDetails = () => {
     } catch (err) {
       error(err.message);
     }
-
-
   };
-
   return (
-    <div className={`py-4 min-h-screen w-11/12 mx-auto`}>
+    <>
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center">
-          <BsFillBagFill size={30} color="crimson" />
+          <BsFillBagFill size={30} className="text-primary" />
           <h1 className="pl-2 text-[25px]">Order Details</h1>
         </div>
       </div>
@@ -93,28 +93,37 @@ const UserOrderDetails = () => {
           Placed on: <span>{data?.createdAt?.slice(0, 10)}</span>
         </h5>
       </div>
-
+      <div className="flex items-center gap-2 mt-4 text-[#00000084]">
+        Status:
+        <p
+          className={`flex items-center justify-center uppercase font-semibold w-fit px-2 md:px-4 rounded-full py-[0.5px] md:py-1 text-[10px] md:text-[11px] ${bg} ${text} whitespace-nowrap max-w-full`}
+        >
+          {data?.status}
+        </p>
+      </div>
       {/* order items */}
       <br />
       <br />
       {data &&
         data?.cart.map((item, index) => {
           return (
-            <div className="w-full flex items-start mb-5" key={item._id}>
+            <div className="w-full flex items-center mb-5" key={item._id}>
               <img
                 src={`${item.images[0]?.url}`}
                 alt=""
-                className="w-[80x] h-[80px]"
+                className="w-[80px] h-[80px] object-cover"
               />
               <div className="w-full">
-                <h5 className="pl-3 text-[20px]">{item.name}</h5>
-                <h5 className="pl-3 text-[20px] text-[#00000091]">
-                  US${item.discountPrice} x {item.qty}
+                <h5 className="pl-3 text-base 400px:text-lg font-medium line-clamp-2">
+                  {item.name}
+                </h5>
+                <h5 className="pl-3 text-sm text-[#00000091]">
+                  US${item.price} x {item.quantity}
                 </h5>
               </div>
               {!item.isReviewed && data?.status === "Delivered" ? (
                 <div
-                  className={`w-[150px] bg-black h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer text-[#fff]`}
+                  className={`w-[150px] bg-primary h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer text-[#fff]`}
                   onClick={() => setOpen(true) || setSelectedItem(item)}
                 >
                   Write a review
@@ -127,7 +136,7 @@ const UserOrderDetails = () => {
       {/* review popup */}
       {open && (
         <div className="w-full fixed top-0 left-0 h-screen bg-[#0005] z-50 flex items-center justify-center">
-          <div className="w-[50%] h-min bg-[#fff] shadow rounded-md p-3">
+          <div className="w-full 400px:w-[80%] md:w-[50%] h-min bg-[#fff] shadow rounded-md p-3">
             <div className="w-full flex justify-end p-3">
               <RxCross1
                 size={30}
@@ -143,12 +152,12 @@ const UserOrderDetails = () => {
               <img
                 src={`${selectedItem?.images[0]?.url}`}
                 alt=""
-                className="w-[80px] h-[80px]"
+                className="w-[80px] h-[80px] object-cover"
               />
               <div>
-                <div className="pl-3 text-[20px]">{selectedItem?.name}</div>
-                <h4 className="pl-3 text-[20px]">
-                  US${selectedItem?.discountPrice} x {selectedItem?.quantity}
+                <div className="pl-3 text-base 400px:text-lg font-medium line-clamp-2">{selectedItem?.name}</div>
+                <h4 className="pl-3 text-sm text-[#00000091]">
+                  US${selectedItem?.price} x {selectedItem?.quantity}
                 </h4>
               </div>
             </div>
@@ -163,19 +172,19 @@ const UserOrderDetails = () => {
             <div className="flex w-full ml-2 pt-1">
               {[1, 2, 3, 4, 5].map((i) =>
                 rating >= i ? (
-                  <AiFillStar
+                  <FaStar
                     key={i}
-                    className="mr-1 cursor-pointer"
-                    color="rgb(246,186,0)"
-                    size={25}
+                    className="mr-1 cursor-pointer text-xl"
+                    color="#ff497c"
+                    
                     onClick={() => setRating(i)}
                   />
                 ) : (
-                  <AiOutlineStar
+                  <FaRegStar
                     key={i}
-                    className="mr-1 cursor-pointer"
-                    color="rgb(246,186,0)"
-                    size={25}
+                    className="mr-1 cursor-pointer text-xl"
+                    color="#ff497c"
+                    
                     onClick={() => setRating(i)}
                   />
                 )
@@ -185,9 +194,7 @@ const UserOrderDetails = () => {
             <div className="w-full ml-3">
               <label className="block text-[20px] font-[500]">
                 Write a comment
-                <span className="ml-1 font-[400] text-[16px] text-[#00000052]">
-                  (optional)
-                </span>
+                
               </label>
               <textarea
                 name="comment"
@@ -200,12 +207,13 @@ const UserOrderDetails = () => {
                 className="mt-2 w-[95%] border p-2 outline-none"
               ></textarea>
             </div>
-            <div
-              className={`w-[150px] bg-black h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer text-white text-[20px] ml-3`}
+            <button
+              className={`w-[150px] bg-primary disabled:bg-primary/[0.4] h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer text-white text-lg ml-3`}
               onClick={rating > 1 ? reviewHandler : null}
+              disabled={isLoading}
             >
               Submit
-            </div>
+            </button>
           </div>
         </div>
       )}
@@ -218,17 +226,7 @@ const UserOrderDetails = () => {
       <br />
       <br />
       <div className="w-full 800px:flex items-center">
-        <div className="w-full 800px:w-[60%]">
-          <h4 className="pt-3 text-[20px] font-[600]">Shipping Address:</h4>
-          <h4 className="pt-3 text-[20px]">
-            {data?.shippingAddress.address1 +
-              " " +
-              data?.shippingAddress.address2}
-          </h4>
-          <h4 className=" text-[20px]">{data?.shippingAddress.country}</h4>
-          <h4 className=" text-[20px]">{data?.shippingAddress.city}</h4>
-          <h4 className=" text-[20px]">{data?.user?.phoneNumber}</h4>
-        </div>
+        
         <div className="w-full 800px:w-[40%]">
           <h4 className="pt-3 text-[20px]">Payment Info:</h4>
           <h4>
@@ -247,12 +245,7 @@ const UserOrderDetails = () => {
         </div>
       </div>
       <br />
-      <Link to="/">
-        <div className={`w-[150px] bg-black h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer text-white`}>Send Message</div>
-      </Link>
-      <br />
-      <br />
-    </div>
+    </>
   );
 };
 

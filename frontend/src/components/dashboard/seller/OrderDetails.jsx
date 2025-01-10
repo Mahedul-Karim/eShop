@@ -6,23 +6,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHttp } from "../../hooks/useHttp";
 import { orderActions } from "../../../store/orderSlice";
 import { sellerActions } from "../../../store/sellerSlice";
+import Dropdown from "../../ui/dropdown/Dropdown";
 
-import { useToast } from '../../hooks/useToast'
+import { useToast } from "../../hooks/useToast";
 
 const OrderDetails = () => {
   const { orders } = useSelector((state) => state.order);
   const { seller, sellerToken } = useSelector((state) => state.seller);
   const dispatch = useDispatch();
-  const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
-  const [_, fetchData] = useHttp();
+  const [isLoading, fetchData] = useHttp();
 
   const { id } = useParams();
 
-  const { success,error } = useToast()
+  const { success, error } = useToast();
 
   const data = orders && orders.find((item) => item._id === id);
+  const [status, setStatus] = useState(data?.status);
 
   const orderUpdateHandler = async (e) => {
     try {
@@ -48,26 +49,18 @@ const OrderDetails = () => {
         JSON.stringify({ seller: data.shop, sellerToken: data.token })
       );
       success("Order Updated");
-      navigate("/dashboard-orders");
     } catch (err) {
       error(err.message);
     }
   };
 
   return (
-    <div className={`py-4 min-h-screen w-11/12 mx-auto`}>
+    <div className={`py-4`}>
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center">
-          <BsFillBagFill size={30} color="crimson" />
+          <BsFillBagFill size={30} className="text-primary" />
           <h1 className="pl-2 text-[25px]">Order Details</h1>
         </div>
-        <Link to="/dashboard-orders">
-          <div
-            className={`w-[150px]  my-3 flex items-center justify-center  cursor-pointer !bg-[#fce1e6] !rounded-[4px] text-[#e94560] font-[600] !h-[45px] text-[18px]`}
-          >
-            Order List
-          </div>
-        </Link>
       </div>
 
       <div className="w-full flex items-center justify-between pt-6">
@@ -88,12 +81,14 @@ const OrderDetails = () => {
             <img
               src={`${item.images[0]?.url}`}
               alt=""
-              className="w-[80x] h-[80px]"
+              className="w-[80px] h-[80px] object-cover"
             />
             <div className="w-full">
-              <h5 className="pl-3 text-[20px]">{item.name}</h5>
-              <h5 className="pl-3 text-[20px] text-[#00000091]">
-                US${item.discountPrice} x {item.quantity}
+              <h5 className="pl-3 text-base 400px:text-lg font-medium line-clamp-2">
+                {item.name}
+              </h5>
+              <h5 className="pl-3 text-sm text-[#00000091]">
+                US${item.price} x {item.quantity}
               </h5>
             </div>
           </div>
@@ -131,10 +126,9 @@ const OrderDetails = () => {
       <h4 className="pt-3 text-[20px] font-[600]">Order Status:</h4>
       {data?.status !== "Processing Refund" &&
         data?.status !== "Refund Success" && (
-          <select
+          <Dropdown
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
+            className="border-[#7777774b] !text-base w-[280px]"
           >
             {[
               "Processing",
@@ -155,37 +149,37 @@ const OrderDetails = () => {
                 ].indexOf(data?.status)
               )
               .map((option, index) => (
-                <option value={option} key={index}>
+                <div onClick={() => setStatus(option)} key={index}>
                   {option}
-                </option>
+                </div>
               ))}
-          </select>
+          </Dropdown>
         )}
       {data?.status === "Processing Refund" ||
       data?.status === "Refund Success" ? (
-        <select
+        <Dropdown
           value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
+          className="border-[#7777774b] !text-base w-[280px]"
         >
           {["Processing Refund", "Refund Success"]
             .slice(
               ["Processing Refund", "Refund Success"].indexOf(data?.status)
             )
             .map((option, index) => (
-              <option value={option} key={index}>
+              <div onClick={() => setStatus(option)} key={index}>
                 {option}
-              </option>
+              </div>
             ))}
-        </select>
+        </Dropdown>
       ) : null}
 
-      <div
-        className={`w-[150px]  my-3 flex items-center justify-center cursor-pointer mt-5 !bg-[#FCE1E6] !rounded-[4px] text-[#E94560] font-[600] !h-[45px] text-[18px]`}
+      <button
+        className={`w-[150px]  my-3 flex items-center justify-center mt-5 bg-primary !rounded-[4px] disabled:bg-primary/[0.4] text-white font-[600] !h-[45px] text-[18px]`}
         onClick={orderUpdateHandler}
+        disabled={isLoading || data?.status === 'Delivered'}
       >
-        Update Status
-      </div>
+        {isLoading ? "Updating..." : "Update Status"}{" "}
+      </button>
     </div>
   );
 };

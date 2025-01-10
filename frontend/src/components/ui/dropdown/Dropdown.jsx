@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
-const Dropdown = ({ value, children }) => {
+const Dropdown = ({ value, children,className }) => {
   const [open, setOpen] = useState(false);
 
   const dropdownRef = useRef(null);
@@ -13,7 +13,7 @@ const Dropdown = ({ value, children }) => {
 
   return (
     <div
-      className={`p-2 border border-solid border-border rounded-md cursor-pointer text-sm flex items-center justify-between relative`}
+      className={`p-2 border border-solid border-border rounded-md cursor-pointer text-sm flex items-center justify-between relative ${className}`}
       onClick={() => setOpen((prev) => !prev)}
       ref={dropdownRef}
     >

@@ -46,7 +46,7 @@ const ShopInfo = ({ isOwner }) => {
     navigate("/");
   };
 
-  const sellerProduct = product && product.filter((p) => p.shopId === data._id);
+  const sellerProduct = product && product.filter((p) => p.shop === data._id);
 
   const allReviews = sellerProduct.flatMap((product) => product.reviews);
 

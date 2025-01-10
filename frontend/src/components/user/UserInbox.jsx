@@ -29,19 +29,19 @@ const UserInbox = () => {
 
   const [isLoading, fetchData] = useHttp();
 
-  socketId.on("getMessage", (data) => {
-    console.log(data)
-    setArrivalMessage({
-      sender: data.senderId,
-      text: data.text,
-      createdAt: Date.now(),
+  useEffect(() => {
+    socketId.on("getMessage", (data) => {
+      console.log(data);
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
     });
-  });
+  }, []);
 
   useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
@@ -83,9 +83,7 @@ const UserInbox = () => {
       conversationId: currentChat._id,
     };
 
-    const receiverId = currentChat.members.find(
-      (member) => member !== user._id
-    );
+    const receiverId = currentChat.userId._id === user._id ? currentChat.participentId._id : currentChat.userId._id;
 
     socketId.emit("sendMessage", {
       senderId: user._id,
@@ -112,21 +110,8 @@ const UserInbox = () => {
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      socketId.emit("addUser", user._id);
-      socketId.on("getUser", (data) => {
-        setOnlineUsers(data);
-      });
-    }
-  }, [user]);
 
-  const onlineCheck = (chat) => {
-    const chatMembers = chat.members.find((member) => member !== user?._id);
-    const online = onlineUsers.find((user) => user.userId === chatMembers);
-
-    return online ? true : false;
-  };
+  
 
   async function updateLastMessage() {
     socketId.emit("updateLastMessage", {
@@ -156,9 +141,7 @@ const UserInbox = () => {
       text: newMessage,
     };
 
-    const receiverId = currentChat.members.find(
-      (member) => member !== user._id
-    );
+    const receiverId = currentChat.userId._id === user._id ? currentChat.participentId._id : currentChat.userId._id;
 
     const fileReader = new FileReader();
 
@@ -167,8 +150,6 @@ const UserInbox = () => {
     };
 
     fileReader.readAsDataURL(e);
-
-    
 
     socketId.emit("sendMessage", {
       senderId: user._id,
@@ -233,8 +214,7 @@ const UserInbox = () => {
                 me={user?._id}
                 setUserData={setUserData}
                 userData={userData}
-                online={onlineCheck(item)}
-                setActiveStatus={setActiveStatus}
+                
                 endpoint={"shop"}
               />
             ))}

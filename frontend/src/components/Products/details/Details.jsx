@@ -132,9 +132,9 @@ const Details = ({
           </button>
         </div>
         <div className="h-[0.8px] bg-[#e5e7eb] w-full mt-2 md:mt-[15px]" />
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
           <Link
-            to={`/shop/preview/${data?.shop?._id}`}
+            to={`/shop/preview/${data?.shop}`}
             className="flex items-center gap-1 text-xs 400px:text-sm sm:text-base text-[#55585B]"
           >
             <AiOutlineShop className="text-sm 400px:text-base sm:text-lg" />
@@ -147,14 +147,12 @@ const Details = ({
             {isInWishlist ? (
               <AiFillHeart
                 title="Remove from wishlist"
-                onClick={() => removeFromWishlist(data._id)}
                 className="text-sm 400px:text-base sm:text-lg text-primary-red"
               />
             ) : (
               <AiOutlineHeart
                 color={"#333"}
                 title="Add to wishlist"
-                onClick={() => addToWishlist(data)}
                 className="text-sm 400px:text-base sm:text-lg"
               />
             )}{" "}

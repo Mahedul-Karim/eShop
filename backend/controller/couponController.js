@@ -3,9 +3,12 @@ const catchAsync = require("../util/catchAsync");
 const AppError = require("../model/errorModel");
 
 exports.createCoupon = catchAsync(async (req, res, next) => {
-  const existingCoupon = await Coupon.find({ name: req.body.name });
+  const existingCoupon = await Coupon.findOne({
+    name: req.body.name,
+    shop: req.shop._id,
+  });
 
-  if (existingCoupon && existingCoupon.length !== 0) {
+  if (existingCoupon) {
     return next(new AppError("Coupon already exists", 400));
   }
 
@@ -37,17 +40,34 @@ exports.deleteCoupon = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getCouponByName=catchAsync(async (req,res,next)=>{
+exports.getCouponByName = catchAsync(async (req, res, next) => {
+  const { arrayData } = req.body;
 
-  const coupon=await Coupon.findOne({name :{ $regex:req.params.name }})
+  const coupon = await Coupon.findOne({ name: { $regex: req.params.name } });
 
-  if(!coupon){
-    return next(new AppError("Coupon code doesn't exist or has expired",404))
+  const isEligible = arrayData.includes(coupon.shop.toString());
+
+  
+
+  if (!isEligible) {
+    return next(
+      new AppError("This coupon is not eligible for this product", 401)
+    );
   }
 
-  res.status(200).json({
-    status:'success',
-    coupon
-  })
+  if (!coupon) {
+    return next(new AppError("Coupon code doesn't exist or has expired", 404));
+  }
 
-})
+  if (coupon && coupon.usedFor === coupon.maxUsage) {
+    return next(new AppError("Coupon has reached maximum usage", 404));
+  }
+
+  coupon.usedFor = coupon.usedFor + 1;
+  await coupon.save();
+
+  res.status(200).json({
+    status: "success",
+    coupon,
+  });
+});

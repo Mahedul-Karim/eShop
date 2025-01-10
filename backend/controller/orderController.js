@@ -37,7 +37,9 @@ exports.createOrder = catchAsync(async (req, res, next) => {
 });
 
 exports.getOrderOfUser = catchAsync(async (req, res, next) => {
-  const order = await Order.find({ "user._id": req.user._id });
+  const order = await Order.find({ "user._id": req.user._id }).select(
+    "cart.images cart.name cart._id cart.price cart.quantity totalPrice status paymentInfo paidAt createdAt cart.isReviewed"
+  ).sort({createdAt:-1});
 
   if (!order || order.length === 0) {
     return next(new AppError("You do not have any order placed", 404));
@@ -51,7 +53,7 @@ exports.getOrderOfUser = catchAsync(async (req, res, next) => {
 
 exports.getShopOrders = catchAsync(async (req, res, next) => {
   const order = await Order.find({
-    "cart.shopId": req.shop._id.toString(),
+    "cart.shop": req.shop._id.toString(),
   }).sort({ createdAt: -1 });
 
   if (!order || order.length === 0) {
@@ -110,7 +112,7 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
     status: "success",
     order,
     shop,
-    token:req.authToken
+    token: req.authToken,
   });
 });
 

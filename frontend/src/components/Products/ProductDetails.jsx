@@ -30,7 +30,7 @@ const ProductDetails = ({ data }) => {
     }
     const groupTitle = user._id + data._id;
     const userId = user._id;
-    const participentId = data.shop._id;
+    const participentId = data.shop;
 
     try {
       const convData = await fetchData(
@@ -43,7 +43,7 @@ const ProductDetails = ({ data }) => {
         JSON.stringify({ groupTitle, userId, participentId })
       );
 
-      navigate(`/inbox?conversation=${convData.conversation._id}`);
+      navigate(`/profile/inbox?conversation=${convData.conversation._id}`);
     } catch (err) {
       error(err.message);
     }

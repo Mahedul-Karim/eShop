@@ -121,16 +121,15 @@ const CheckoutPage = () => {
   const handleSubmit = async function (e) {
     e.preventDefault();
 
+    const arrayData = cart.map(c=>c.shop)
+
     try {
-      const data = await fetchData(`coupon/shop/${couponCode}`);
+      const data = await fetchData(`coupon/shop/${couponCode}`,'POST',{
+        'Content-Type':'application/json'
+      },JSON.stringify({arrayData}));
 
-      const validProduct =
-        cart && cart.filter((c) => c.shopId === data.coupon.shop);
-
-      if (validProduct.length === 0) {
-        throw new Error("This coupon is not eligible for this product");
-      }
-
+      
+      
       setDiscountPrice(data.coupon.value);
       setCouponCodeData(data.coupon);
       setCouponCode("");
@@ -162,7 +161,7 @@ const CheckoutPage = () => {
         )}
         {active === 2 && (
           <StripeRoutes>
-            <Payment />
+            <Payment discountPercentage={discountPercentage}/>
           </StripeRoutes>
         )}
       </div>

@@ -40,10 +40,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.getProductDetail = catchAsync(async (req, res, next) => {
-  const product = await Product.findOne({ name: req.params.name }).populate(
-    "shop",
-    "name avatar"
-  );
+  const product = await Product.findOne({ name: req.params.name });
 
   if (product.length === 0) {
     return next(new AppError("No product found!"));

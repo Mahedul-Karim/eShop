@@ -11,19 +11,17 @@ import PaymentInfo from "./PaymentInfo";
 import CartData from "../cart/CartData";
 import { useHttp } from "../hooks/useHttp";
 import { useToast } from "../hooks/useToast";
-import { cartAction } from '../../store/cartSlice';
+import { cartAction } from "../../store/cartSlice";
 import { useDispatch } from "react-redux";
 
-
-const Payment = () => {
-
+const Payment = ({ discountPercentage }) => {
   const [orderData, setOrderData] = useState([]);
   const [open, setOpen] = useState(false);
   const { user, token } = useSelector((state) => state.auth);
 
   const { error } = useToast();
 
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -42,19 +40,20 @@ const Payment = () => {
     cart: orderData?.cart,
     shippingAddress: orderData?.shippingAddress,
     user: user && user,
-    totalPrice: orderData?.totalPrice,
+    totalPrice: discountPercentage
+      ? orderData?.totalPrice - discountPercentage
+      : orderData?.totalPrice,
   };
 
   //paypal
-  const paypalPaymentHandler =async function (paymentData) {
-
+  const paypalPaymentHandler = async function (paymentData) {
     order.paymentInfo = {
       id: paymentData.payer_id,
-      status: 'succeeded',
+      status: "succeeded",
       type: "PayPal",
     };
 
-    const orderData= await fetchData(
+    const orderData = await fetchData(
       "order",
       "POST",
       {
@@ -68,53 +67,53 @@ const Payment = () => {
     localStorage.removeItem("cartItems");
     localStorage.removeItem("latestOrder");
     dispatch(cartAction.emptyCart());
-
   };
 
-
   const onApprove = function (data, action) {
-    return action.order.capture().then(details=>{
+    return action.order.capture().then((details) => {
       const { payer } = details;
 
-      let paymentInfo=payer;
+      let paymentInfo = payer;
 
-      if(paymentInfo !== undefined){
-        paypalPaymentHandler(paymentInfo)
+      if (paymentInfo !== undefined) {
+        paypalPaymentHandler(paymentInfo);
       }
-    })
+    });
   };
 
   const createOrder = function (data, action) {
-    return action.order.create({
-      purchase_units:[
-        {
-          description:'Fsfs',
-          amount:{
-            currency_code:'USD',
-            value:orderData?.totalPrice
-          }
-        }
-      ],
-      application_context:{
-        shipping_preference:'NO_SHIPPING'
-      }
-    }).then(orderId => orderId)
+    return action.order
+      .create({
+        purchase_units: [
+          {
+            description: "Fsfs",
+            amount: {
+              currency_code: "USD",
+              value: orderData?.totalPrice,
+            },
+          },
+        ],
+        application_context: {
+          shipping_preference: "NO_SHIPPING",
+        },
+      })
+      .then((orderId) => orderId);
   };
-
-  
 
   //stripe
   const paymentData = {
-    amount: Math.round(orderData?.totalPrice * 100),
+    amount: Math.round(
+      discountPercentage
+        ? (orderData?.totalPrice - discountPercentage) * 100
+        : orderData?.totalPrice
+    ),
   };
-
-  
 
   const paymentHandler = async function (e) {
     e.preventDefault();
-    
+
     try {
-      const data =await fetchData(
+      const data = await fetchData(
         "payment/stripe",
         "POST",
         {
@@ -122,9 +121,9 @@ const Payment = () => {
         },
         JSON.stringify(paymentData)
       );
-      
+
       const client_secret = data.client_secret;
-        
+
       const result = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
@@ -143,7 +142,7 @@ const Payment = () => {
         };
       }
 
-     const orderData= await fetchData(
+      const orderData = await fetchData(
         "order",
         "POST",
         {
@@ -158,21 +157,20 @@ const Payment = () => {
       localStorage.removeItem("latestOrder");
       dispatch(cartAction.emptyCart());
     } catch (err) {
-      
       error(err.message);
     }
   };
 
   //code
-  const codHandler =async function (e) {
+  const codHandler = async function (e) {
     e.preventDefault();
 
     order.paymentInfo = {
       type: "Cash On Delivery",
     };
 
-    try{
-      const orderData= await fetchData(
+    try {
+      const orderData = await fetchData(
         "order",
         "POST",
         {
@@ -181,18 +179,15 @@ const Payment = () => {
         },
         JSON.stringify(order)
       );
-      
+
       setOpen(false);
       navigate("/order/success");
       localStorage.removeItem("cartItems");
       localStorage.removeItem("latestOrder");
       dispatch(cartAction.emptyCart());
-    }catch(err){
-      error(err.message)
+    } catch (err) {
+      error(err.message);
     }
-
-
-
   };
 
   return (
@@ -210,7 +205,6 @@ const Payment = () => {
             isLoading={isLoading}
           />
         </div>
-       
       </div>
     </div>
   );

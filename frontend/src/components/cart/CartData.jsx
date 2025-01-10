@@ -19,7 +19,7 @@ const CartData = ({
   }, []);
 
   return (
-    <div className="w-full bg-[#fff] rounded-md pb-8">
+    <div className="w-full rounded-md pb-8">
       <div className="mb-8 flex flex-col gap-2">
         {cart &&
           cart.map((data, index) => (
@@ -31,7 +31,7 @@ const CartData = ({
                 <img
                   src={data?.images?.[0].url}
                   alt=""
-                  className="w-[54px] h-[54px] object-contain bg-white"
+                  className="w-[54px] h-[54px] object-cover bg-white"
                 />
                 <p className="text-sm line-clamp-1">{data?.name}</p>
               </div>

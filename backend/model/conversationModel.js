@@ -5,8 +5,13 @@ const conversationSchema = new mongoose.Schema(
     groupTitle:{
         type: String,
     },
-    members: {
-      type: Array,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'User'
+    },
+    participentId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'Shop'
     },
     lastMessage: {
       type: String,

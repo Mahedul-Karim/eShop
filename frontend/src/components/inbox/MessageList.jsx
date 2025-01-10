@@ -11,8 +11,6 @@ const MessageList = ({
   me,
   setUserData,
   userData,
-  online,
-  setActiveStatus,
   isLoading,
   endpoint,
 }) => {
@@ -31,7 +29,8 @@ const MessageList = ({
 
   useEffect(() => {
     const getUser = async function () {
-      const userId = data.members.find((user) => user !== me);
+      const userId =
+        data.userId._id === me ? data.participentId._id : data.userId._id;
       try {
         const data = await fetchData(`${endpoint}/${userId}`);
 
@@ -53,10 +52,7 @@ const MessageList = ({
         active === index ? "bg-[#00000010]" : "bg-transparent"
       }  cursor-pointer`}
       onClick={(e) =>
-        setActive(index) ||
-        handleClick(data._id) ||
-        setCurrentChat(data) ||
-        setActiveStatus(online)
+        setActive(index) || handleClick(data._id) || setCurrentChat(data)
       }
     >
       <div className="relative">
@@ -65,11 +61,6 @@ const MessageList = ({
           alt=""
           className="w-[50px] h-[50px] rounded-full"
         />
-        {online ? (
-          <div className="w-[12px] h-[12px] bg-green-400 rounded-full absolute top-[2px] right-[2px]" />
-        ) : (
-          <div className="w-[12px] h-[12px] bg-[#c7b9b9] rounded-full absolute top-[2px] right-[2px]" />
-        )}
       </div>
       <div className="pl-3">
         <h1 className="text-[18px]">{userData?.name}</h1>

@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.route("/").post(isSeller, createCoupon);
 router.route('/:id').get(getCoupons).delete(deleteCoupon);
-router.route('/shop/:name').get(getCouponByName);
+router.route('/shop/:name').post(getCouponByName);
 
 module.exports = router;

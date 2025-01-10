@@ -5,7 +5,7 @@ const useOutsideClick = (ref, onClickOutside) => {
     if (!ref) return;
 
     const handleOutsideClick = (e) => {
-      if (!ref.current.contains(e.target)) {
+      if (ref.current && !ref.current.contains(e.target)) {
         onClickOutside();
       }
     };
