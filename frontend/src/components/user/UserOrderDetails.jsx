@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsFillBagFill } from "react-icons/bs";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RxCross1 } from "react-icons/rx";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -21,6 +21,8 @@ const UserOrderDetails = () => {
   const [rating, setRating] = useState(1);
 
   const { id } = useParams();
+
+  const navigate = useNavigate()
 
   const { success, error } = useToast();
 
@@ -52,6 +54,7 @@ const UserOrderDetails = () => {
       setComment("");
       dispatch(productActions.updateProductReview(data.product));
       success("Review submitted");
+      navigate('/profile/orders')
     } catch (err) {
       error(err.message);
     }

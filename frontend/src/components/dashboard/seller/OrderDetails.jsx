@@ -123,9 +123,12 @@ const OrderDetails = () => {
       </div>
       <br />
       <br />
-      <h4 className="pt-3 text-[20px] font-[600]">Order Status:</h4>
+      {data?.status !== "Delivered" && (
+        <h4 className="pt-3 text-[20px] font-[600]">Order Status:</h4>
+      )}
       {data?.status !== "Processing Refund" &&
-        data?.status !== "Refund Success" && (
+        data?.status !== "Refund Success" &&
+        data?.status !== "Delivered" && (
           <Dropdown
             value={status}
             className="border-[#7777774b] !text-base w-[280px]"
@@ -146,7 +149,15 @@ const OrderDetails = () => {
                   "Received",
                   "On the way",
                   "Delivered",
-                ].indexOf(data?.status)
+                ].indexOf(data?.status)+1,
+                [
+                  "Processing",
+                  "Transferred to delivery partner",
+                  "Shipping",
+                  "Received",
+                  "On the way",
+                  "Delivered",
+                ].indexOf(data?.status) + 2
               )
               .map((option, index) => (
                 <div onClick={() => setStatus(option)} key={index}>
@@ -173,13 +184,15 @@ const OrderDetails = () => {
         </Dropdown>
       ) : null}
 
-      <button
-        className={`w-[150px]  my-3 flex items-center justify-center mt-5 bg-primary !rounded-[4px] disabled:bg-primary/[0.4] text-white font-[600] !h-[45px] text-[18px]`}
-        onClick={orderUpdateHandler}
-        disabled={isLoading || data?.status === 'Delivered'}
-      >
-        {isLoading ? "Updating..." : "Update Status"}{" "}
-      </button>
+      {data?.status !== "Delivered" && (
+        <button
+          className={`w-[150px]  my-3 flex items-center justify-center mt-5 bg-primary !rounded-[4px] disabled:bg-primary/[0.4] text-white font-[600] !h-[45px] text-[18px]`}
+          onClick={orderUpdateHandler}
+          disabled={isLoading}
+        >
+          {isLoading ? "Updating..." : "Update Status"}{" "}
+        </button>
+      )}
     </div>
   );
 };
